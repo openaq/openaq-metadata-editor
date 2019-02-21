@@ -50,3 +50,13 @@
    ========================================================================== */
 
 @import "base";
+
+.page__header {
+  background-image: url(../graphics/layout/header-background.png);
+  background-size: 100%;
+  height: 300px;
+}
+
+.site__title {
+  padding: 10px;
+}

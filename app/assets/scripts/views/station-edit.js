@@ -7,7 +7,7 @@ class Home extends React.Component {
     return (
       <div className='page page--homepage'>
         <Header>
-          <h1 classNAme='page__title'>Search stations</h1>
+          <h1 classNAme='page__title'>Edit metadata</h1>
         </Header>
       </div>
     );
