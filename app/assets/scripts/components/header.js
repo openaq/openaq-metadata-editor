@@ -11,7 +11,7 @@ class Header extends React.Component {
               <span className='visually-hidden'>OpenAQ</span>
             </a>
           </h1>
-          <div class="header__content">
+          <div className='header__content'>
             {this.props.children}
           </div>
         </div>
