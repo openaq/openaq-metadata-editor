@@ -16,6 +16,7 @@ const SassString = require('node-sass').types.String;
 const notifier = require('node-notifier');
 const runSequence = require('run-sequence');
 const through2 = require('through2');
+const { compile } = require('collecticons-processor');
 
 // /////////////////////////////////////////////////////////////////////////////
 // --------------------------- Variables -------------------------------------//
@@ -54,7 +55,7 @@ gulp.task('default', ['clean'], function () {
   gulp.start('build');
 });
 
-gulp.task('serve', ['vendorScripts', 'javascript', 'styles'], function () {
+gulp.task('serve', ['vendorScripts', 'javascript', 'collecticons', 'styles'], function () {
   browserSync({
     port: 3000,
     server: {
@@ -128,6 +129,16 @@ gulp.task('javascript', function () {
     .on('update', bundler);
 
   return bundler();
+});
+
+gulp.task('collecticons', function () {
+  return compile({
+    dirPath: 'app/assets/icons/collecticons/',
+    fontName: 'Collecticons',
+    styleDest: 'app/assets/styles/',
+    styleName: '_collecticons',
+    preview: false
+  });
 });
 
 // Vendor scripts. Basically all the dependencies in the package.js.

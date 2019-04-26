@@ -1,0 +1,1789 @@
+/* ==========================================================================
+   Icon font: Collecticons
+   ========================================================================== */
+
+/**
+ * Designed by Development Seed
+ * https://developmentseed.org/
+ *
+ * Generated with collecticons-processor on April 23rd, 2019
+ * http://collecticons.io/
+ */
+
+@font-face {
+  font-family: "Collecticons";
+  src: url(data:application/font-woff2;charset=utf-8;base64,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) format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+%collecticons,
+[class^="collecticons-"],
+[class*=" collecticons-"] {
+  speak: none;
+  font-family: "Collecticons";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+
+  /* Better font rendering */
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+%collecticons-arrow-down-left {
+  @extend %collecticons;
+  content: "\F101";
+}
+
+.collecticons-arrow-down-left:before {
+  content: "\F101";
+}
+
+%collecticons-arrow-down-right {
+  @extend %collecticons;
+  content: "\F102";
+}
+
+.collecticons-arrow-down-right:before {
+  content: "\F102";
+}
+
+%collecticons-arrow-down {
+  @extend %collecticons;
+  content: "\F103";
+}
+
+.collecticons-arrow-down:before {
+  content: "\F103";
+}
+
+%collecticons-arrow-left {
+  @extend %collecticons;
+  content: "\F104";
+}
+
+.collecticons-arrow-left:before {
+  content: "\F104";
+}
+
+%collecticons-arrow-loop {
+  @extend %collecticons;
+  content: "\F105";
+}
+
+.collecticons-arrow-loop:before {
+  content: "\F105";
+}
+
+%collecticons-arrow-return {
+  @extend %collecticons;
+  content: "\F106";
+}
+
+.collecticons-arrow-return:before {
+  content: "\F106";
+}
+
+%collecticons-arrow-right {
+  @extend %collecticons;
+  content: "\F107";
+}
+
+.collecticons-arrow-right:before {
+  content: "\F107";
+}
+
+%collecticons-arrow-semi-spin-ccw {
+  @extend %collecticons;
+  content: "\F108";
+}
+
+.collecticons-arrow-semi-spin-ccw:before {
+  content: "\F108";
+}
+
+%collecticons-arrow-semi-spin-cw {
+  @extend %collecticons;
+  content: "\F109";
+}
+
+.collecticons-arrow-semi-spin-cw:before {
+  content: "\F109";
+}
+
+%collecticons-arrow-spin-ccw {
+  @extend %collecticons;
+  content: "\F10A";
+}
+
+.collecticons-arrow-spin-ccw:before {
+  content: "\F10A";
+}
+
+%collecticons-arrow-spin-cw {
+  @extend %collecticons;
+  content: "\F10B";
+}
+
+.collecticons-arrow-spin-cw:before {
+  content: "\F10B";
+}
+
+%collecticons-arrow-up-left {
+  @extend %collecticons;
+  content: "\F10C";
+}
+
+.collecticons-arrow-up-left:before {
+  content: "\F10C";
+}
+
+%collecticons-arrow-up-right {
+  @extend %collecticons;
+  content: "\F10D";
+}
+
+.collecticons-arrow-up-right:before {
+  content: "\F10D";
+}
+
+%collecticons-arrow-up {
+  @extend %collecticons;
+  content: "\F10E";
+}
+
+.collecticons-arrow-up:before {
+  content: "\F10E";
+}
+
+%collecticons-bell {
+  @extend %collecticons;
+  content: "\F10F";
+}
+
+.collecticons-bell:before {
+  content: "\F10F";
+}
+
+%collecticons-blow {
+  @extend %collecticons;
+  content: "\F110";
+}
+
+.collecticons-blow:before {
+  content: "\F110";
+}
+
+%collecticons-book-bookmark {
+  @extend %collecticons;
+  content: "\F111";
+}
+
+.collecticons-book-bookmark:before {
+  content: "\F111";
+}
+
+%collecticons-book {
+  @extend %collecticons;
+  content: "\F112";
+}
+
+.collecticons-book:before {
+  content: "\F112";
+}
+
+%collecticons-brand-collecticons {
+  @extend %collecticons;
+  content: "\F113";
+}
+
+.collecticons-brand-collecticons:before {
+  content: "\F113";
+}
+
+%collecticons-brand-development-seed-2 {
+  @extend %collecticons;
+  content: "\F114";
+}
+
+.collecticons-brand-development-seed-2:before {
+  content: "\F114";
+}
+
+%collecticons-brand-development-seed {
+  @extend %collecticons;
+  content: "\F115";
+}
+
+.collecticons-brand-development-seed:before {
+  content: "\F115";
+}
+
+%collecticons-brand-dropbox {
+  @extend %collecticons;
+  content: "\F116";
+}
+
+.collecticons-brand-dropbox:before {
+  content: "\F116";
+}
+
+%collecticons-brand-facebook {
+  @extend %collecticons;
+  content: "\F117";
+}
+
+.collecticons-brand-facebook:before {
+  content: "\F117";
+}
+
+%collecticons-brand-flickr {
+  @extend %collecticons;
+  content: "\F118";
+}
+
+.collecticons-brand-flickr:before {
+  content: "\F118";
+}
+
+%collecticons-brand-github {
+  @extend %collecticons;
+  content: "\F119";
+}
+
+.collecticons-brand-github:before {
+  content: "\F119";
+}
+
+%collecticons-brand-google-plus {
+  @extend %collecticons;
+  content: "\F11A";
+}
+
+.collecticons-brand-google-plus:before {
+  content: "\F11A";
+}
+
+%collecticons-brand-human-rights {
+  @extend %collecticons;
+  content: "\F11B";
+}
+
+.collecticons-brand-human-rights:before {
+  content: "\F11B";
+}
+
+%collecticons-brand-id {
+  @extend %collecticons;
+  content: "\F11C";
+}
+
+.collecticons-brand-id:before {
+  content: "\F11C";
+}
+
+%collecticons-brand-instagram {
+  @extend %collecticons;
+  content: "\F11D";
+}
+
+.collecticons-brand-instagram:before {
+  content: "\F11D";
+}
+
+%collecticons-brand-lastfm {
+  @extend %collecticons;
+  content: "\F11E";
+}
+
+.collecticons-brand-lastfm:before {
+  content: "\F11E";
+}
+
+%collecticons-brand-linkedin {
+  @extend %collecticons;
+  content: "\F11F";
+}
+
+.collecticons-brand-linkedin:before {
+  content: "\F11F";
+}
+
+%collecticons-brand-medium {
+  @extend %collecticons;
+  content: "\F120";
+}
+
+.collecticons-brand-medium:before {
+  content: "\F120";
+}
+
+%collecticons-brand-satsummit {
+  @extend %collecticons;
+  content: "\F121";
+}
+
+.collecticons-brand-satsummit:before {
+  content: "\F121";
+}
+
+%collecticons-brand-skype {
+  @extend %collecticons;
+  content: "\F122";
+}
+
+.collecticons-brand-skype:before {
+  content: "\F122";
+}
+
+%collecticons-brand-slack {
+  @extend %collecticons;
+  content: "\F123";
+}
+
+.collecticons-brand-slack:before {
+  content: "\F123";
+}
+
+%collecticons-brand-soundcloud {
+  @extend %collecticons;
+  content: "\F124";
+}
+
+.collecticons-brand-soundcloud:before {
+  content: "\F124";
+}
+
+%collecticons-brand-tumblr {
+  @extend %collecticons;
+  content: "\F125";
+}
+
+.collecticons-brand-tumblr:before {
+  content: "\F125";
+}
+
+%collecticons-brand-twitter {
+  @extend %collecticons;
+  content: "\F126";
+}
+
+.collecticons-brand-twitter:before {
+  content: "\F126";
+}
+
+%collecticons-brand-youtube {
+  @extend %collecticons;
+  content: "\F127";
+}
+
+.collecticons-brand-youtube:before {
+  content: "\F127";
+}
+
+%collecticons-briefcase {
+  @extend %collecticons;
+  content: "\F128";
+}
+
+.collecticons-briefcase:before {
+  content: "\F128";
+}
+
+%collecticons-calendar {
+  @extend %collecticons;
+  content: "\F129";
+}
+
+.collecticons-calendar:before {
+  content: "\F129";
+}
+
+%collecticons-camera {
+  @extend %collecticons;
+  content: "\F12A";
+}
+
+.collecticons-camera:before {
+  content: "\F12A";
+}
+
+%collecticons-chart-bars {
+  @extend %collecticons;
+  content: "\F12B";
+}
+
+.collecticons-chart-bars:before {
+  content: "\F12B";
+}
+
+%collecticons-chart-line {
+  @extend %collecticons;
+  content: "\F12C";
+}
+
+.collecticons-chart-line:before {
+  content: "\F12C";
+}
+
+%collecticons-chart-pie {
+  @extend %collecticons;
+  content: "\F12D";
+}
+
+.collecticons-chart-pie:before {
+  content: "\F12D";
+}
+
+%collecticons-chevron-down--small {
+  @extend %collecticons;
+  content: "\F12E";
+}
+
+.collecticons-chevron-down--small:before {
+  content: "\F12E";
+}
+
+%collecticons-chevron-down-trail--small {
+  @extend %collecticons;
+  content: "\F12F";
+}
+
+.collecticons-chevron-down-trail--small:before {
+  content: "\F12F";
+}
+
+%collecticons-chevron-down {
+  @extend %collecticons;
+  content: "\F130";
+}
+
+.collecticons-chevron-down:before {
+  content: "\F130";
+}
+
+%collecticons-chevron-left--small {
+  @extend %collecticons;
+  content: "\F131";
+}
+
+.collecticons-chevron-left--small:before {
+  content: "\F131";
+}
+
+%collecticons-chevron-left-trail--small {
+  @extend %collecticons;
+  content: "\F132";
+}
+
+.collecticons-chevron-left-trail--small:before {
+  content: "\F132";
+}
+
+%collecticons-chevron-left {
+  @extend %collecticons;
+  content: "\F133";
+}
+
+.collecticons-chevron-left:before {
+  content: "\F133";
+}
+
+%collecticons-chevron-right--small {
+  @extend %collecticons;
+  content: "\F134";
+}
+
+.collecticons-chevron-right--small:before {
+  content: "\F134";
+}
+
+%collecticons-chevron-right-trail--small {
+  @extend %collecticons;
+  content: "\F135";
+}
+
+.collecticons-chevron-right-trail--small:before {
+  content: "\F135";
+}
+
+%collecticons-chevron-right {
+  @extend %collecticons;
+  content: "\F136";
+}
+
+.collecticons-chevron-right:before {
+  content: "\F136";
+}
+
+%collecticons-chevron-step-backward {
+  @extend %collecticons;
+  content: "\F137";
+}
+
+.collecticons-chevron-step-backward:before {
+  content: "\F137";
+}
+
+%collecticons-chevron-step-forward {
+  @extend %collecticons;
+  content: "\F138";
+}
+
+.collecticons-chevron-step-forward:before {
+  content: "\F138";
+}
+
+%collecticons-chevron-up--small {
+  @extend %collecticons;
+  content: "\F139";
+}
+
+.collecticons-chevron-up--small:before {
+  content: "\F139";
+}
+
+%collecticons-chevron-up-trail--small {
+  @extend %collecticons;
+  content: "\F13A";
+}
+
+.collecticons-chevron-up-trail--small:before {
+  content: "\F13A";
+}
+
+%collecticons-chevron-up {
+  @extend %collecticons;
+  content: "\F13B";
+}
+
+.collecticons-chevron-up:before {
+  content: "\F13B";
+}
+
+%collecticons-circle-exclamation {
+  @extend %collecticons;
+  content: "\F13C";
+}
+
+.collecticons-circle-exclamation:before {
+  content: "\F13C";
+}
+
+%collecticons-circle-forbidden {
+  @extend %collecticons;
+  content: "\F13D";
+}
+
+.collecticons-circle-forbidden:before {
+  content: "\F13D";
+}
+
+%collecticons-circle-information {
+  @extend %collecticons;
+  content: "\F13E";
+}
+
+.collecticons-circle-information:before {
+  content: "\F13E";
+}
+
+%collecticons-circle-pause {
+  @extend %collecticons;
+  content: "\F13F";
+}
+
+.collecticons-circle-pause:before {
+  content: "\F13F";
+}
+
+%collecticons-circle-play-next {
+  @extend %collecticons;
+  content: "\F140";
+}
+
+.collecticons-circle-play-next:before {
+  content: "\F140";
+}
+
+%collecticons-circle-play {
+  @extend %collecticons;
+  content: "\F141";
+}
+
+.collecticons-circle-play:before {
+  content: "\F141";
+}
+
+%collecticons-circle-question {
+  @extend %collecticons;
+  content: "\F142";
+}
+
+.collecticons-circle-question:before {
+  content: "\F142";
+}
+
+%collecticons-circle-stop {
+  @extend %collecticons;
+  content: "\F143";
+}
+
+.collecticons-circle-stop:before {
+  content: "\F143";
+}
+
+%collecticons-circle-tick {
+  @extend %collecticons;
+  content: "\F144";
+}
+
+.collecticons-circle-tick:before {
+  content: "\F144";
+}
+
+%collecticons-circle-xmark {
+  @extend %collecticons;
+  content: "\F145";
+}
+
+.collecticons-circle-xmark:before {
+  content: "\F145";
+}
+
+%collecticons-clipboard-tick {
+  @extend %collecticons;
+  content: "\F146";
+}
+
+.collecticons-clipboard-tick:before {
+  content: "\F146";
+}
+
+%collecticons-clipboard {
+  @extend %collecticons;
+  content: "\F147";
+}
+
+.collecticons-clipboard:before {
+  content: "\F147";
+}
+
+%collecticons-clock-back {
+  @extend %collecticons;
+  content: "\F148";
+}
+
+.collecticons-clock-back:before {
+  content: "\F148";
+}
+
+%collecticons-clock {
+  @extend %collecticons;
+  content: "\F149";
+}
+
+.collecticons-clock:before {
+  content: "\F149";
+}
+
+%collecticons-code {
+  @extend %collecticons;
+  content: "\F14A";
+}
+
+.collecticons-code:before {
+  content: "\F14A";
+}
+
+%collecticons-cog {
+  @extend %collecticons;
+  content: "\F14B";
+}
+
+.collecticons-cog:before {
+  content: "\F14B";
+}
+
+%collecticons-compass-2 {
+  @extend %collecticons;
+  content: "\F14C";
+}
+
+.collecticons-compass-2:before {
+  content: "\F14C";
+}
+
+%collecticons-compass {
+  @extend %collecticons;
+  content: "\F14D";
+}
+
+.collecticons-compass:before {
+  content: "\F14D";
+}
+
+%collecticons-crosshair-2 {
+  @extend %collecticons;
+  content: "\F14E";
+}
+
+.collecticons-crosshair-2:before {
+  content: "\F14E";
+}
+
+%collecticons-crosshair {
+  @extend %collecticons;
+  content: "\F14F";
+}
+
+.collecticons-crosshair:before {
+  content: "\F14F";
+}
+
+%collecticons-disc-dollar {
+  @extend %collecticons;
+  content: "\F150";
+}
+
+.collecticons-disc-dollar:before {
+  content: "\F150";
+}
+
+%collecticons-disc-xmark {
+  @extend %collecticons;
+  content: "\F151";
+}
+
+.collecticons-disc-xmark:before {
+  content: "\F151";
+}
+
+%collecticons-download-2 {
+  @extend %collecticons;
+  content: "\F152";
+}
+
+.collecticons-download-2:before {
+  content: "\F152";
+}
+
+%collecticons-download {
+  @extend %collecticons;
+  content: "\F153";
+}
+
+.collecticons-download:before {
+  content: "\F153";
+}
+
+%collecticons-drop {
+  @extend %collecticons;
+  content: "\F154";
+}
+
+.collecticons-drop:before {
+  content: "\F154";
+}
+
+%collecticons-ellipsis-horizontal {
+  @extend %collecticons;
+  content: "\F155";
+}
+
+.collecticons-ellipsis-horizontal:before {
+  content: "\F155";
+}
+
+%collecticons-ellipsis-vertical {
+  @extend %collecticons;
+  content: "\F156";
+}
+
+.collecticons-ellipsis-vertical:before {
+  content: "\F156";
+}
+
+%collecticons-envelope {
+  @extend %collecticons;
+  content: "\F157";
+}
+
+.collecticons-envelope:before {
+  content: "\F157";
+}
+
+%collecticons-equal--small {
+  @extend %collecticons;
+  content: "\F158";
+}
+
+.collecticons-equal--small:before {
+  content: "\F158";
+}
+
+%collecticons-equal {
+  @extend %collecticons;
+  content: "\F159";
+}
+
+.collecticons-equal:before {
+  content: "\F159";
+}
+
+%collecticons-expand-down-left {
+  @extend %collecticons;
+  content: "\F15A";
+}
+
+.collecticons-expand-down-left:before {
+  content: "\F15A";
+}
+
+%collecticons-expand-down-right {
+  @extend %collecticons;
+  content: "\F15B";
+}
+
+.collecticons-expand-down-right:before {
+  content: "\F15B";
+}
+
+%collecticons-expand-top-left {
+  @extend %collecticons;
+  content: "\F15C";
+}
+
+.collecticons-expand-top-left:before {
+  content: "\F15C";
+}
+
+%collecticons-expand-top-right {
+  @extend %collecticons;
+  content: "\F15D";
+}
+
+.collecticons-expand-top-right:before {
+  content: "\F15D";
+}
+
+%collecticons-eye-disabled {
+  @extend %collecticons;
+  content: "\F15E";
+}
+
+.collecticons-eye-disabled:before {
+  content: "\F15E";
+}
+
+%collecticons-eye {
+  @extend %collecticons;
+  content: "\F15F";
+}
+
+.collecticons-eye:before {
+  content: "\F15F";
+}
+
+%collecticons-face-happy {
+  @extend %collecticons;
+  content: "\F160";
+}
+
+.collecticons-face-happy:before {
+  content: "\F160";
+}
+
+%collecticons-face-sad {
+  @extend %collecticons;
+  content: "\F161";
+}
+
+.collecticons-face-sad:before {
+  content: "\F161";
+}
+
+%collecticons-factory {
+  @extend %collecticons;
+  content: "\F162";
+}
+
+.collecticons-factory:before {
+  content: "\F162";
+}
+
+%collecticons-fence {
+  @extend %collecticons;
+  content: "\F163";
+}
+
+.collecticons-fence:before {
+  content: "\F163";
+}
+
+%collecticons-flag-pole {
+  @extend %collecticons;
+  content: "\F164";
+}
+
+.collecticons-flag-pole:before {
+  content: "\F164";
+}
+
+%collecticons-flame {
+  @extend %collecticons;
+  content: "\F165";
+}
+
+.collecticons-flame:before {
+  content: "\F165";
+}
+
+%collecticons-folder {
+  @extend %collecticons;
+  content: "\F166";
+}
+
+.collecticons-folder:before {
+  content: "\F166";
+}
+
+%collecticons-gauge {
+  @extend %collecticons;
+  content: "\F167";
+}
+
+.collecticons-gauge:before {
+  content: "\F167";
+}
+
+%collecticons-git-fork {
+  @extend %collecticons;
+  content: "\F168";
+}
+
+.collecticons-git-fork:before {
+  content: "\F168";
+}
+
+%collecticons-globe {
+  @extend %collecticons;
+  content: "\F169";
+}
+
+.collecticons-globe:before {
+  content: "\F169";
+}
+
+%collecticons-hamburguer-menu {
+  @extend %collecticons;
+  content: "\F16A";
+}
+
+.collecticons-hamburguer-menu:before {
+  content: "\F16A";
+}
+
+%collecticons-hand-thumbs-down {
+  @extend %collecticons;
+  content: "\F16B";
+}
+
+.collecticons-hand-thumbs-down:before {
+  content: "\F16B";
+}
+
+%collecticons-hand-thumbs-up {
+  @extend %collecticons;
+  content: "\F16C";
+}
+
+.collecticons-hand-thumbs-up:before {
+  content: "\F16C";
+}
+
+%collecticons-heart {
+  @extend %collecticons;
+  content: "\F16D";
+}
+
+.collecticons-heart:before {
+  content: "\F16D";
+}
+
+%collecticons-house {
+  @extend %collecticons;
+  content: "\F16E";
+}
+
+.collecticons-house:before {
+  content: "\F16E";
+}
+
+%collecticons-houses {
+  @extend %collecticons;
+  content: "\F16F";
+}
+
+.collecticons-houses:before {
+  content: "\F16F";
+}
+
+%collecticons-iso-stack {
+  @extend %collecticons;
+  content: "\F170";
+}
+
+.collecticons-iso-stack:before {
+  content: "\F170";
+}
+
+%collecticons-layout-column-2x {
+  @extend %collecticons;
+  content: "\F171";
+}
+
+.collecticons-layout-column-2x:before {
+  content: "\F171";
+}
+
+%collecticons-layout-grid-2x2 {
+  @extend %collecticons;
+  content: "\F172";
+}
+
+.collecticons-layout-grid-2x2:before {
+  content: "\F172";
+}
+
+%collecticons-layout-grid-3x3 {
+  @extend %collecticons;
+  content: "\F173";
+}
+
+.collecticons-layout-grid-3x3:before {
+  content: "\F173";
+}
+
+%collecticons-layout-row-2x {
+  @extend %collecticons;
+  content: "\F174";
+}
+
+.collecticons-layout-row-2x:before {
+  content: "\F174";
+}
+
+%collecticons-leaf {
+  @extend %collecticons;
+  content: "\F175";
+}
+
+.collecticons-leaf:before {
+  content: "\F175";
+}
+
+%collecticons-link {
+  @extend %collecticons;
+  content: "\F176";
+}
+
+.collecticons-link:before {
+  content: "\F176";
+}
+
+%collecticons-list {
+  @extend %collecticons;
+  content: "\F177";
+}
+
+.collecticons-list:before {
+  content: "\F177";
+}
+
+%collecticons-lock-2-open {
+  @extend %collecticons;
+  content: "\F178";
+}
+
+.collecticons-lock-2-open:before {
+  content: "\F178";
+}
+
+%collecticons-lock-2 {
+  @extend %collecticons;
+  content: "\F179";
+}
+
+.collecticons-lock-2:before {
+  content: "\F179";
+}
+
+%collecticons-lock-open {
+  @extend %collecticons;
+  content: "\F17A";
+}
+
+.collecticons-lock-open:before {
+  content: "\F17A";
+}
+
+%collecticons-lock {
+  @extend %collecticons;
+  content: "\F17B";
+}
+
+.collecticons-lock:before {
+  content: "\F17B";
+}
+
+%collecticons-login {
+  @extend %collecticons;
+  content: "\F17C";
+}
+
+.collecticons-login:before {
+  content: "\F17C";
+}
+
+%collecticons-logout {
+  @extend %collecticons;
+  content: "\F17D";
+}
+
+.collecticons-logout:before {
+  content: "\F17D";
+}
+
+%collecticons-magnifier-left {
+  @extend %collecticons;
+  content: "\F17E";
+}
+
+.collecticons-magnifier-left:before {
+  content: "\F17E";
+}
+
+%collecticons-magnifier-right {
+  @extend %collecticons;
+  content: "\F17F";
+}
+
+.collecticons-magnifier-right:before {
+  content: "\F17F";
+}
+
+%collecticons-map {
+  @extend %collecticons;
+  content: "\F180";
+}
+
+.collecticons-map:before {
+  content: "\F180";
+}
+
+%collecticons-marker {
+  @extend %collecticons;
+  content: "\F181";
+}
+
+.collecticons-marker:before {
+  content: "\F181";
+}
+
+%collecticons-minus--small {
+  @extend %collecticons;
+  content: "\F182";
+}
+
+.collecticons-minus--small:before {
+  content: "\F182";
+}
+
+%collecticons-minus {
+  @extend %collecticons;
+  content: "\F183";
+}
+
+.collecticons-minus:before {
+  content: "\F183";
+}
+
+%collecticons-mobile-phone {
+  @extend %collecticons;
+  content: "\F184";
+}
+
+.collecticons-mobile-phone:before {
+  content: "\F184";
+}
+
+%collecticons-page-cog {
+  @extend %collecticons;
+  content: "\F185";
+}
+
+.collecticons-page-cog:before {
+  content: "\F185";
+}
+
+%collecticons-page-label {
+  @extend %collecticons;
+  content: "\F186";
+}
+
+.collecticons-page-label:before {
+  content: "\F186";
+}
+
+%collecticons-page-lock-open {
+  @extend %collecticons;
+  content: "\F187";
+}
+
+.collecticons-page-lock-open:before {
+  content: "\F187";
+}
+
+%collecticons-page-tick {
+  @extend %collecticons;
+  content: "\F188";
+}
+
+.collecticons-page-tick:before {
+  content: "\F188";
+}
+
+%collecticons-page {
+  @extend %collecticons;
+  content: "\F189";
+}
+
+.collecticons-page:before {
+  content: "\F189";
+}
+
+%collecticons-pages {
+  @extend %collecticons;
+  content: "\F18A";
+}
+
+.collecticons-pages:before {
+  content: "\F18A";
+}
+
+%collecticons-pencil {
+  @extend %collecticons;
+  content: "\F18B";
+}
+
+.collecticons-pencil:before {
+  content: "\F18B";
+}
+
+%collecticons-picture {
+  @extend %collecticons;
+  content: "\F18C";
+}
+
+.collecticons-picture:before {
+  content: "\F18C";
+}
+
+%collecticons-plus--small {
+  @extend %collecticons;
+  content: "\F18D";
+}
+
+.collecticons-plus--small:before {
+  content: "\F18D";
+}
+
+%collecticons-plus {
+  @extend %collecticons;
+  content: "\F18E";
+}
+
+.collecticons-plus:before {
+  content: "\F18E";
+}
+
+%collecticons-pop-down {
+  @extend %collecticons;
+  content: "\F18F";
+}
+
+.collecticons-pop-down:before {
+  content: "\F18F";
+}
+
+%collecticons-pop-up {
+  @extend %collecticons;
+  content: "\F190";
+}
+
+.collecticons-pop-up:before {
+  content: "\F190";
+}
+
+%collecticons-printer {
+  @extend %collecticons;
+  content: "\F191";
+}
+
+.collecticons-printer:before {
+  content: "\F191";
+}
+
+%collecticons-quote-left {
+  @extend %collecticons;
+  content: "\F192";
+}
+
+.collecticons-quote-left:before {
+  content: "\F192";
+}
+
+%collecticons-quote-right {
+  @extend %collecticons;
+  content: "\F193";
+}
+
+.collecticons-quote-right:before {
+  content: "\F193";
+}
+
+%collecticons-resize-center-horizontal {
+  @extend %collecticons;
+  content: "\F194";
+}
+
+.collecticons-resize-center-horizontal:before {
+  content: "\F194";
+}
+
+%collecticons-resize-center-vertical {
+  @extend %collecticons;
+  content: "\F195";
+}
+
+.collecticons-resize-center-vertical:before {
+  content: "\F195";
+}
+
+%collecticons-resize-in {
+  @extend %collecticons;
+  content: "\F196";
+}
+
+.collecticons-resize-in:before {
+  content: "\F196";
+}
+
+%collecticons-resize-out {
+  @extend %collecticons;
+  content: "\F197";
+}
+
+.collecticons-resize-out:before {
+  content: "\F197";
+}
+
+%collecticons-road {
+  @extend %collecticons;
+  content: "\F198";
+}
+
+.collecticons-road:before {
+  content: "\F198";
+}
+
+%collecticons-rock {
+  @extend %collecticons;
+  content: "\F199";
+}
+
+.collecticons-rock:before {
+  content: "\F199";
+}
+
+%collecticons-rss-feed {
+  @extend %collecticons;
+  content: "\F19A";
+}
+
+.collecticons-rss-feed:before {
+  content: "\F19A";
+}
+
+%collecticons-share-2 {
+  @extend %collecticons;
+  content: "\F19B";
+}
+
+.collecticons-share-2:before {
+  content: "\F19B";
+}
+
+%collecticons-share {
+  @extend %collecticons;
+  content: "\F19C";
+}
+
+.collecticons-share:before {
+  content: "\F19C";
+}
+
+%collecticons-sign-danger {
+  @extend %collecticons;
+  content: "\F19D";
+}
+
+.collecticons-sign-danger:before {
+  content: "\F19D";
+}
+
+%collecticons-sliders-horizontal {
+  @extend %collecticons;
+  content: "\F19E";
+}
+
+.collecticons-sliders-horizontal:before {
+  content: "\F19E";
+}
+
+%collecticons-sliders-vertical {
+  @extend %collecticons;
+  content: "\F19F";
+}
+
+.collecticons-sliders-vertical:before {
+  content: "\F19F";
+}
+
+%collecticons-sort-asc {
+  @extend %collecticons;
+  content: "\F1A0";
+}
+
+.collecticons-sort-asc:before {
+  content: "\F1A0";
+}
+
+%collecticons-sort-desc {
+  @extend %collecticons;
+  content: "\F1A1";
+}
+
+.collecticons-sort-desc:before {
+  content: "\F1A1";
+}
+
+%collecticons-sort-none {
+  @extend %collecticons;
+  content: "\F1A2";
+}
+
+.collecticons-sort-none:before {
+  content: "\F1A2";
+}
+
+%collecticons-sort {
+  @extend %collecticons;
+  content: "\F1A3";
+}
+
+.collecticons-sort:before {
+  content: "\F1A3";
+}
+
+%collecticons-spark {
+  @extend %collecticons;
+  content: "\F1A4";
+}
+
+.collecticons-spark:before {
+  content: "\F1A4";
+}
+
+%collecticons-speech-balloon {
+  @extend %collecticons;
+  content: "\F1A5";
+}
+
+.collecticons-speech-balloon:before {
+  content: "\F1A5";
+}
+
+%collecticons-square--small {
+  @extend %collecticons;
+  content: "\F1A6";
+}
+
+.collecticons-square--small:before {
+  content: "\F1A6";
+}
+
+%collecticons-square {
+  @extend %collecticons;
+  content: "\F1A7";
+}
+
+.collecticons-square:before {
+  content: "\F1A7";
+}
+
+%collecticons-star {
+  @extend %collecticons;
+  content: "\F1A8";
+}
+
+.collecticons-star:before {
+  content: "\F1A8";
+}
+
+%collecticons-steam {
+  @extend %collecticons;
+  content: "\F1A9";
+}
+
+.collecticons-steam:before {
+  content: "\F1A9";
+}
+
+%collecticons-swap-horizontal {
+  @extend %collecticons;
+  content: "\F1AA";
+}
+
+.collecticons-swap-horizontal:before {
+  content: "\F1AA";
+}
+
+%collecticons-swap-vertical {
+  @extend %collecticons;
+  content: "\F1AB";
+}
+
+.collecticons-swap-vertical:before {
+  content: "\F1AB";
+}
+
+%collecticons-tag {
+  @extend %collecticons;
+  content: "\F1AC";
+}
+
+.collecticons-tag:before {
+  content: "\F1AC";
+}
+
+%collecticons-target {
+  @extend %collecticons;
+  content: "\F1AD";
+}
+
+.collecticons-target:before {
+  content: "\F1AD";
+}
+
+%collecticons-text-block {
+  @extend %collecticons;
+  content: "\F1AE";
+}
+
+.collecticons-text-block:before {
+  content: "\F1AE";
+}
+
+%collecticons-tick--small {
+  @extend %collecticons;
+  content: "\F1AF";
+}
+
+.collecticons-tick--small:before {
+  content: "\F1AF";
+}
+
+%collecticons-tick {
+  @extend %collecticons;
+  content: "\F1B0";
+}
+
+.collecticons-tick:before {
+  content: "\F1B0";
+}
+
+%collecticons-trash-bin {
+  @extend %collecticons;
+  content: "\F1B1";
+}
+
+.collecticons-trash-bin:before {
+  content: "\F1B1";
+}
+
+%collecticons-triangle-down--small {
+  @extend %collecticons;
+  content: "\F1B2";
+}
+
+.collecticons-triangle-down--small:before {
+  content: "\F1B2";
+}
+
+%collecticons-triangle-down {
+  @extend %collecticons;
+  content: "\F1B3";
+}
+
+.collecticons-triangle-down:before {
+  content: "\F1B3";
+}
+
+%collecticons-triangle-left--small {
+  @extend %collecticons;
+  content: "\F1B4";
+}
+
+.collecticons-triangle-left--small:before {
+  content: "\F1B4";
+}
+
+%collecticons-triangle-left {
+  @extend %collecticons;
+  content: "\F1B5";
+}
+
+.collecticons-triangle-left:before {
+  content: "\F1B5";
+}
+
+%collecticons-triangle-right--small {
+  @extend %collecticons;
+  content: "\F1B6";
+}
+
+.collecticons-triangle-right--small:before {
+  content: "\F1B6";
+}
+
+%collecticons-triangle-right {
+  @extend %collecticons;
+  content: "\F1B7";
+}
+
+.collecticons-triangle-right:before {
+  content: "\F1B7";
+}
+
+%collecticons-triangle-up--small {
+  @extend %collecticons;
+  content: "\F1B8";
+}
+
+.collecticons-triangle-up--small:before {
+  content: "\F1B8";
+}
+
+%collecticons-triangle-up {
+  @extend %collecticons;
+  content: "\F1B9";
+}
+
+.collecticons-triangle-up:before {
+  content: "\F1B9";
+}
+
+%collecticons-tumblr-reblog {
+  @extend %collecticons;
+  content: "\F1BA";
+}
+
+.collecticons-tumblr-reblog:before {
+  content: "\F1BA";
+}
+
+%collecticons-ufo {
+  @extend %collecticons;
+  content: "\F1BB";
+}
+
+.collecticons-ufo:before {
+  content: "\F1BB";
+}
+
+%collecticons-upload-2 {
+  @extend %collecticons;
+  content: "\F1BC";
+}
+
+.collecticons-upload-2:before {
+  content: "\F1BC";
+}
+
+%collecticons-upload {
+  @extend %collecticons;
+  content: "\F1BD";
+}
+
+.collecticons-upload:before {
+  content: "\F1BD";
+}
+
+%collecticons-user-group {
+  @extend %collecticons;
+  content: "\F1BE";
+}
+
+.collecticons-user-group:before {
+  content: "\F1BE";
+}
+
+%collecticons-user {
+  @extend %collecticons;
+  content: "\F1BF";
+}
+
+.collecticons-user:before {
+  content: "\F1BF";
+}
+
+%collecticons-users {
+  @extend %collecticons;
+  content: "\F1C0";
+}
+
+.collecticons-users:before {
+  content: "\F1C0";
+}
+
+%collecticons-wrench {
+  @extend %collecticons;
+  content: "\F1C1";
+}
+
+.collecticons-wrench:before {
+  content: "\F1C1";
+}
+
+%collecticons-xmark--small {
+  @extend %collecticons;
+  content: "\F1C2";
+}
+
+.collecticons-xmark--small:before {
+  content: "\F1C2";
+}
+
+%collecticons-xmark {
+  @extend %collecticons;
+  content: "\F1C3";
+}
+
+.collecticons-xmark:before {
+  content: "\F1C3";
+}

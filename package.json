@@ -1,7 +1,7 @@
 {
   "name": "openaq-metadata-editor",
   "version": "0.0.0",
-  "description": "A metadata editor for OpenAQ station metadata",
+  "description": "A metadata editor for OpenAQ location metadata",
   "repository": {
     "type": "git",
     "url": "https://github.com/openaq/openaq-metadata-editor.git"
@@ -103,6 +103,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "tachyons-flexbox": "^2.1.1",
     "unfetch": "^4.0.1"
   }
 }

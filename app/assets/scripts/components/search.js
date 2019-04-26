@@ -19,18 +19,19 @@ class Search extends React.Component {
 
   render () {
     return (
-      <div className='search'>
+      <form className='search' onSubmit={() => this.onSubmit()}>
         <input
           type='text'
-          placeholder='Station ID, City, Country'
+          placeholder='Location ID, City, Country'
           onChange={(v) => this.onChange(v)}
         />
         <button
+          className='search-button'
           onClick={() => this.onSubmit()}
         >
-          Search
+          <span className='collecticons collecticons-magnifier-left'></span>
         </button>
-      </div>
+      </form>
     );
   }
 }
