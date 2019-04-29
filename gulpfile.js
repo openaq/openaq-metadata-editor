@@ -24,6 +24,7 @@ const { compile } = require('collecticons-processor');
 
 // The package.json
 var pkg;
+var pkgDependencies;
 
 // Environment
 // Set the correct environment, which controls what happens in config.js
@@ -43,6 +44,8 @@ var prodBuild = false;
 
 function readPackage () {
   pkg = JSON.parse(fs.readFileSync('package.json'));
+  pkgDependencies = Object.assign({}, pkg.dependencies);
+  delete pkgDependencies['tachyons-flexbox'];
 }
 readPackage();
 
@@ -99,8 +102,8 @@ gulp.task('javascript', function () {
   }), { poll: true });
 
   function bundler () {
-    if (pkg.dependencies) {
-      watcher.external(Object.keys(pkg.dependencies));
+    if (pkgDependencies) {
+      watcher.external(Object.keys(pkgDependencies));
     }
     return watcher.bundle()
       .on('error', function (e) {
@@ -148,7 +151,7 @@ gulp.task('vendorScripts', function () {
   readPackage();
   var vb = browserify({
     debug: true,
-    require: pkg.dependencies ? Object.keys(pkg.dependencies) : []
+    require: pkgDependencies ? Object.keys(pkgDependencies) : []
   });
   return vb.bundle()
     .on('error', log.bind(log, 'Browserify Error'))
