@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 // Populate test fixtures with:
-// npm run test-data > app/assets/scripts/tests/fixtures/location.json
+// npm run test-data
 
 const generateTestData = require('../app/assets/scripts/lib/generate-test-data');
 

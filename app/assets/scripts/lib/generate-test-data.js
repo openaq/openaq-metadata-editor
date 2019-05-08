@@ -1,17 +1,17 @@
 const jsf = require('json-schema-faker');
-const schema = require('../schema/location.json');
+const { schemas } = require('openaq-data-format');
 
-schema.properties.id.faker = 'random.alphaNumeric';
-schema.properties.city.faker = 'address.city';
-schema.properties.country.faker = 'address.countryCode';
-schema.properties.altitude.minimum = 0;
-schema.properties.altitude.maximum = 4000;
-schema.properties.activationDate.faker = 'date.past';
-schema.properties.deactivationDate.faker = 'date.past';
-schema.properties.coordinates.properties.latitude.faker = 'address.latitude';
-schema.properties.coordinates.properties.longitude.faker = 'address.longitude';
-schema.properties.instruments.items.properties.activationDate.faker = 'date.past';
-schema.properties.instruments.items.properties.deactivationDate.faker = 'date.past';
+schemas.location.properties.id.faker = 'random.alphaNumeric';
+schemas.location.properties.city.faker = 'address.city';
+schemas.location.properties.country.faker = 'address.countryCode';
+schemas.location.properties.altitude.minimum = 0;
+schemas.location.properties.altitude.maximum = 4000;
+schemas.location.properties.activationDate.faker = 'date.past';
+schemas.location.properties.deactivationDate.faker = 'date.past';
+schemas.location.properties.coordinates.properties.latitude.faker = 'address.latitude';
+schemas.location.properties.coordinates.properties.longitude.faker = 'address.longitude';
+schemas.location.properties.instruments.items.properties.activationDate.faker = 'date.past';
+schemas.location.properties.instruments.items.properties.deactivationDate.faker = 'date.past';
 
 jsf.option('alwaysFakeOptionals', true);
 jsf.option('fillProperties', true);
@@ -23,9 +23,9 @@ module.exports = function generateTestData () {
   let total = 10;
 
   while (total > 0) {
-    results.push(jsf.generate(schema));
+    results.push(jsf.generate(schemas.location));
     total--;
   }
-  
+
   return results
 }

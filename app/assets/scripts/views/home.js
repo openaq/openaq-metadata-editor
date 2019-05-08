@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 
 import Header from '../components/header';
 import Search from '../components/search';
+import Filter from '../components/filter';
+import Table from '../components/table';
 
+import locations from '../tests/fixtures/locations.json'
+console.log('locations', locations)
 class Home extends React.Component {
   constructor (props) {
     super(props);
@@ -20,11 +24,12 @@ class Home extends React.Component {
     return (
       <div className='page page--homepage'>
         <Header>
-          <h1 classNAme='page__title'>Search locations</h1>
+          <h1 className='page__title'>Search locations</h1>
           <Search onChange={(v) => this.onChange(v)} />
         </Header>
         <main role='main'>
-
+          <Filter locations={locations} />
+          <Table locations={locations} />
         </main>
       </div>
     );
