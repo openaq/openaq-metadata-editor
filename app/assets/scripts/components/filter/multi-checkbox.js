@@ -1,39 +1,41 @@
 import React from 'react';
 
 class MultiCheckboxFilter extends React.Component {
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      selected: {}
-    };
-  }
-
   onChange (e) {
-    const { selected } = this.state;
+    const { value } = this.props;
     const { name, checked } = e.target;
-
+    value[name] = checked;
+    this.props.onChange(value);
   }
 
-  renderCheckbox () {
+  renderCheckbox (option) {
+    const selected = this.props.value;
+    const checked = selected[option];
+
     return (
-      <input
-        type='checkbox'
-        name={name}
-        checked={checked}
-        onChange={(e) => {
-          this.onChange(e)
-        }}
-      />
+      <div key={`checkbox-${option}`}>
+        <input
+          type='checkbox'
+          name={option}
+          id={`checkbox-${option}`}
+          value={checked || ''}
+          checked={checked || ''}
+          onChange={(e) => {
+            this.onChange(e);
+          }}
+        />
+        <label htmlFor={`checkbox-${option}`}>{option}</label>
+      </div>
     );
   }
 
   render () {
-    const { onChange, options } = this.props
+    const { options, name } = this.props;
 
     return (
-      <div className='multi-checkbox'>
-
+      <div className='filter-input filter-multicheckbox'>
+        <h3>{name}</h3>
+        { options.map((option) => this.renderCheckbox(option))}
       </div>
     );
   }

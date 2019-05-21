@@ -1,0 +1,18 @@
+.filter {
+  padding-top: 20px;
+}
+
+.filter-input {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid $base-color;
+  margin-bottom: 10px;
+}
+
+.filter-column {
+  width: 100%;
+
+  @include media(medium-up) {
+    width: 300px;
+  }
+}

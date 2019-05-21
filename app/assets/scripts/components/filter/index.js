@@ -7,9 +7,9 @@ import RangeFilter from './range';
 const initialState = {
   open: false,
   filter: {
-    countries: [],
-    pollutants: [],
-    siteType: [],
+    countries: {},
+    pollutants: {},
+    siteType: {},
     stationHeight: null,
     completeness: null,
     installationDate: {
@@ -46,10 +46,29 @@ const filterInputs = {
   }
 };
 
+const formInputOptions = {
+  countries: [],
+  pollutants: ['pm25', 'pm10', 'co', 'bc', 'so2', 'no2', 'o3'],
+  siteType: ['rural', 'urban', 'suburban', 'other'],
+  sourceType: ['government', 'research', 'other'],
+  stationHeight: {
+    start: 0,
+    end: 100000
+  },
+  installationDate: {
+    start: null,
+    end: null
+  }
+};
+
 class Filter extends React.Component {
   constructor (props) {
     super(props);
-    this.state = Object.assign({}, initialState);
+    const { locations } = props;
+    console.log('locations', locations);
+    const state = Object.assign({}, initialState);
+
+    this.state = state;
   }
 
   reset () {
@@ -83,42 +102,52 @@ class Filter extends React.Component {
       this.toggle();
     };
 
-    const direction = open ? 'down' : 'left';
+    const direction = open ? 'down' : 'right';
 
     return (
       <div onClick={onClick}>
         <h2>
           Filter Locations
-          <span className={`collecticons collecticons-magnifier-${direction}`}></span>
+          <span
+            className={`collecticons collecticons-chevron-${direction}--small`}
+            style={{ marginLeft: 4, verticalAlign: 'top', display: 'inline-block' }}
+          >
+          </span>
         </h2>
       </div>
     );
   }
 
   renderInput (key) {
-    const { name, Component } = filterInputs[key];
-
+    const { Component, name } = filterInputs[key];
+    const options = formInputOptions[key];
+    const value = this.state.filter[key];
     const onChange = (value) => {
       this.setFilterValue(key, value);
     };
 
     return (
-      <Component onChange={onChange} />
+      <Component
+        onChange={onChange}
+        options={options}
+        value={value}
+        name={name}
+      />
     );
   }
 
   renderInputs () {
     return (
-      <div>
-        <div>
+      <div className='flex justify-between'>
+        <div className='filter-column'>
           {this.renderInput('countries')}
         </div>
-        <div>
+        <div className='filter-column'>
           {this.renderInput('completeness')}
           {this.renderInput('installationDate')}
           {this.renderInput('stationHeight')}
         </div>
-        <div>
+        <div className='filter-column'>
           {this.renderInput('pollutants')}
           {this.renderInput('siteType')}
         </div>
@@ -130,10 +159,12 @@ class Filter extends React.Component {
     const { open } = this.state;
 
     return (
-      <div>
-        {this.renderToggle()}
-        {open && this.renderInputs()}
-      </div>
+      <section className='filter fold fold--filled'>
+        <div className='row'>
+          {this.renderToggle()}
+          {/* open && */ this.renderInputs()}
+        </div>
+      </section>
     );
   }
 }

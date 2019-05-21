@@ -6,8 +6,8 @@ import Search from '../components/search';
 import Filter from '../components/filter';
 import Table from '../components/table';
 
-import locations from '../tests/fixtures/locations.json'
-console.log('locations', locations)
+import locations from '../tests/fixtures/locations.json';
+
 class Home extends React.Component {
   constructor (props) {
     super(props);

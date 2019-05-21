@@ -17,9 +17,7 @@ class Table extends React.Component {
       <tr key={`location-table-row-${index}`}>
         <td>
           <Link to={`/location/${location.id}`}>
-            <a className='link--normal' >
-              {location.id}
-            </a>
+            {location.id}
           </Link>
         </td>
         <td>
@@ -48,22 +46,26 @@ class Table extends React.Component {
     const { locations } = this.props;
 
     return (
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Station ID</th>
-              <th>Country</th>
-              <th>City</th>
-              <th>Activated</th>
-              <th>Site Type</th>
-              <th>Instruments</th>
-              <th>Altitude (m)</th>
-            </tr>
-          </thead>
-          { this.renderLocations(locations) }
-        </table>
-      </div>
+      <section className='fold'>
+        <div className='row'>
+          <div className='responsive-table-wrapper'>
+            <table className='table table--zebra'>
+              <thead>
+                <tr>
+                  <th>Station ID</th>
+                  <th>Country</th>
+                  <th>City</th>
+                  <th>Activated</th>
+                  <th>Site Type</th>
+                  <th>Instruments</th>
+                  <th>Altitude (m)</th>
+                </tr>
+              </thead>
+              { this.renderLocations(locations) }
+            </table>
+          </div>
+        </div>
+      </section>
     );
   }
 }
