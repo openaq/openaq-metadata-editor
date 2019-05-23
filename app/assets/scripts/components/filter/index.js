@@ -143,7 +143,7 @@ class Filter extends React.Component {
           {this.renderInput('countries')}
         </div>
         <div className='filter-column'>
-          {this.renderInput('completeness')}
+          {/* this.renderInput('completeness') */}
           {this.renderInput('installationDate')}
           {this.renderInput('stationHeight')}
         </div>

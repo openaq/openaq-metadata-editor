@@ -13,7 +13,7 @@ class MultiCheckboxFilter extends React.Component {
     const checked = selected[option];
 
     return (
-      <div key={`checkbox-${option}`}>
+      <li key={`checkbox-${option}`}>
         <input
           type='checkbox'
           name={option}
@@ -25,7 +25,7 @@ class MultiCheckboxFilter extends React.Component {
           }}
         />
         <label htmlFor={`checkbox-${option}`}>{option}</label>
-      </div>
+      </li>
     );
   }
 
@@ -35,7 +35,9 @@ class MultiCheckboxFilter extends React.Component {
     return (
       <div className='filter-input filter-multicheckbox'>
         <h3>{name}</h3>
-        { options.map((option) => this.renderCheckbox(option))}
+        <ul>
+          { options.map((option) => this.renderCheckbox(option))}
+        </ul>
       </div>
     );
   }

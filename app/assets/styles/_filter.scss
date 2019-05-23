@@ -16,3 +16,12 @@
     width: 300px;
   }
 }
+
+.filter-multicheckbox li {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.filter-multicheckbox label {
+  padding-left: 4px;
+}
