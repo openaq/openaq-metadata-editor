@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 class Navigation extends React.Component {
   render () {
@@ -14,8 +14,8 @@ class Navigation extends React.Component {
           </ul>
         </div>
       </nav>
-    )
+    );
   }
 }
 
-export default Navigation
+export default Navigation;

@@ -1,0 +1,53 @@
+.filter {
+  padding-top: 20px;
+}
+
+.filter-input {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid $base-color;
+  margin-bottom: 10px;
+}
+
+.filter-column {
+  width: 100%;
+
+  @include media(medium-up) {
+    width: 300px;
+  }
+}
+
+.filter-multicheckbox li {
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.filter-multicheckbox label {
+  padding-left: 4px;
+}
+
+.react-datepicker-wrapper {
+  display: block;
+}
+
+.input-range {
+  width: 90%;
+  margin: 30px 0px 20px 10px;
+}
+
+.input-range__slider {
+  background-color: $base-color;
+  border-color: $base-color;
+}
+
+.input-range__track--active {
+  background-color: $base-color;
+}
+
+.input-range__label--min, .input-range__label--max {
+  bottom: -1rem;
+}
+
+.input-range__label--max {
+
+}

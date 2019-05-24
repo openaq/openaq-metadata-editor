@@ -16,6 +16,7 @@ const SassString = require('node-sass').types.String;
 const notifier = require('node-notifier');
 const runSequence = require('run-sequence');
 const through2 = require('through2');
+const { compile } = require('collecticons-processor');
 
 // /////////////////////////////////////////////////////////////////////////////
 // --------------------------- Variables -------------------------------------//
@@ -23,6 +24,7 @@ const through2 = require('through2');
 
 // The package.json
 var pkg;
+var pkgDependencies;
 
 // Environment
 // Set the correct environment, which controls what happens in config.js
@@ -42,6 +44,8 @@ var prodBuild = false;
 
 function readPackage () {
   pkg = JSON.parse(fs.readFileSync('package.json'));
+  pkgDependencies = Object.assign({}, pkg.dependencies);
+  delete pkgDependencies['tachyons-flexbox'];
 }
 readPackage();
 
@@ -54,7 +58,7 @@ gulp.task('default', ['clean'], function () {
   gulp.start('build');
 });
 
-gulp.task('serve', ['vendorScripts', 'javascript', 'styles'], function () {
+gulp.task('serve', ['vendorScripts', 'javascript', 'collecticons', 'styles'], function () {
   browserSync({
     port: 3000,
     server: {
@@ -98,8 +102,8 @@ gulp.task('javascript', function () {
   }), { poll: true });
 
   function bundler () {
-    if (pkg.dependencies) {
-      watcher.external(Object.keys(pkg.dependencies));
+    if (pkgDependencies) {
+      watcher.external(Object.keys(pkgDependencies));
     }
     return watcher.bundle()
       .on('error', function (e) {
@@ -130,6 +134,16 @@ gulp.task('javascript', function () {
   return bundler();
 });
 
+gulp.task('collecticons', function () {
+  return compile({
+    dirPath: 'app/assets/icons/collecticons/',
+    fontName: 'Collecticons',
+    styleDest: 'app/assets/styles/',
+    styleName: '_collecticons',
+    preview: false
+  });
+});
+
 // Vendor scripts. Basically all the dependencies in the package.js.
 // Therefore be careful and keep the dependencies clean.
 gulp.task('vendorScripts', function () {
@@ -137,7 +151,7 @@ gulp.task('vendorScripts', function () {
   readPackage();
   var vb = browserify({
     debug: true,
-    require: pkg.dependencies ? Object.keys(pkg.dependencies) : []
+    require: pkgDependencies ? Object.keys(pkgDependencies) : []
   });
   return vb.bundle()
     .on('error', log.bind(log, 'Browserify Error'))

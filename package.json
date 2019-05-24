@@ -1,7 +1,7 @@
 {
   "name": "openaq-metadata-editor",
   "version": "0.0.0",
-  "description": "A metadata editor for OpenAQ station metadata",
+  "description": "A metadata editor for OpenAQ location metadata",
   "repository": {
     "type": "git",
     "url": "https://github.com/openaq/openaq-metadata-editor.git"
@@ -22,10 +22,12 @@
     "build": "NODE_ENV=production gulp",
     "stage": "NODE_ENV=staging gulp",
     "lint": "eslint app/assets/scripts/ --ext .js",
-    "test": "echo \"No tests\" && exit 0"
+    "lintfix": "eslint app/assets/scripts/ --ext .js --fix",
+    "test": "echo \"No tests\" && exit 0",
+    "test-data": "bin/generate-test-data.js > app/assets/scripts/tests/fixtures/locations.json"
   },
   "engines": {
-    "node": "8.x"
+    "node": "10.x"
   },
   "browserify": {
     "transform": [
@@ -56,6 +58,7 @@
     "babelify": "^8.0.0",
     "browser-sync": "^2.24.4",
     "browserify": "^16.2.2",
+    "collecticons-processor": "^4.0.1",
     "del": "^3.0.0",
     "envify": "^4.1.0",
     "eslint": "^5.4.0",
@@ -65,6 +68,7 @@
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-standard": "^4.0.0",
+    "faker": "^4.1.0",
     "fancy-log": "^1.3.2",
     "gulp": "^3.9.1",
     "gulp-csso": "^3.0.1",
@@ -80,6 +84,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "gulp-useref": "^3.1.5",
+    "json-schema-faker": "github:json-schema-faker/json-schema-faker#develop",
     "node-bourbon": "^4.2.8",
     "node-notifier": "^5.2.1",
     "node-sass": "^4.9.0",
@@ -91,18 +96,26 @@
     "watchify": "^3.11.0"
   },
   "dependencies": {
+    "alpha2-countries": "^1.1.0",
     "babel-preset-es2015": "^6.24.1",
+    "country-list": "^2.1.0",
+    "date-fns": "^1.30.1",
     "devseed-standard": "^1.1.0",
     "history": "^4.7.2",
     "lodash.defaultsdeep": "^4.6.0",
+    "openaq-data-format": "openaq/openaq-data-format#location-json-schema",
     "openaq-design-system": "openaq/openaq-design-system",
     "react": "^16.8.1",
+    "react-datepicker": "^2.5.0",
     "react-dom": "^16.8.1",
+    "react-input-range": "^1.3.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
+    "react-select": "^2.4.3",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "tachyons-flexbox": "^2.1.1",
     "unfetch": "^4.0.1"
   }
 }

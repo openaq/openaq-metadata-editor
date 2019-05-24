@@ -14,7 +14,6 @@
   "rules": {
     "semi": [2, "always"],
     "jsx-quotes": [2, "prefer-single"],
-    "no-console": 2,
     "no-extra-semi": 2,
     "semi-spacing": [2, { "before": false, "after": true }],
     "react/display-name": 1,
@@ -29,7 +28,6 @@
     "react/no-direct-mutation-state": 2,
     "react/no-is-mounted": 2,
     "react/no-unknown-property": 2,
-    "react/prop-types": 2,
     "react/react-in-jsx-scope": 2,
     "prefer-promise-reject-errors": 0
   }
