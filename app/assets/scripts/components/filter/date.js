@@ -3,35 +3,37 @@ import DatePicker from 'react-datepicker';
 
 class DateFilter extends React.Component {
   onStartChange (start) {
-    const { end } = this.props;
+    const { value: { end } } = this.props;
     this.props.onChange({ start, end });
   }
 
   onEndChange (end) {
-    const { start } = this.props;
+    const { value: { start } } = this.props;
     this.props.onChange({ start, end });
   }
 
   render () {
-    const { name } = this.props;
+    const { name, value } = this.props;
 
     return (
       <div className='filter-input filter-date'>
         <h3>{name}</h3>
+        <label>Start:</label>
         <DatePicker
-          selected={this.props.start}
+          selected={value.start}
           selectsStart
-          startDate={this.props.start}
-          endDate={this.props.end}
-          onChange={(value) => this.onStartChange(value)}
+          startDate={value.start}
+          endDate={value.end}
+          onChange={(val) => this.onStartChange(val)}
         />
 
+        <label>End:</label>
         <DatePicker
-          selected={this.props.end}
+          selected={value.end}
           selectsEnd
-          startDate={this.props.start}
-          endDate={this.props.end}
-          onChange={(value) => this.onEndChange(value)}
+          startDate={value.start}
+          endDate={value.end}
+          onChange={(val) => this.onEndChange(val)}
         />
       </div>
     );

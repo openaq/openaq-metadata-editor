@@ -1,20 +1,33 @@
 import React from 'react';
+import alpha2Countries from 'alpha2-countries';
+import subYears from 'date-fns/sub_years';
 
 import MultiCheckboxFilter from './multi-checkbox';
 import DateFilter from './date';
 import RangeFilter from './range';
+import SelectFilter from './select';
+
+const countryList = alpha2Countries.getNameCodePairs().map((country) => {
+  return {
+    label: country.name,
+    value: country.code
+  };
+});
 
 const initialState = {
   open: false,
   filter: {
-    countries: {},
+    countries: [],
     pollutants: {},
     siteType: {},
-    stationHeight: null,
+    elevation: {
+      min: 0,
+      max: 10000
+    },
     completeness: null,
     installationDate: {
-      start: null,
-      end: null
+      start: subYears(new Date(), 10),
+      end: new Date()
     }
   }
 };
@@ -22,7 +35,7 @@ const initialState = {
 const filterInputs = {
   countries: {
     name: 'Countries',
-    Component: MultiCheckboxFilter
+    Component: SelectFilter
   },
   pollutants: {
     name: 'Pollutants',
@@ -36,8 +49,8 @@ const filterInputs = {
     name: 'Metadata Completeness',
     Component: RangeFilter
   },
-  stationHeight: {
-    name: 'Station height (m)',
+  elevation: {
+    name: 'Elevation (m)',
     Component: RangeFilter
   },
   installationDate: {
@@ -47,17 +60,17 @@ const filterInputs = {
 };
 
 const formInputOptions = {
-  countries: [],
+  countries: countryList,
   pollutants: ['pm25', 'pm10', 'co', 'bc', 'so2', 'no2', 'o3'],
   siteType: ['rural', 'urban', 'suburban', 'other'],
   sourceType: ['government', 'research', 'other'],
-  stationHeight: {
-    start: 0,
-    end: 100000
+  elevation: {
+    min: 0,
+    max: 10000
   },
   installationDate: {
-    start: null,
-    end: null
+    start: subYears(new Date(), 10),
+    end: new Date()
   }
 };
 
@@ -123,9 +136,11 @@ class Filter extends React.Component {
     const options = formInputOptions[key];
     const value = this.state.filter[key];
     const onChange = (value) => {
+      console.log('onChange', key, value)
       this.setFilterValue(key, value);
     };
 
+    console.log('renderInput', key, value)
     return (
       <Component
         onChange={onChange}
@@ -145,7 +160,7 @@ class Filter extends React.Component {
         <div className='filter-column'>
           {/* this.renderInput('completeness') */}
           {this.renderInput('installationDate')}
-          {this.renderInput('stationHeight')}
+          {this.renderInput('elevation')}
         </div>
         <div className='filter-column'>
           {this.renderInput('pollutants')}

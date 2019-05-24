@@ -22,7 +22,7 @@ class Search extends React.Component {
       <form className='search' onSubmit={() => this.onSubmit()}>
         <input
           type='text'
-          placeholder='Location ID, City, Country'
+          placeholder='Location ID'
           onChange={(v) => this.onChange(v)}
         />
         <button
