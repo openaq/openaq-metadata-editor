@@ -27,5 +27,5 @@ module.exports = function generateTestData () {
     total--;
   }
 
-  return results
-}
+  return results;
+};

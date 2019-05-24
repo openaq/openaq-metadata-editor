@@ -3,7 +3,7 @@ import InputRange from 'react-input-range';
 
 class RangeFilter extends React.Component {
   onChange (value) {
-    console.log('RangeFilter value', value)
+    console.log('RangeFilter value', value);
     this.props.onChange(value);
   }
 

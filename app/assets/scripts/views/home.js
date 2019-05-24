@@ -12,24 +12,31 @@ class Home extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      value: null
+      search: null,
+      filter: null
     };
   }
 
-  onChange (value) {
-    this.setState({ value });
+  onSearchChange (value) {
+    this.setState({ search: value });
+  }
+
+  onFilterChange (value) {
+    this.setState({ filter: value });
   }
 
   render () {
+    const { search, filter } = this.state;
+
     return (
       <div className='page page--homepage'>
         <Header>
           <h1 className='page__title'>Search locations</h1>
-          <Search onChange={(v) => this.onChange(v)} />
+          <Search onChange={(v) => this.onSearchChange(v)} />
         </Header>
         <main role='main'>
           <Filter locations={locations} />
-          <Table locations={locations} />
+          <Table locations={locations} search={search} filter={filter} />
         </main>
       </div>
     );

@@ -136,11 +136,9 @@ class Filter extends React.Component {
     const options = formInputOptions[key];
     const value = this.state.filter[key];
     const onChange = (value) => {
-      console.log('onChange', key, value)
       this.setFilterValue(key, value);
     };
 
-    console.log('renderInput', key, value)
     return (
       <Component
         onChange={onChange}
@@ -177,7 +175,7 @@ class Filter extends React.Component {
       <section className='filter fold fold--filled'>
         <div className='row'>
           {this.renderToggle()}
-          {/* open && */ this.renderInputs()}
+          {open && this.renderInputs()}
         </div>
       </section>
     );

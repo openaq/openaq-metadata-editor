@@ -22,6 +22,7 @@
     "build": "NODE_ENV=production gulp",
     "stage": "NODE_ENV=staging gulp",
     "lint": "eslint app/assets/scripts/ --ext .js",
+    "lintfix": "eslint app/assets/scripts/ --ext .js --fix",
     "test": "echo \"No tests\" && exit 0",
     "test-data": "bin/generate-test-data.js > app/assets/scripts/tests/fixtures/locations.json"
   },
