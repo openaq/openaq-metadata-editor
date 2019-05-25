@@ -27,6 +27,7 @@ class Home extends React.Component {
 
   render () {
     const { search, filter } = this.state;
+    const { history } = this.props;
 
     return (
       <div className='page page--homepage'>
@@ -36,7 +37,7 @@ class Home extends React.Component {
         </Header>
         <main role='main'>
           <Filter locations={locations} />
-          <Table locations={locations} search={search} filter={filter} />
+          <Table locations={locations} search={search} filter={filter} history={history} />
         </main>
       </div>
     );

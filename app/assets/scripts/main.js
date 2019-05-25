@@ -18,14 +18,14 @@ class Root extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <main className='page__body' role='main'>
+          <div className='page__body'>
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/location/:id/' component={LocationView} />
               <Route exact path='/location/edit/:id/' component={LocationEdit} />
               <Route component={NoMatch} />
             </Switch>
-          </main>
+          </div>
         </Router>
       </Provider>
     );

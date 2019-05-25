@@ -119,7 +119,7 @@ class Filter extends React.Component {
 
     return (
       <div onClick={onClick}>
-        <h2>
+        <h2 style={{ marginBottom: 0 }}>
           Filter Locations
           <span
             className={`collecticons collecticons-chevron-${direction}--small`}
@@ -173,7 +173,7 @@ class Filter extends React.Component {
 
     return (
       <section className='filter fold fold--filled'>
-        <div className='row'>
+        <div className='inner'>
           {this.renderToggle()}
           {open && this.renderInputs()}
         </div>

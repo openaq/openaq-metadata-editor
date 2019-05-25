@@ -21,3 +21,7 @@
 .site__title {
   padding: 10px;
 }
+
+.inner {
+  @extend .row, .row--centered;
+}

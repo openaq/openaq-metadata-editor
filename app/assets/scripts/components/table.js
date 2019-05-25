@@ -13,30 +13,43 @@ class Table extends React.Component {
   }
 
   renderLocation (location, index) {
+    const locationUrl = `/location/${location.id}`;
     return (
       <tr key={`location-table-row-${index}`}>
         <td>
-          <Link to={`/location/${location.id}`}>
+          <Link to={locationUrl}>
             {location.id}
           </Link>
         </td>
         <td>
-          {location.country}
+          <Link to={locationUrl}>
+            {location.country}
+          </Link>
         </td>
         <td>
-          {location.city}
+          <Link to={locationUrl}>
+            {location.city}
+          </Link>
         </td>
         <td>
-          {location.activationDate}
+          <Link to={locationUrl}>
+            {location.activationDate}
+          </Link>
         </td>
         <td>
-          {location.siteType}
+          <Link to={locationUrl}>
+            {location.siteType}
+          </Link>
         </td>
         <td>
-          {location.instruments.length}
+          <Link to={locationUrl}>
+            {location.instruments.length}
+          </Link>
         </td>
         <td>
-          {location.altitude}
+          <Link to={locationUrl}>
+            {location.altitude}
+          </Link>
         </td>
       </tr>
     );
@@ -47,9 +60,9 @@ class Table extends React.Component {
 
     return (
       <section className='fold'>
-        <div className='row'>
+        <div className='inner'>
           <div className='responsive-table-wrapper'>
-            <table className='table table--zebra'>
+            <table className='table table--zebra table-with-link-rows'>
               <thead>
                 <tr>
                   <th>Station ID</th>
