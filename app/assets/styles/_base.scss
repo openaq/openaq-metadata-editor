@@ -1,6 +1,7 @@
 .page__header {
   background-image: url(../graphics/layout/header-background.png);
-  background-size: 100%;
+  background-size: cover;
+  background-position-y: center;
 
   .header__content {
     text-align: center;

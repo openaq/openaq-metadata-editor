@@ -118,7 +118,7 @@ class Filter extends React.Component {
     const direction = open ? 'down' : 'right';
 
     return (
-      <div onClick={onClick}>
+      <div className='filter-toggle' onClick={onClick}>
         <h2 style={{ marginBottom: 0 }}>
           Filter Locations
           <span
@@ -151,7 +151,7 @@ class Filter extends React.Component {
 
   renderInputs () {
     return (
-      <div className='flex justify-between'>
+      <div className='filter-content flex justify-between'>
         <div className='filter-column'>
           {this.renderInput('countries')}
         </div>

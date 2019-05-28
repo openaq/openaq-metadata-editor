@@ -12,7 +12,7 @@ class Map extends React.Component {
     this.map = new mapboxgl.Map({
       center: coordinates,
       container: this.mapContainer,
-      style: mapbox.style,
+      style: mapbox.baseStyle,
       zoom: zoom || 8
     });
   }
