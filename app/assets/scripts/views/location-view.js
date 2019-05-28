@@ -30,13 +30,9 @@ class LocationView extends React.Component {
               Instruments
             </h2>
 
-
-
             <h2 className='location-view-header'>
               Maintenance
             </h2>
-
-
 
             <h2 className='location-view-header'>
               Site Description

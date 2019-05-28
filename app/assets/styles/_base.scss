@@ -24,4 +24,9 @@
 
 .inner {
   @extend .row, .row--centered;
+
+  &-edit {
+    max-width: 800px;
+  }
 }
+
