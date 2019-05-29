@@ -6,6 +6,7 @@ const $ = require('gulp-load-plugins')();
 const del = require('del');
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
+const historyApiFallback = require('connect-history-api-fallback');
 const watchify = require('watchify');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
@@ -67,7 +68,10 @@ gulp.task('serve', ['vendorScripts', 'javascript', 'collecticons', 'styles'], fu
         '/node_modules': './node_modules'
       }
     },
-    middleware: require('openaq-design-system/gulp-addons').graphicsMiddleware(fs)
+    middleware: [
+      historyApiFallback(),
+      require('openaq-design-system/gulp-addons').graphicsMiddleware(fs)
+    ]
   });
 
   // watch for changes

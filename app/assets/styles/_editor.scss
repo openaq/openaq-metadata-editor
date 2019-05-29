@@ -1,8 +1,15 @@
+.edit-container {
+  max-width: 800px;
+  margin: 50px auto;
+}
+
 .edit-box {
   border: 1px solid $base-color;
+  margin-bottom: 20px;
 }
 
 .edit-box-toggle {
+  padding: 5px 10px;
   background-color: $base-color;
   color: #fff;
 }

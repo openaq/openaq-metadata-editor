@@ -2323,7 +2323,7 @@ concat-with-sourcemaps@^1.0.0:
   dependencies:
     source-map "^0.6.1"
 
-connect-history-api-fallback@^1:
+connect-history-api-fallback@^1, connect-history-api-fallback@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/connect-history-api-fallback/-/connect-history-api-fallback-1.6.0.tgz#8b32089359308d111115d81cad3fceab888f97bc"
   integrity sha512-e54B99q/OUoH64zYYRf3HBP5z24G38h5D3qXu23JGRoigpX5Ss4r9ZnDk3g0Z8uQC2x2lPaJ+UlWBc1ZWBWdLg==
@@ -7202,7 +7202,7 @@ openaq-data-format@openaq/openaq-data-format#location-json-schema:
   version "0.0.0"
   resolved "https://codeload.github.com/openaq/openaq-data-format/tar.gz/b6b6b1a6e239eb07c2ed4295197aa6002092b6d9"
   dependencies:
-    jsonschema "^1.2.4"
+    ajv "^6.10.0"
 
 openaq-design-system@openaq/openaq-design-system:
   version "2.0.0"

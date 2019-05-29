@@ -18,7 +18,7 @@ class Root extends Component {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <div className='page__body'>
+          <div className='app-container'>
             <Switch>
               <Route exact path='/' component={Home} />
               <Route exact path='/location/:id/' component={LocationView} />

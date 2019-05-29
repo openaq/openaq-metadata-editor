@@ -1,0 +1,36 @@
+.location-detail-list {
+  margin: 0px;
+  padding: 0px;
+  float: left;
+  font-size: 20px;
+
+  li {
+    list-style-type: none;
+  }
+}
+
+.page__title {
+  .location-id {
+    display: block;
+    font-weight: 300;
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+
+  .location-name {
+    display: block;
+    font-size: 2.5rem;
+    line-height: 3rem;
+  }
+
+  .location-city {
+    display: block;
+    font-weight: 300;
+    font-size: 1.5rem;
+    line-height: 3rem;
+  }
+}
+
+.location-view-section {
+  margin-bottom: 50px;
+}

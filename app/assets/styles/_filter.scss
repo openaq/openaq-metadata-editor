@@ -17,7 +17,7 @@
   margin-bottom: 10px;
 }
 
-.filter-column {
+.filter-column, .column {
   width: 100%;
 
   @include media(medium-up) {

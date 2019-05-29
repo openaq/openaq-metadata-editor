@@ -19,15 +19,37 @@
   }
 }
 
-.site__title {
-  padding: 10px;
-}
-
 .inner {
   @extend .row, .row--centered;
 
   &-edit {
     max-width: 800px;
+    margin: 50px auto 0px auto;
+    padding-bottom: 50px;
   }
 }
 
+.page--location-view, .page--location-edit {
+  background-color: #fff;
+
+  .header__content {
+    text-align: left;
+    padding-left: 0px;
+  }
+
+  .inner {
+    padding-top: 50px;
+
+    .row {
+      padding: 0px;
+    }
+  }
+}
+
+.column, .filter-column {
+  width: 100%;
+
+  @include media(medium-up) {
+    width: 300px;
+  }
+}

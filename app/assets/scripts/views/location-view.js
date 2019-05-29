@@ -7,36 +7,96 @@ import Map from '../components/map';
 class LocationView extends React.Component {
   render () {
     return (
-      <div className='page page--homepage'>
+      <div className='page page--location-view'>
         <Header>
-          <h1 className='page__title'>Location ID</h1>
-          <h2 className='page__title'>Location Name</h2>
-          <h3 className='page__title'>City, Country</h3>
+          <h1 className='page__title'>
+            <span className='location-id'>9203184789012m34</span>
+            <span className='location-name'>Seattle-10th & Welle</span>
+            <span className='location-city'>Seattle, United States</span>
+          </h1>
+
         </Header>
         <main role='main'>
           <div className='inner'>
-            <ul>
-              <li>Location: {``}</li>
-              <li>City: {``}</li>
-              <li>Country: {``}</li>
-              <li>Latitude: {``}</li>
-              <li>Longitude: {``}</li>
-              <li>Location Type: {``}</li>
-            </ul>
+            <div className='row'>
+              <ul className='location-detail-list'>
+                <li>Location: <b>{`Seattle-10th & Welle`}</b></li>
+                <li>City: <b>{`Seattle`}</b></li>
+                <li>Country: <b>{`United States`}</b></li>
+                <li>Latitude: <b>{`47.597`}</b></li>
+                <li>Longitude: <b>{`-122.32`}</b></li>
+                <li>Location Type: <b>{`Urban`}</b></li>
+              </ul>
 
-            <Map coordinates={{ lat: 47, lon: -122 }} />
+              <Map zoom={10} coordinates={{ lat: 47.597, lon: -122.32 }} />
+            </div>
 
-            <h2 className='location-view-header'>
-              Instruments
-            </h2>
+            <div className='location-view-section'>
+              <h2 className='location-view-header'>
+                Site Details
+              </h2>
+              <dl>
+                <dt>Altitude</dt>
+                <dd>432m</dd>
+                <dt>Site type</dt>
+                <dd>Urban</dd>
+                <dt>Description</dt>
+                <dd>Text describing the location.</dd>
+              </dl>
+            </div>
 
-            <h2 className='location-view-header'>
-              Maintenance
-            </h2>
+            <div className='location-view-section'>
+              <h2 className='location-view-header'>
+                Maintenance
+              </h2>
+              <dl>
+                <dt>Installation Date</dt>
+                <dd>2016/03/15</dd>
+                <dt>Last Maintenance Date</dt>
+                <dd>2019/05/28</dd>
+                <dt>Maintenance Schedule</dt>
+                <dd>As needed</dd>
+              </dl>
+            </div>
 
-            <h2 className='location-view-header'>
-              Site Description
-            </h2>
+            <div className='location-view-section'>
+              <h2 className='location-view-header'>
+                Instruments
+              </h2>
+              <div className='flex'>
+                <div className='column'>
+                  <h3 className=''>
+                    Instrument 1
+                  </h3>
+                  <dl>
+                    <dt>Pollutants</dt>
+                    <dd><b>CO, PM2.5</b></dd>
+                    <dt>Model</dt>
+                    <dd>Spectrometer 1.109</dd>
+                    <dt>Manufacturer</dt>
+                    <dd>GRIMM</dd>
+                    <dt>Installed</dt>
+                    <dd>2016</dd>
+                  </dl>
+                </div>
+                <div className='column'>
+                  <h3 className=''>
+                    Instrument 2
+                  </h3>
+                  <dl>
+                    <dt>Pollutants</dt>
+                    <dd><b>CO, PM2.5</b></dd>
+                    <dt>Model</dt>
+                    <dd>Spectrometer 1.109</dd>
+                    <dt>Manufacturer</dt>
+                    <dd>GRIMM</dd>
+                    <dt>Installed</dt>
+                    <dd>2016</dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+
           </div>
         </main>
       </div>
