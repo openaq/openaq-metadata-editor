@@ -22,9 +22,15 @@ class Map extends React.Component {
   }
 
   render () {
+    const { width, height } = this.props;
+
     return (
       <div className='map'>
-        <div className='map__container' ref={(el) => (this.mapContainer = el)}>
+        <div
+          className='map__container'
+          ref={(el) => (this.mapContainer = el)}
+          style={{ width, height }}
+        >
         </div>
       </div>
     );

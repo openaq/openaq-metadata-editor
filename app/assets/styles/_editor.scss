@@ -1,6 +1,16 @@
 .edit-container {
   max-width: 800px;
   margin: 50px auto;
+  background-color: rgb(240, 244, 247);
+  padding: 20px;
+
+  .page__title {
+    font-size: 1.5rem;
+
+    .location-id {
+      font-size: 2rem;
+    }
+  }
 }
 
 .edit-box {

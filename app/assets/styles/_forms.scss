@@ -10,7 +10,7 @@
   }
 }
 
-.form--download, .form-vote {
+.edit-box {
   .form__legend {
     color: $base-color;
   }
@@ -19,8 +19,8 @@
     box-shadow: none;
   }
   .form__label {
-    font-weight: $base-font-weight;
-    margin-bottom: 0;
+    margin-top: 0.8rem;
+    margin-bottom: 0.2rem;
     font-size: 0.857rem;
   }
   .form__option-group {

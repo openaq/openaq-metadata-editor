@@ -29,7 +29,8 @@
   }
 }
 
-.page--location-view, .page--location-edit {
+.page--location-view,
+.page--location-edit {
   background-color: #fff;
 
   .header__content {
@@ -46,10 +47,26 @@
   }
 }
 
+.page--homepage .page__header {
+  .inner {
+    padding-top: 50px;
+  }
+}
+
 .column, .filter-column {
   width: 100%;
 
   @include media(medium-up) {
     width: 300px;
+  }
+}
+
+.callout-button {
+  padding: 1rem;
+  text-align: center;
+  background: $primary-color;
+
+  a {
+    color: #fff;
   }
 }

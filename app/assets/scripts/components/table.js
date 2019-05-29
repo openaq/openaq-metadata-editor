@@ -48,7 +48,7 @@ class Table extends React.Component {
         </td>
         <td>
           <Link to={locationUrl}>
-            {location.altitude}
+            {location.elevation}
           </Link>
         </td>
       </tr>
@@ -71,7 +71,7 @@ class Table extends React.Component {
                   <th>Activated</th>
                   <th>Site Type</th>
                   <th>Instruments</th>
-                  <th>Altitude (m)</th>
+                  <th>Elevation (m)</th>
                 </tr>
               </thead>
               { this.renderLocations(locations) }

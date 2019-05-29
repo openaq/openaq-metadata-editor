@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Header from '../components/header';
 import Map from '../components/map';
 
 class LocationView extends React.Component {
   render () {
+    const { match } = this.props;
+
     return (
       <div className='page page--location-view'>
         <Header>
@@ -36,7 +39,7 @@ class LocationView extends React.Component {
                 Site Details
               </h2>
               <dl>
-                <dt>Altitude</dt>
+                <dt>Elevation</dt>
                 <dd>432m</dd>
                 <dt>Site type</dt>
                 <dd>Urban</dd>
@@ -97,6 +100,11 @@ class LocationView extends React.Component {
               </div>
             </div>
 
+          </div>
+          <div className='callout-button'>
+            <Link to={`/location/edit/${match.params.id}`}>
+              See something missing? Edit this location
+            </Link>
           </div>
         </main>
       </div>
