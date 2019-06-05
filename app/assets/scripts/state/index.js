@@ -3,8 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import config from '../config';
 
-import editor from './editor';
-import locations from './locations';
+import locations from './locations/reducers';
 
 const logger = createLogger({
   level: 'info',
@@ -17,7 +16,6 @@ const logger = createLogger({
 const initialState = {};
 
 const reducer = combineReducers({
-  editor,
   locations
 });
 

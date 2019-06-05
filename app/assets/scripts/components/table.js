@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 
 class Table extends React.Component {
   renderLocations (locations) {
+    console.log('renderLocations', locations)
+    if (!locations || !locations.length) {
+      return null;
+    }
+
     return (
       <tbody>
         {
@@ -65,7 +70,7 @@ class Table extends React.Component {
             <table className='table table--zebra table-with-link-rows'>
               <thead>
                 <tr>
-                  <th>Station ID</th>
+                  <th>ID</th>
                   <th>Country</th>
                   <th>City</th>
                   <th>Activated</th>

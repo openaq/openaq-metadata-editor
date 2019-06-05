@@ -3,7 +3,7 @@ import React from 'react';
 class EditBox extends React.Component {
   constructor (props) {
     super(props);
-    this.state = { open: props.open || false }
+    this.state = { open: props.open || false };
   }
 
   toggle () {

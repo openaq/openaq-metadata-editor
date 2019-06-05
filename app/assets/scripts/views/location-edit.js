@@ -5,7 +5,50 @@ import Select from 'react-select';
 import Header from '../components/header';
 import Map from '../components/map';
 
+import { schemas } from 'openaq-data-format';
+
+const locationSchema = schemas.location;
+
+const excludePropertiesFromEditing = [
+  'id',
+  'coordinates',
+  'city',
+  'country',
+  'instruments'
+];
+
+const propertiesToEdit = Object.keys(locationSchema.properties)
+  .filter((key) => !excludePropertiesFromEditing.includes(key))
+  .map((key) => {
+    const prop = locationSchema.properties[key];
+    prop.key = key;
+    return prop;
+  });
+
+const maintenanceProperties = [
+  'active',
+  'activationDate',
+  'deactivationDate'
+];
+
+const editorGroups = {
+  siteDetails: {
+    name: 'Site Details',
+    properties: propertiesToEdit.filter((prop) => !maintenanceProperties.includes(prop.key))
+  },
+  maintenance: {
+    name: 'Maintenance',
+    properties: propertiesToEdit.filter((prop) => maintenanceProperties.includes(prop.key))
+  }
+};
+
+console.log('editorGroups', editorGroups)
+
 class LocationEdit extends React.Component {
+  renderFormWithSchema (schema) {
+
+  }
+
   render () {
     return (
       <div className='page page--location-edit'>
