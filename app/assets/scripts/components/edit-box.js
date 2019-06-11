@@ -35,7 +35,7 @@ class EditBox extends React.Component {
   }
 
   render () {
-    const { name, children } = this.props;
+    const { children } = this.props;
 
     return (
       <section className='edit-box'>

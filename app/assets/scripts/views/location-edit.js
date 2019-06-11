@@ -42,10 +42,79 @@ const editorGroups = {
   }
 };
 
-console.log('editorGroups', editorGroups)
+console.log('editorGroups', editorGroups);
 
 class LocationEdit extends React.Component {
-  renderFormWithSchema (schema) {
+  renderInfo (siteDetails) {
+    return (
+      <div className='flex edit-container justify-between'>
+        <div className='location-edit-details'>
+          <h1 className='page__title'>
+            Location ID
+            <span className='location-id'>9203184789012m34</span>
+          </h1>
+          <ul className='location-detail-list'>
+            <li>Location: <b>{`Seattle-10th & Welle`}</b></li>
+            <li>City: <b>{`Seattle`}</b></li>
+            <li>Country: <b>{`United States`}</b></li>
+            <li>Latitude: <b>{`47.597`}</b></li>
+            <li>Longitude: <b>{`-122.32`}</b></li>
+            <li>Location Type: <b>{`Urban`}</b></li>
+          </ul>
+        </div>
+        <Map zoom={10} coordinates={{ lat: 47.597, lon: -122.32 }} width={300} />
+      </div>
+    );
+  }
+
+  renderEditSection (section) {
+    return (
+      <div className='edit-box instrument-edit'>
+        <div className='edit-box-toggle'>
+          {section.name}
+        </div>
+        <div className='edit-box-content'>
+          {
+            section.properties.map((prop) => {
+              console.log('prop', prop);
+            })
+          }
+          <label className='form__label'>Activation Date</label>
+          <input type='text' className='form__control' />
+
+          <label className='form__label'>De-activation Date</label>
+          <input type='text' className='form__control' />
+
+          <label className='form__label'>Elevation (meters)</label>
+          <input type='text' className='form__control' />
+
+          <label className='form__label'>Attribution</label>
+          <input type='text' className='form__control' />
+
+          <label className='form__label'>Site Type</label>
+          <Select
+            options={[{ key: 'urban', label: 'urban' }, { key: 'suburban', label: 'suburban' }, { key: 'rural', label: 'rural' }]}
+            /* TODO: state */
+          />
+
+          <label className='form__label'>Source Type</label>
+          <Select
+            options={[{ key: 'government', label: 'government' }, { key: 'research', label: 'research' }, { key: 'other', label: 'other' }]}
+            /* TODO: state */
+          />
+
+          <label className='form__label'>Notes</label>
+          <textarea className='form__control'></textarea>
+        </div>
+      </div>
+    );
+  }
+
+  renderMaintenance (maintenance) {
+
+  }
+
+  renderInstruments (instruments) {
 
   }
 
@@ -56,60 +125,9 @@ class LocationEdit extends React.Component {
           <h1 classNAme='page__title'>Edit metadata</h1>
         </Header>
         <main role='main'>
-          <div className='flex edit-container justify-between'>
-            <div className='location-edit-details'>
-              <h1 className='page__title'>
-                Location ID
-                <span className='location-id'>9203184789012m34</span>
-              </h1>
-              <ul className='location-detail-list'>
-                <li>Location: <b>{`Seattle-10th & Welle`}</b></li>
-                <li>City: <b>{`Seattle`}</b></li>
-                <li>Country: <b>{`United States`}</b></li>
-                <li>Latitude: <b>{`47.597`}</b></li>
-                <li>Longitude: <b>{`-122.32`}</b></li>
-                <li>Location Type: <b>{`Urban`}</b></li>
-              </ul>
-            </div>
-
-            <Map zoom={10} coordinates={{ lat: 47.597, lon: -122.32 }} width={300} />
-          </div>
+          {this.renderInfo()}
 
           <div className='inner-edit'>
-            <div className='edit-box instrument-edit'>
-              <div className='edit-box-toggle'>
-                Site Details
-              </div>
-              <div className='edit-box-content'>
-                <label className='form__label'>Activation Date</label>
-                <input type='text' className='form__control' />
-
-                <label className='form__label'>De-activation Date</label>
-                <input type='text' className='form__control' />
-
-                <label className='form__label'>Elevation (meters)</label>
-                <input type='text' className='form__control' />
-
-                <label className='form__label'>Attribution</label>
-                <input type='text' className='form__control' />
-
-                <label className='form__label'>Site Type</label>
-                <Select
-                  options={[{ key: 'urban', label: 'urban' }, { key: 'suburban', label: 'suburban' }, { key: 'rural', label: 'rural' }]}
-                  /* TODO: state */
-                />
-
-                <label className='form__label'>Source Type</label>
-                <Select
-                  options={[{ key: 'government', label: 'government' }, { key: 'research', label: 'research' }, { key: 'other', label: 'other' }]}
-                  /* TODO: state */
-                />
-
-                <label className='form__label'>Notes</label>
-                <textarea className='form__control'></textarea>
-              </div>
-            </div>
-
             <div className='edit-box instrument-edit'>
               <div className='edit-box-toggle'>
                 Maintenance

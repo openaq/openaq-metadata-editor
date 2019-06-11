@@ -15,7 +15,7 @@ const history = createHistory();
 
 class ScrollToTop extends Component {
   componentDidUpdate (prevProps) {
-    console.log('this.props.location.pathname !== prevProps.location.pathname', this.props.location.pathname !== prevProps.location.pathname, this.props.location.pathname, prevProps.location.pathname)
+    console.log('this.props.location.pathname !== prevProps.location.pathname', this.props.location.pathname !== prevProps.location.pathname, this.props.location.pathname, prevProps.location.pathname);
     if (this.props.location.pathname !== prevProps.location.pathname) {
       window.scrollTo(0, 0);
     }

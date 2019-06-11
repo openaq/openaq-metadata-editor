@@ -1,7 +1,7 @@
 import fetch from 'unfetch';
 import qs from 'query-string';
 
-import { apiUrl, locationsApiUrl } from '../config';
+import { apiUrl } from '../config';
 
 function request (method, url, params = {}) {
   const headers = { 'Content-Type': 'application/json' };
@@ -28,13 +28,6 @@ function request (method, url, params = {}) {
     .then(res => res.json());
 }
 
-function getLocations (params) {
-  console.log('getLocations', locationsApiUrl || apiUrl, locationsApiUrl, apiUrl)
-  const url = `${locationsApiUrl || apiUrl}/v1/locations/`;
-
-  return request('GET', url, params);
-}
-
 function getMetadataList (params) {
   const url = `${apiUrl}/v1/locations/metadata/`;
 
@@ -47,22 +40,14 @@ function getMetadata (id) {
   return request('GET', url);
 }
 
-function createMetadata (params) {
-  const url = `${apiUrl}/v1/locations/metadata/`;
-
-  return request('POST', url, params);
-}
-
-function updateMetadata (params) {
+function putMetadata (params) {
   const url = `${apiUrl}/v1/locations/metadata/`;
 
   return request('PUT', url, params);
 }
 
 export default {
-  getLocations,
   getMetadataList,
   getMetadata,
-  createMetadata,
-  updateMetadata
+  putMetadata
 };

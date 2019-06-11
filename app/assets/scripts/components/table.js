@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Table extends React.Component {
   renderLocations (locations) {
-    console.log('renderLocations', locations)
+    console.log('renderLocations', locations);
     if (!locations || !locations.length) {
       return null;
     }
@@ -43,17 +43,17 @@ class Table extends React.Component {
         </td>
         <td>
           <Link to={locationUrl}>
-            {location.siteType}
+            {location.data && location.data.siteType}
           </Link>
         </td>
         <td>
           <Link to={locationUrl}>
-            {location.instruments.length}
+            {location.data && location.data.instruments.length}
           </Link>
         </td>
         <td>
           <Link to={locationUrl}>
-            {location.elevation}
+            {location.data && location.data.elevation}
           </Link>
         </td>
       </tr>
