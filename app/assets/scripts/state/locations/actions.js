@@ -29,7 +29,7 @@ export function getMetadata (id) {
       .then(data => {
         dispatch({
           type: constants.LOADED_METADATA,
-          data: data
+          data: data.results
         });
       })
       .catch(err => {

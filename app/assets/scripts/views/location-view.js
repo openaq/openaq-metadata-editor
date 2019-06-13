@@ -4,34 +4,52 @@ import { Link } from 'react-router-dom';
 
 import Header from '../components/header';
 import Map from '../components/map';
+import { getMetadata } from '../state/locations/actions';
 
 class LocationView extends React.Component {
+  componentDidMount () {
+    const { match: { params: { id } } } = this.props;
+
+    if (!this.props.metadata) {
+      this.props.getMetadata(id);
+    }
+  }
+
   render () {
-    const { match } = this.props;
+    const { metadata, match } = this.props;
+
+    if (!metadata) return null;
 
     return (
       <div className='page page--location-view'>
         <Header>
           <h1 className='page__title'>
             <span className='location-id'>9203184789012m34</span>
-            <span className='location-name'>Seattle-10th & Welle</span>
-            <span className='location-city'>Seattle, United States</span>
+            <span className='location-name'>{metadata.location}</span>
+            <span className='location-city'>{metadata.city}, {metadata.country}</span>
           </h1>
-
         </Header>
+
         <main role='main'>
           <div className='inner'>
             <div className='row'>
               <ul className='location-detail-list'>
-                <li>Location: <b>{`Seattle-10th & Welle`}</b></li>
-                <li>City: <b>{`Seattle`}</b></li>
-                <li>Country: <b>{`United States`}</b></li>
-                <li>Latitude: <b>{`47.597`}</b></li>
-                <li>Longitude: <b>{`-122.32`}</b></li>
-                <li>Location Type: <b>{`Urban`}</b></li>
+                <li>Location: <b>{metadata.location}</b></li>
+                <li>City: <b>{metadata.city}</b></li>
+                <li>Country: <b>{metadata.country}</b></li>
+                <li>Latitude: <b>{metadata.data.coordinates.latitude}</b></li>
+                <li>Longitude: <b>{metadata.data.coordinates.longitude}</b></li>
+                <li>Location Type: <b>{metadata.data.siteType}</b></li>
               </ul>
 
-              <Map zoom={10} coordinates={{ lat: 47.597, lon: -122.32 }} />
+              <Map
+                zoom={10}
+                width={300}
+                coordinates={{
+                  lat: metadata.data.coordinates.latitude,
+                  lon: metadata.data.coordinates.longitude
+                }}
+              />
             </div>
 
             <div className='location-view-section'>
@@ -40,11 +58,11 @@ class LocationView extends React.Component {
               </h2>
               <dl>
                 <dt>Elevation</dt>
-                <dd>432m</dd>
+                <dd>{metadata.data.elevation}</dd>
                 <dt>Site type</dt>
-                <dd>Urban</dd>
+                <dd>{metadata.data.siteType}</dd>
                 <dt>Description</dt>
-                <dd>Text describing the location.</dd>
+                <dd>{metadata.data.notes}</dd>
               </dl>
             </div>
 
@@ -54,11 +72,9 @@ class LocationView extends React.Component {
               </h2>
               <dl>
                 <dt>Installation Date</dt>
-                <dd>2016/03/15</dd>
-                <dt>Last Maintenance Date</dt>
-                <dd>2019/05/28</dd>
-                <dt>Maintenance Schedule</dt>
-                <dd>As needed</dd>
+                <dd>{metadata.data.activationDate}</dd>
+                <dt>Deactivation Date</dt>
+                <dd>{metadata.data.deactivationDate}</dd>
               </dl>
             </div>
 
@@ -67,36 +83,27 @@ class LocationView extends React.Component {
                 Instruments
               </h2>
               <div className='flex'>
-                <div className='column'>
-                  <h3 className=''>
-                    Instrument 1
-                  </h3>
-                  <dl>
-                    <dt>Pollutants</dt>
-                    <dd><b>CO, PM2.5</b></dd>
-                    <dt>Model</dt>
-                    <dd>Spectrometer 1.109</dd>
-                    <dt>Manufacturer</dt>
-                    <dd>GRIMM</dd>
-                    <dt>Installed</dt>
-                    <dd>2016</dd>
-                  </dl>
-                </div>
-                <div className='column'>
-                  <h3 className=''>
-                    Instrument 2
-                  </h3>
-                  <dl>
-                    <dt>Pollutants</dt>
-                    <dd><b>CO, PM2.5</b></dd>
-                    <dt>Model</dt>
-                    <dd>Spectrometer 1.109</dd>
-                    <dt>Manufacturer</dt>
-                    <dd>GRIMM</dd>
-                    <dt>Installed</dt>
-                    <dd>2016</dd>
-                  </dl>
-                </div>
+                {
+                  metadata.data.instruments.map((instr, i) => {
+                    return (
+                      <div className='column'>
+                        <h3 className=''>
+                          Instrument {i}
+                        </h3>
+                        <dl>
+                          <dt>Pollutants</dt>
+                          <dd><b>{instr.parameters.join(', ')}</b></dd>
+                          <dt>Model</dt>
+                          <dd>{instr.modelName}</dd>
+                          <dt>Manufacturer</dt>
+                          <dd>{instr.manufacturer}</dd>
+                          <dt>Installed</dt>
+                          <dd>{instr.activationDate}</dd>
+                        </dl>
+                      </div>
+                    );
+                  })
+                }
               </div>
             </div>
 
@@ -113,10 +120,14 @@ class LocationView extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    metadata: state.locations.metadata
+  };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getMetadata
+};
 
 export default connect(
   mapStateToProps,
