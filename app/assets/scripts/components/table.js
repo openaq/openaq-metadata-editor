@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 class Table extends React.Component {
   renderLocations (locations) {
-    console.log('renderLocations', locations);
     if (!locations || !locations.length) {
       return null;
     }

@@ -77,8 +77,7 @@ const formInputOptions = {
 class Filter extends React.Component {
   constructor (props) {
     super(props);
-    const { locations } = props;
-    console.log('locations', locations);
+    // const { locations } = props;
     const state = Object.assign({}, initialState);
 
     this.state = state;

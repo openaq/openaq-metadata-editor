@@ -40,8 +40,8 @@ function getMetadata (id) {
   return request('GET', url);
 }
 
-function putMetadata (params) {
-  const url = `${apiUrl}/v1/locations/metadata/`;
+function putMetadata (id, params) {
+  const url = `${apiUrl}/v1/locations/${id}/metadata/`;
 
   return request('PUT', url, params);
 }

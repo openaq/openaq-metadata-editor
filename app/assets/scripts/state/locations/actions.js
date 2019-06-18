@@ -1,6 +1,6 @@
 import * as constants from './constants';
 import api from '../../services/openaq-api';
-console.log('constants', constants);
+
 export function getMetadataList (params) {
   return (dispatch, getState) => {
     dispatch({ type: constants.LOADING_METADATA_LIST });
@@ -41,9 +41,9 @@ export function getMetadata (id) {
   };
 }
 
-export function putMetadata (obj) {
+export function putMetadata (id, obj) {
   return (dispatch, getState) => {
-    api.putMetadata(obj)
+    api.putMetadata(id, obj)
       .then(data => {
         dispatch({
           type: constants.PUT_METADATA,

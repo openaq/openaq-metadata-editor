@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import keypath from 'obj-keypath';
 
 import { schemas } from 'openaq-data-format';
 
@@ -44,15 +45,27 @@ const editorGroups = {
   }
 };
 
-console.log('editorGroups', editorGroups);
-
 class LocationEdit extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      metadata: {}
+    };
+  }
+
   componentDidMount () {
     const { match: { params: { id } } } = this.props;
 
     if (!this.props.metadata) {
       this.props.getMetadata(id);
     }
+  }
+
+  propUpdate (key, value) {
+    const metadata = Object.assign({}, this.state.metadata);
+    keypath.set(metadata, key, value);
+    this.setState({ metadata });
   }
 
   renderInfo () {
@@ -88,54 +101,138 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderStringProp (prop) {
+  renderStringProp (prop, initialValue) {
+    const { metadata } = this.state;
+    const value = metadata[prop.key] || initialValue;
+
+    const onChange = (e) => {
+      this.propUpdate(prop.key, e.target.value);
+    };
+
     return (
-      <React.Fragment>
+      <React.Fragment key={`form-field-${prop.key}`}>
         <label className='form__label'>{prop.title}</label>
-        <input type='text' className='form__control' />
+        <input
+          type='text'
+          className='form__control'
+          value={value}
+          onChange={onChange}
+        />
       </React.Fragment>
     );
   }
 
-  renderIntegerProp (prop) {
+  renderIntegerProp (prop, initialValue) {
+    const { metadata } = this.state;
+    const value = metadata[prop.key] || initialValue;
+
+    const onChange = (e) => {
+      this.propUpdate(prop.key, e.target.value);
+    };
+
     return (
-      <React.Fragment>
+      <React.Fragment key={`form-field-${prop.key}`}>
         <label className='form__label'>{prop.title}</label>
-        <input type='number' className='form__control' />
+        <input
+          type='number'
+          className='form__control'
+          value={value}
+          onChange={onChange}
+        />
       </React.Fragment>
     );
   }
 
-  renderBooleanProp (prop) {
+  renderBooleanProp (prop, initialValue) {
+    const { metadata } = this.state;
+    const value = metadata[prop.key] || initialValue;
+
+    const onChange = (e) => {
+      this.propUpdate(prop.key, e.target.checked);
+    };
+
     return (
-      <React.Fragment>
+      <React.Fragment key={`form-field-${prop.key}`}>
         <label className='form__label'>{prop.title}</label>
-        <input type='checkbox' checked='true' className='form__control' />
+        <input
+          type='checkbox'
+          value={value}
+          className='form__control'
+          onChange={onChange}
+        />
       </React.Fragment>
     );
   }
 
-  renderArrayProp (prop) {
+  renderSelectProp (prop, initialValue) {
+    const { metadata } = this.state;
+    const value = metadata[prop.key] || initialValue;
+
+    const availableValues = prop.enum;
+
     let options;
-
-    if (prop.items.enum) {
-      options = prop.items.enum.map((key) => {
+    if (availableValues) {
+      options = availableValues.map((key) => {
         return { key, label: key };
       });
     }
 
+    const onChange = (val) => {
+      this.propUpdate(prop.key, val.key);
+    };
+
     return (
-      <React.Fragment>
+      <React.Fragment key={`form-field-${prop.key}`}>
         <label className='form__label'>{prop.title}</label>
         <Select
+          value={{ key: value, label: value }}
           options={options}
-          /* TODO: state */
+          onChange={onChange}
+          getOptionValue={(option) => {
+            return option.key;
+          }}
+        />
+      </React.Fragment>
+    );
+  }
+
+  renderMultiSelectProp (prop, initialValue) {
+    const { metadata } = this.state;
+    const value = metadata[prop.key] || initialValue;
+
+    const availableValues = prop.items.enum;
+
+    let options;
+    if (availableValues) {
+      options = availableValues
+        .map((key) => {
+          return { key, label: key };
+        });
+    }
+
+    const onChange = (value) => {
+      this.propUpdate(prop.key, value);
+    };
+
+    return (
+      <React.Fragment key={`form-field-${prop.key}`}>
+        <label className='form__label'>{prop.title}</label>
+        <Select
+          isMulti
+          value={value}
+          options={options}
+          onChange={onChange}
+          getOptionValue={(option) => {
+            return option.key;
+          }}
         />
       </React.Fragment>
     );
   }
 
   renderEditSection (section) {
+    const { metadata } = this.props;
+
     return (
       <div className='edit-box instrument-edit'>
         <div className='edit-box-toggle'>
@@ -144,13 +241,18 @@ class LocationEdit extends React.Component {
         <div className='edit-box-content'>
           {
             section.properties.map((prop) => {
+              const initialValue = metadata.data[prop.key];
               switch (prop.type) {
                 case 'string':
-                  return this.renderStringProp(prop);
+                  return prop.enum
+                    ? this.renderSelectProp(prop, initialValue)
+                    : this.renderStringProp(prop, initialValue);
                 case 'integer':
-                  return this.renderIntegerProp(prop);
+                  return this.renderIntegerProp(prop, initialValue);
                 case 'array':
-                  return this.renderArrayProp(prop);
+                  return this.renderMultiSelectProp(prop, initialValue);
+                case 'boolean':
+                  return this.renderBooleanProp(prop, initialValue);
               }
             })
           }
@@ -180,19 +282,47 @@ class LocationEdit extends React.Component {
           </div>
 
           <div className='flex justify-between'>
-            <button type='button' className='button button--medium button--primary-bounded'>Add Another Instrument</button>
-            <button type='button' className='button button--medium button--primary'>Save Location</button>
+            <button
+              type='button'
+              className='button button--medium button--primary-bounded'
+              onClick={(e) => this.onAddInstrumentClick(e)}
+            >
+              Add Another Instrument
+            </button>
+            <button
+              type='button'
+              className='button button--medium button--primary'
+              onClick={(e) => this.onSaveLocationClick(e)}
+            >
+              Save Location
+            </button>
           </div>
         </div>
       </main>
     );
   }
 
+  onAddInstrumentClick () {
+
+  }
+
+  onSaveLocationClick () {
+    const { match } = this.props;
+
+    const metadata = Object.assign(
+      {},
+      this.props.metadata.data,
+      this.state.metadata
+    );
+
+    this.props.putMetadata(match.params.id, metadata);
+  }
+
   render () {
     return (
       <div className='page page--location-edit'>
         <Header>
-          <h1 classNAme='page__title'>Edit metadata</h1>
+          <h1 className='page__title'>Edit metadata</h1>
         </Header>
         {this.renderMetadataForm()}
       </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, Route, Switch, withRouter } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 
 import NoMatch from './views/404';
 import Home from './views/home';
@@ -11,11 +11,10 @@ import LocationView from './views/location-view';
 
 import store from './state';
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 class ScrollToTop extends Component {
   componentDidUpdate (prevProps) {
-    console.log('this.props.location.pathname !== prevProps.location.pathname', this.props.location.pathname !== prevProps.location.pathname, this.props.location.pathname, prevProps.location.pathname);
     if (this.props.location.pathname !== prevProps.location.pathname) {
       window.scrollTo(0, 0);
     }
