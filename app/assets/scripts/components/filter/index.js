@@ -77,8 +77,7 @@ const formInputOptions = {
 class Filter extends React.Component {
   constructor (props) {
     super(props);
-    const { locations } = props;
-    console.log('locations', locations);
+    // const { locations } = props;
     const state = Object.assign({}, initialState);
 
     this.state = state;
@@ -118,8 +117,8 @@ class Filter extends React.Component {
     const direction = open ? 'down' : 'right';
 
     return (
-      <div onClick={onClick}>
-        <h2>
+      <div className='filter-toggle' onClick={onClick}>
+        <h2 style={{ marginBottom: 0 }}>
           Filter Locations
           <span
             className={`collecticons collecticons-chevron-${direction}--small`}
@@ -151,7 +150,7 @@ class Filter extends React.Component {
 
   renderInputs () {
     return (
-      <div className='flex justify-between'>
+      <div className='filter-content flex justify-between'>
         <div className='filter-column'>
           {this.renderInput('countries')}
         </div>
@@ -173,7 +172,7 @@ class Filter extends React.Component {
 
     return (
       <section className='filter fold fold--filled'>
-        <div className='row'>
+        <div className='inner'>
           {this.renderToggle()}
           {open && this.renderInputs()}
         </div>

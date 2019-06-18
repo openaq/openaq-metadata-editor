@@ -6,7 +6,7 @@ import Search from '../components/search';
 import Filter from '../components/filter';
 import Table from '../components/table';
 
-import locations from '../tests/fixtures/locations.json';
+import { getMetadataList } from '../state/locations/actions';
 
 class Home extends React.Component {
   constructor (props) {
@@ -25,8 +25,13 @@ class Home extends React.Component {
     this.setState({ filter: value });
   }
 
+  componentDidMount () {
+    this.props.getMetadataList();
+  }
+
   render () {
     const { search, filter } = this.state;
+    const { history, metadataList } = this.props;
 
     return (
       <div className='page page--homepage'>
@@ -35,8 +40,13 @@ class Home extends React.Component {
           <Search onChange={(v) => this.onSearchChange(v)} />
         </Header>
         <main role='main'>
-          <Filter locations={locations} />
-          <Table locations={locations} search={search} filter={filter} />
+          <Filter locations={metadataList} />
+          <Table
+            locations={metadataList}
+            search={search}
+            filter={filter}
+            history={history}
+          />
         </main>
       </div>
     );
@@ -44,10 +54,14 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    metadataList: state.locations.metadataList.results
+  };
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getMetadataList
+};
 
 export default connect(
   mapStateToProps,

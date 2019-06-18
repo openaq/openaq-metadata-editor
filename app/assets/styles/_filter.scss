@@ -1,4 +1,12 @@
 .filter {
+  padding: 20px 0px;
+}
+
+.filter-toggle {
+  cursor: pointer;
+}
+
+.filter-content {
   padding-top: 20px;
 }
 
@@ -9,7 +17,7 @@
   margin-bottom: 10px;
 }
 
-.filter-column {
+.filter-column, .column {
   width: 100%;
 
   @include media(medium-up) {

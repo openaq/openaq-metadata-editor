@@ -24,6 +24,7 @@
 @import "../../../../node_modules/tachyons-flexbox/css/tachyons-flexbox.css";
 @import "../../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss";
 @import "../../../../node_modules/react-input-range/src/scss/index.scss";
+@import "../../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
 
 /* Reboot
    ========================================================================== */
@@ -60,3 +61,8 @@
 @import "folds";
 @import "search";
 @import "filter";
+@import "tables";
+@import "map";
+@import "editor";
+@import "locations";
+@import "forms";

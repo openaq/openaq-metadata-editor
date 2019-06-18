@@ -1,0 +1,60 @@
+.form__fieldset {
+  &--location {
+    .form__legend {
+      @extend .visually-hidden;
+    }
+  }
+
+  &--parameters {
+    margin-bottom: 3rem;
+  }
+}
+
+.edit-box {
+  .form__legend {
+    color: $base-color;
+  }
+  .form__fieldset {
+    padding-bottom: 0;
+    box-shadow: none;
+  }
+  .form__label {
+    margin-top: 0.8rem;
+    margin-bottom: 0.2rem;
+    font-size: 0.857rem;
+  }
+  .form__option-group {
+    @extend .clearfix;
+    .form__option {
+      float: left;
+      width: 5rem;
+      margin: 0 1rem 1rem 0;
+    }
+  }
+  .form__actions {
+    text-align: center;
+    .button {
+      margin-right: 1rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+/* Form color modifiers
+   ========================================================================== */
+
+.form__control.select--base-bounded {
+  background: none;
+  box-shadow: inset 0 0 0 2px $base-color;
+  color: $base-color;
+
+  &:hover {
+    background: none;
+  }
+
+  &:active {
+    background: none;
+  }
+}

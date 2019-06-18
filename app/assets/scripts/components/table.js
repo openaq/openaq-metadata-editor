@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 
 class Table extends React.Component {
   renderLocations (locations) {
+    if (!locations || !locations.length) {
+      return null;
+    }
+
     return (
       <tbody>
         {
@@ -13,30 +17,43 @@ class Table extends React.Component {
   }
 
   renderLocation (location, index) {
+    const locationUrl = `/location/${location.id}`;
     return (
       <tr key={`location-table-row-${index}`}>
         <td>
-          <Link to={`/location/${location.id}`}>
+          <Link to={locationUrl}>
             {location.id}
           </Link>
         </td>
         <td>
-          {location.country}
+          <Link to={locationUrl}>
+            {location.country}
+          </Link>
         </td>
         <td>
-          {location.city}
+          <Link to={locationUrl}>
+            {location.city}
+          </Link>
         </td>
         <td>
-          {location.activationDate}
+          <Link to={locationUrl}>
+            {location.activationDate}
+          </Link>
         </td>
         <td>
-          {location.siteType}
+          <Link to={locationUrl}>
+            {location.data && location.data.siteType}
+          </Link>
         </td>
         <td>
-          {location.instruments.length}
+          <Link to={locationUrl}>
+            {location.data && location.data.instruments.length}
+          </Link>
         </td>
         <td>
-          {location.altitude}
+          <Link to={locationUrl}>
+            {location.data && location.data.elevation}
+          </Link>
         </td>
       </tr>
     );
@@ -47,18 +64,18 @@ class Table extends React.Component {
 
     return (
       <section className='fold'>
-        <div className='row'>
+        <div className='inner'>
           <div className='responsive-table-wrapper'>
-            <table className='table table--zebra'>
+            <table className='table table--zebra table-with-link-rows'>
               <thead>
                 <tr>
-                  <th>Station ID</th>
+                  <th>ID</th>
                   <th>Country</th>
                   <th>City</th>
                   <th>Activated</th>
                   <th>Site Type</th>
                   <th>Instruments</th>
-                  <th>Altitude (m)</th>
+                  <th>Elevation (m)</th>
                 </tr>
               </thead>
               { this.renderLocations(locations) }
