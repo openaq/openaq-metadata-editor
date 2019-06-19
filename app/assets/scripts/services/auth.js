@@ -16,6 +16,7 @@ class Auth {
       domain: config.auth.domain,
       clientID: config.auth.clientID,
       redirectUri: config.auth.callbackUrl,
+      audience: config.auth.audience,
       responseType: 'token id_token',
       scope: 'openid profile'
     });
