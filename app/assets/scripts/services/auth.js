@@ -3,7 +3,7 @@ import auth0 from 'auth0-js';
 import history from './history';
 import config from '../config';
 import store from '../state';
-import { loginUser } from '../state/user/actions';
+import { loginUser, loginUserError } from '../state/user/actions';
 
 class Auth {
   constructor () {
@@ -45,8 +45,9 @@ class Auth {
         // navigate to the home route
         history.replace('/');
       } else if (err) {
-        history.replace('/');
         console.log(err);
+        store.dispatch(loginUserError(err));
+        history.replace('/');
       }
     });
   }
@@ -91,6 +92,7 @@ class Auth {
         this.setSession(authResult);
       } else if (err) {
         this.logout();
+        store.dispatch(loginUserError(err));
         console.error('error renewing session', err);
       }
     });

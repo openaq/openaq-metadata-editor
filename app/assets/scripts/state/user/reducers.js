@@ -16,6 +16,10 @@ function reducer (state = initialState, action) {
     case constants.LOGOUT_USER: {
       return initialState;
     }
+
+    case constants.LOGIN_USER_ERROR: {
+      return { ...initialState, error: action.data };
+    }
   }
   return state;
 }

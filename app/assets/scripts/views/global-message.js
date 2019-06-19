@@ -2,15 +2,15 @@ import React from 'react';
 
 import Header from '../components/header';
 
-class Login extends React.Component {
+class GlobalError extends React.Component {
   render () {
     return (
-      <div className='page page--login'>
+      <div className='page page--global-msg'>
         <Header />
         <main role='main'>
           <div className='inner'>
-            <div className='login-message'>
-              Please log in to access this page.
+            <div className='global-message'>
+              {this.props.children}
             </div>
           </div>
         </main>
@@ -19,4 +19,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default GlobalError;

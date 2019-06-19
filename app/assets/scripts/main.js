@@ -9,7 +9,7 @@ import Home from './views/home';
 import LocationEdit from './views/location-edit';
 import LocationView from './views/location-view';
 import Callback from './views/callback';
-import Login from './views/login';
+import GlobalMessage from './views/global-message';
 
 import store from './state';
 import history from './services/history';
@@ -29,14 +29,34 @@ const PrivateRoute = connect(
   }),
   {}
 )(props => {
-  const { component: Component, ...rest } = props;
+  const { component: Component, user, ...rest } = props;
   return (
     <Route
       {...rest}
-      render={props => auth.isAuthenticated()
-        ? <Component {...props} />
-        : <Login />
-      }
+      render={props => {
+        if (user.error) {
+          return (
+            <GlobalMessage>An error occurred while logging in: {user.error.errorDescription}</GlobalMessage>
+          );
+        }
+
+        if (!auth.isAuthenticated()) {
+          return (
+            <GlobalMessage>Please log in to access this page.</GlobalMessage>
+          );
+        }
+
+        const metadata = user.userProfile['http://openaq.org/user_metadata'];
+        if (!metadata.active) {
+          return (
+            <GlobalMessage>
+              <p>Your account has to be activated by an administrator.</p>
+              <p>Please come back later.</p>
+            </GlobalMessage>
+          );
+        }
+        return <Component {...props} />;
+      }}
     />
   );
 });

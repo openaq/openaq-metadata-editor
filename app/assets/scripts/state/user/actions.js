@@ -7,6 +7,13 @@ export function loginUser (user) {
   };
 }
 
+export function loginUserError (error) {
+  return {
+    type: constants.LOGIN_USER_ERROR,
+    data: error
+  };
+}
+
 export function logoutUser () {
   return {
     type: constants.LOGOUT_USER
