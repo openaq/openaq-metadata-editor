@@ -1,3 +1,4 @@
+/* Page header styles */
 .page__header {
   background-image: url(../graphics/layout/header-background.png);
   background-size: cover;
@@ -8,14 +9,56 @@
     padding: 32px;
   }
 
-  h1 {
-    margin-bottom: 32px;
+  .site__title {
+    margin:  0;
+
     > img {
       width: auto;
       height: 64px;
       max-width: 100%;
       vertical-align: top;
     }
+  }
+}
+
+.page__headline {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+
+  .site__actions {
+    margin-left: auto;
+  }
+
+  .user span {
+    line-height: 2rem;
+    vertical-align: middle;
+    margin-right: 1rem;
+  }
+
+  .user__picture {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 32rem;
+    margin-right: 0.5rem;
+  }
+}
+
+/* Page actions */
+.btn--user-login {
+  @extend .button, .button--base;
+
+  &::before {
+    @extend %collecticons-login;
+  }
+}
+
+.btn--user-logout {
+  @extend .button, .button--base-unbounded;
+
+  &::before {
+    @extend %collecticons-logout;
   }
 }
 
@@ -47,12 +90,6 @@
   }
 }
 
-.page--homepage .page__header {
-  .inner {
-    padding-top: 50px;
-  }
-}
-
 .column, .filter-column {
   width: 100%;
 
@@ -69,4 +106,33 @@
   a {
     color: #fff;
   }
+}
+
+.global-message {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.page--callback .loader {
+  max-width: 10rem;
+  margin: 3rem auto 0 auto;
+}
+
+.wind-animated .wind {
+  fill: none;
+  stroke: $base-color;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-miterlimit: 10;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 3s linear forwards infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: 0;}
+  0% { opacity: 0;}
+  15% { opacity: 1;}
+  80% { opacity: 1;}
+  100% { opacity: 0;}
 }

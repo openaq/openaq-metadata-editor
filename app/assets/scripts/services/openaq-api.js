@@ -2,9 +2,13 @@ import fetch from 'unfetch';
 import qs from 'query-string';
 
 import { apiUrl } from '../config';
+import auth from './auth';
 
 function request (method, url, params = {}) {
-  const headers = { 'Content-Type': 'application/json' };
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${auth.getAccessToken()}`
+  };
 
   const options = {
     headers,
