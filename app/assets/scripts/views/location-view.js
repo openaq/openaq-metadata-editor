@@ -10,23 +10,24 @@ class LocationView extends React.Component {
   componentDidMount () {
     const { match: { params: { id } } } = this.props;
 
-    if (!this.props.metadata) {
+    if (!this.props.location) {
       this.props.getMetadata(id);
     }
   }
 
   render () {
-    const { metadata, match } = this.props;
+    const { location, match } = this.props;
+    if (!location) return null;
 
-    if (!metadata) return null;
+    const { metadata } = location;
 
     return (
       <div className='page page--location-view'>
         <Header>
           <h1 className='page__title'>
-            <span className='location-id'>9203184789012m34</span>
-            <span className='location-name'>{metadata.location}</span>
-            <span className='location-city'>{metadata.city}, {metadata.country}</span>
+            <span className='location-id'>{metadata.locationId}</span>
+            <span className='location-name'>{location.location}</span>
+            <span className='location-city'>{location.city}, {metadata.country}</span>
           </h1>
         </Header>
 
@@ -34,20 +35,20 @@ class LocationView extends React.Component {
           <div className='inner'>
             <div className='row'>
               <ul className='location-detail-list'>
-                <li>Location: <b>{metadata.location}</b></li>
-                <li>City: <b>{metadata.city}</b></li>
-                <li>Country: <b>{metadata.country}</b></li>
-                <li>Latitude: <b>{metadata.data.coordinates.latitude}</b></li>
-                <li>Longitude: <b>{metadata.data.coordinates.longitude}</b></li>
-                <li>Location Type: <b>{metadata.data.siteType}</b></li>
+                <li>Location: <b>{location.location}</b></li>
+                <li>City: <b>{location.city}</b></li>
+                <li>Country: <b>{location.country}</b></li>
+                <li>Latitude: <b>{metadata.coordinates.latitude}</b></li>
+                <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>
+                <li>Location Type: <b>{metadata.siteType}</b></li>
               </ul>
 
               <Map
                 zoom={10}
                 width={300}
                 coordinates={{
-                  lat: metadata.data.coordinates.latitude,
-                  lon: metadata.data.coordinates.longitude
+                  lat: metadata.coordinates.latitude,
+                  lon: metadata.coordinates.longitude
                 }}
               />
             </div>
@@ -58,11 +59,11 @@ class LocationView extends React.Component {
               </h2>
               <dl>
                 <dt>Elevation</dt>
-                <dd>{metadata.data.elevation}</dd>
+                <dd>{metadata.elevation}</dd>
                 <dt>Site type</dt>
-                <dd>{metadata.data.siteType}</dd>
+                <dd>{metadata.siteType}</dd>
                 <dt>Description</dt>
-                <dd>{metadata.data.notes}</dd>
+                <dd>{metadata.notes}</dd>
               </dl>
             </div>
 
@@ -72,9 +73,9 @@ class LocationView extends React.Component {
               </h2>
               <dl>
                 <dt>Installation Date</dt>
-                <dd>{metadata.data.activationDate}</dd>
+                <dd>{metadata.activationDate}</dd>
                 <dt>Deactivation Date</dt>
-                <dd>{metadata.data.deactivationDate}</dd>
+                <dd>{metadata.deactivationDate}</dd>
               </dl>
             </div>
 
@@ -84,9 +85,9 @@ class LocationView extends React.Component {
               </h2>
               <div className='flex'>
                 {
-                  metadata.data.instruments.map((instr, i) => {
+                  metadata.instruments.map((instr, i) => {
                     return (
-                      <div className='column'>
+                      <div className='column' key={`instrument-${i}`}>
                         <h3 className=''>
                           Instrument {i}
                         </h3>
@@ -121,7 +122,7 @@ class LocationView extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    metadata: state.locations.metadata
+    location: state.locations.location
   };
 };
 
