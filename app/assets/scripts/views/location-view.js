@@ -21,6 +21,37 @@ class LocationView extends React.Component {
 
     const { metadata } = location;
 
+    if (!metadata) {
+      return (
+        <div className='page page--location-view'>
+          <Header>
+            <h1 className='page__title'>
+              <span className='location-id'>{location.id}</span>
+              <span className='location-name'>{location.location}</span>
+              <span className='location-city'>{location.city}, {location.country}</span>
+            </h1>
+          </Header>
+
+          <main role='main'>
+            <div className='callout-button'>
+              <Link to={`/location/edit/${match.params.id}`}>
+                This location does not have any metadata. Edit this location.
+              </Link>
+            </div>
+            <div className='inner'>
+              <div className='row'>
+                <ul className='location-detail-list' style={{ marginBottom: 100 }}>
+                  <li>Location: <b>{location.location}</b></li>
+                  <li>City: <b>{location.city}</b></li>
+                  <li>Country: <b>{location.country}</b></li>
+                </ul>
+              </div>
+            </div>
+          </main>
+        </div>
+      );
+    }
+
     return (
       <div className='page page--location-view'>
         <Header>
