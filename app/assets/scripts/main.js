@@ -68,8 +68,8 @@ class Root extends Component {
         <Router history={history}>
           <App>
             <Switch>
-              <PrivateRoute exact path='/' component={Home} />
-              <PrivateRoute
+              <Route exact path='/' component={Home} />
+              <Route
                 exact
                 path='/location/:id/'
                 component={LocationView}
