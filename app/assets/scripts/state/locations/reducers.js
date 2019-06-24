@@ -2,7 +2,7 @@ import * as constants from './constants';
 
 const initialState = {
   metadataList: {},
-  metadata: null
+  location: null
 };
 
 function reducer (state = initialState, action) {
@@ -23,12 +23,12 @@ function reducer (state = initialState, action) {
     }
 
     case constants.LOADING_METADATA: {
-      state.metadata = null;
+      state.location = null;
       return Object.assign({}, state);
     }
 
     case constants.LOADED_METADATA: {
-      state.metadata = action.data;
+      state.location = action.data;
       return Object.assign({}, state);
     }
 

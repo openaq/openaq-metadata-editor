@@ -33,13 +33,13 @@ function request (method, url, params = {}) {
 }
 
 function getMetadataList (params) {
-  const url = `${apiUrl}/v1/locations/metadata/`;
+  const url = `${apiUrl}/v1/locations?metadata=true`;
 
   return request('GET', url, params);
 }
 
 function getMetadata (id) {
-  const url = `${apiUrl}/v1/locations/${id}/metadata/`;
+  const url = `${apiUrl}/v1/locations/${id}?metadata=true`;
 
   return request('GET', url);
 }

@@ -17,7 +17,9 @@ class Table extends React.Component {
   }
 
   renderLocation (location, index) {
+    const { metadata } = location;
     const locationUrl = `/location/${location.id}`;
+
     return (
       <tr key={`location-table-row-${index}`}>
         <td>
@@ -42,17 +44,17 @@ class Table extends React.Component {
         </td>
         <td>
           <Link to={locationUrl}>
-            {location.data && location.data.siteType}
+            {metadata && metadata.siteType}
           </Link>
         </td>
         <td>
           <Link to={locationUrl}>
-            {location.data && location.data.instruments.length}
+            {metadata && metadata.instruments.length}
           </Link>
         </td>
         <td>
           <Link to={locationUrl}>
-            {location.data && location.data.elevation}
+            {metadata && metadata.elevation}
           </Link>
         </td>
       </tr>

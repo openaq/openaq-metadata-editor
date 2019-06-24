@@ -69,7 +69,8 @@ class LocationEdit extends React.Component {
   }
 
   renderInfo () {
-    const { metadata } = this.props;
+    const { location } = this.props;
+    const { metadata } = location;
 
     return (
       <div className='flex edit-container justify-between'>
@@ -80,12 +81,12 @@ class LocationEdit extends React.Component {
           </h1>
           <ul className='location-detail-list'>
             {/* TODO: make sure location, city, country exist */}
-            <li>Location: <b>{metadata.location}</b></li>
-            <li>City: <b>{metadata.city}</b></li>
-            <li>Country: <b>{metadata.country}</b></li>
-            <li>Latitude: <b>{metadata.data.coordinates.latitude}</b></li>
-            <li>Longitude: <b>{metadata.data.coordinates.longitude}</b></li>
-            <li>Location Type: <b>{metadata.data.siteType}</b></li>
+            <li>Location: <b>{location.location}</b></li>
+            <li>City: <b>{location.city}</b></li>
+            <li>Country: <b>{location.country}</b></li>
+            <li>Latitude: <b>{metadata.coordinates.latitude}</b></li>
+            <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>
+            <li>Location Type: <b>{metadata.siteType}</b></li>
           </ul>
         </div>
 
@@ -231,7 +232,8 @@ class LocationEdit extends React.Component {
   }
 
   renderEditSection (section) {
-    const { metadata } = this.props;
+    const { location } = this.props;
+    const { metadata } = location;
 
     return (
       <div className='edit-box instrument-edit'>
@@ -262,8 +264,11 @@ class LocationEdit extends React.Component {
   }
 
   renderMetadataForm () {
-    const { metadata } = this.props;
-    if (!metadata) return null;
+    const { location } = this.props;
+    const { metadata } = location;
+
+    if (!location || !metadata) return null;
+
     return (
       <main role='main'>
         {this.renderInfo()}
@@ -332,7 +337,7 @@ class LocationEdit extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    metadata: state.locations.metadata
+    location: state.locations.location
   };
 };
 
