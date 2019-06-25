@@ -2,7 +2,11 @@ import * as constants from './constants';
 
 const initialState = {
   metadataList: {},
-  location: null
+  location: {
+    metadata: {
+      instruments: []
+    }
+  }
 };
 
 function reducer (state = initialState, action) {
@@ -40,6 +44,12 @@ function reducer (state = initialState, action) {
     case constants.PUT_METADATA_ERROR: {
       console.log('error', action.error);
       return state;
+    }
+
+    case constants.UPDATE_METADATA: {
+      const location = Object.assign({}, state.location);
+      location.metadata = Object.assign({}, location.metadata, action.data);
+      return Object.assign({}, state, { location });
     }
   }
 

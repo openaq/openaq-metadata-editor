@@ -8,7 +8,7 @@ import { schemas } from 'openaq-data-format';
 import Header from '../components/header';
 import Map from '../components/map';
 
-import { getMetadata, putMetadata } from '../state/locations/actions';
+import { getMetadata, putMetadata, updateMetadata } from '../state/locations/actions';
 
 const locationSchema = schemas.location;
 
@@ -17,13 +17,22 @@ const excludePropertiesFromEditing = [
   'coordinates',
   'city',
   'country',
-  'instruments'
+  'instruments',
+  'parameters',
+  'attribution'
 ];
 
 const propertiesToEdit = Object.keys(locationSchema.properties)
   .filter((key) => !excludePropertiesFromEditing.includes(key))
   .map((key) => {
     const prop = locationSchema.properties[key];
+    prop.key = key;
+    return prop;
+  });
+
+const instrumentProperties = Object.keys(locationSchema.properties.instruments.items.properties)
+  .map((key) => {
+    const prop = locationSchema.properties.instruments.items.properties[key];
     prop.key = key;
     return prop;
   });
@@ -42,76 +51,76 @@ const editorGroups = {
   maintenance: {
     name: 'Maintenance',
     properties: propertiesToEdit.filter((prop) => maintenanceProperties.includes(prop.key))
+  },
+  instrument: {
+    name: 'Instrument',
+    properties: instrumentProperties
   }
 };
 
 class LocationEdit extends React.Component {
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      metadata: {}
-    };
-  }
-
   componentDidMount () {
     const { match: { params: { id } } } = this.props;
 
-    if (!this.props.metadata) {
+    if (!this.props.location || this.props.location.id || this.props.location.id !== id) {
       this.props.getMetadata(id);
     }
   }
 
   propUpdate (key, value) {
-    const metadata = Object.assign({}, this.state.metadata);
-    keypath.set(metadata, key, value);
-    this.setState({ metadata });
+    const metadata = Object.assign({ instruments: [] }, this.props.location.metadata);
+    const data = keypath.set(metadata, key, value);
+    this.props.updateMetadata(data);
   }
 
   renderInfo () {
     const { location } = this.props;
     const { metadata } = location;
-
+    console.log('location', location)
     return (
       <div className='flex edit-container justify-between'>
         <div className='location-edit-details'>
           <h1 className='page__title'>
             Location ID
-            <span className='location-id'>{metadata.locationId}</span>
+            <span className='location-id'>{location.id}</span>
           </h1>
           <ul className='location-detail-list'>
             {/* TODO: make sure location, city, country exist */}
             <li>Location: <b>{location.location}</b></li>
             <li>City: <b>{location.city}</b></li>
             <li>Country: <b>{location.country}</b></li>
-            <li>Latitude: <b>{metadata.coordinates.latitude}</b></li>
-            <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>
-            <li>Location Type: <b>{metadata.siteType}</b></li>
+            {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
+            {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
+            {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
           </ul>
         </div>
 
-        <Map
-          zoom={10}
-          width={300}
-          coordinates={{
-            lat: metadata.data.coordinates.latitude,
-            lon: metadata.data.coordinates.longitude
-          }}
-        />
+        {
+          metadata &&
+          metadata.coordinates &&
+          metadata.coordinates.latitude &&
+          metadata.coordinates.longitude && (
+            <Map
+              zoom={10}
+              width={300}
+              coordinates={{
+                lat: metadata.coordinates.latitude,
+                lon: metadata.coordinates.longitude
+              }}
+            />
+          )
+        }
       </div>
     );
   }
 
-  renderStringProp (prop, initialValue) {
-    const { metadata } = this.state;
-    const value = metadata[prop.key] || initialValue;
-
+  renderStringProp (key, value, prop) {
     const onChange = (e) => {
-      this.propUpdate(prop.key, e.target.value);
+      this.propUpdate(key, e.target.value);
     };
 
     return (
-      <React.Fragment key={`form-field-${prop.key}`}>
+      <React.Fragment key={`form-field-${key}`}>
         <label className='form__label'>{prop.title}</label>
         <input
           type='text'
@@ -123,16 +132,13 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderIntegerProp (prop, initialValue) {
-    const { metadata } = this.state;
-    const value = metadata[prop.key] || initialValue;
-
+  renderIntegerProp (key, value, prop) {
     const onChange = (e) => {
-      this.propUpdate(prop.key, e.target.value);
+      this.propUpdate(key, e.target.value);
     };
 
     return (
-      <React.Fragment key={`form-field-${prop.key}`}>
+      <React.Fragment key={`form-field-${key}`}>
         <label className='form__label'>{prop.title}</label>
         <input
           type='number'
@@ -144,16 +150,13 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderBooleanProp (prop, initialValue) {
-    const { metadata } = this.state;
-    const value = metadata[prop.key] || initialValue;
-
+  renderBooleanProp (key, value, prop) {
     const onChange = (e) => {
-      this.propUpdate(prop.key, e.target.checked);
+      this.propUpdate(key, e.target.checked);
     };
 
     return (
-      <React.Fragment key={`form-field-${prop.key}`}>
+      <React.Fragment key={`form-field-${key}`}>
         <label className='form__label'>{prop.title}</label>
         <input
           type='checkbox'
@@ -165,25 +168,20 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderSelectProp (prop, initialValue) {
-    const { metadata } = this.state;
-    const value = metadata[prop.key] || initialValue;
-
+  renderSelectProp (key, value, prop) {
     const availableValues = prop.enum;
 
     let options;
     if (availableValues) {
-      options = availableValues.map((key) => {
-        return { key, label: key };
-      });
+      options = availableValues.map((k) => ({ key: k, label: k }));
     }
 
     const onChange = (val) => {
-      this.propUpdate(prop.key, val.key);
+      this.propUpdate(key, val.key);
     };
 
     return (
-      <React.Fragment key={`form-field-${prop.key}`}>
+      <React.Fragment key={`form-field-${key}`}>
         <label className='form__label'>{prop.title}</label>
         <Select
           value={{ key: value, label: value }}
@@ -197,30 +195,29 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderMultiSelectProp (prop, initialValue) {
-    const { metadata } = this.state;
-    const value = metadata[prop.key] || initialValue;
-
+  renderMultiSelectProp (key, value, prop) {
     const availableValues = prop.items.enum;
 
     let options;
     if (availableValues) {
-      options = availableValues
-        .map((key) => {
-          return { key, label: key };
-        });
+      options = availableValues.map((k) => ({ key: k, label: k }));
     }
 
     const onChange = (value) => {
-      this.propUpdate(prop.key, value);
+      this.propUpdate(key, value.map((val) => val.key));
     };
 
+    let values;
+    if (value) {
+      values = value.map((val) => ({ key: val, label: val }));
+    }
+
     return (
-      <React.Fragment key={`form-field-${prop.key}`}>
+      <React.Fragment key={`form-field-${key}`}>
         <label className='form__label'>{prop.title}</label>
         <Select
           isMulti
-          value={value}
+          value={values}
           options={options}
           onChange={onChange}
           getOptionValue={(option) => {
@@ -231,30 +228,32 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderEditSection (section) {
+  renderEditSection (section, keyPrefix) {
     const { location } = this.props;
     const { metadata } = location;
 
     return (
-      <div className='edit-box instrument-edit'>
+      <div className='edit-box' key={`edit-section-${section.name}`}>
         <div className='edit-box-toggle'>
           {section.name}
         </div>
         <div className='edit-box-content'>
           {
             section.properties.map((prop) => {
-              const initialValue = metadata.data[prop.key];
+              const key = keyPrefix ? `${keyPrefix}.${prop.key}` : prop.key;
+              const value = keypath.get(metadata || {}, key);
+
               switch (prop.type) {
                 case 'string':
                   return prop.enum
-                    ? this.renderSelectProp(prop, initialValue)
-                    : this.renderStringProp(prop, initialValue);
+                    ? this.renderSelectProp(key, value, prop)
+                    : this.renderStringProp(key, value, prop);
                 case 'integer':
-                  return this.renderIntegerProp(prop, initialValue);
+                  return this.renderIntegerProp(key, value, prop);
                 case 'array':
-                  return this.renderMultiSelectProp(prop, initialValue);
+                  return this.renderMultiSelectProp(key, value, prop);
                 case 'boolean':
-                  return this.renderBooleanProp(prop, initialValue);
+                  return this.renderBooleanProp(key, value, prop);
               }
             })
           }
@@ -263,11 +262,32 @@ class LocationEdit extends React.Component {
     );
   }
 
+  renderEditInstruments () {
+    const { location } = this.props;
+
+    let instruments;
+    if (location.metadata) {
+      instruments = keypath.get(location, 'metadata.instruments') || [];
+    } else {
+      instruments = [];
+    }
+
+    if (!instruments.length) {
+      instruments.push({});
+    }
+
+    return instruments.map((instrument, i) => {
+      const section = Object.assign({}, editorGroups.instrument, {
+        name: `Instrument ${i + 1}`
+      });
+
+      return this.renderEditSection(section, `instruments.${i}`);
+    });
+  }
+
   renderMetadataForm () {
     const { location } = this.props;
-    const { metadata } = location;
-
-    if (!location || !metadata) return null;
+    if (!location) return null;
 
     return (
       <main role='main'>
@@ -280,11 +300,9 @@ class LocationEdit extends React.Component {
           <h2 className='location-view-header'>
             Instruments
           </h2>
-          <div className='edit-box instrument-edit'>
-            {
-
-            }
-          </div>
+          {
+            this.renderEditInstruments()
+          }
 
           <div className='flex justify-between'>
             <button
@@ -308,19 +326,17 @@ class LocationEdit extends React.Component {
   }
 
   onAddInstrumentClick () {
-
+    const { location } = this.props;
+    location.metadata.instruments.push({});
+    this.props.updateMetadata(location.metadata);
   }
 
   onSaveLocationClick () {
     const { match } = this.props;
-
-    const metadata = Object.assign(
-      {},
-      this.props.metadata.data,
-      this.state.metadata
-    );
-
-    this.props.putMetadata(match.params.id, metadata);
+    const metadata = Object.assign({}, this.props.location.metadata);
+    this.props.putMetadata(match.params.id, metadata).then(() => {
+      this.props.history.push(`/location/${match.params.id}`);
+    });
   }
 
   render () {
@@ -336,14 +352,14 @@ class LocationEdit extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    location: state.locations.location
-  };
+  const { location } = state.locations;
+  return { location };
 };
 
 const mapDispatchToProps = {
   getMetadata,
-  putMetadata
+  putMetadata,
+  updateMetadata
 };
 
 export default connect(

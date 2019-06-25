@@ -25,12 +25,13 @@ export function getMetadata (id) {
   return (dispatch, getState) => {
     dispatch({ type: constants.LOADING_METADATA });
 
-    api.getMetadata(id)
+    return api.getMetadata(id)
       .then(data => {
         dispatch({
           type: constants.LOADED_METADATA,
           data: data.results
         });
+        return data.results;
       })
       .catch(err => {
         dispatch({
@@ -43,11 +44,11 @@ export function getMetadata (id) {
 
 export function putMetadata (id, obj) {
   return (dispatch, getState) => {
-    api.putMetadata(id, obj)
+    return api.putMetadata(id, obj)
       .then(data => {
         dispatch({
           type: constants.PUT_METADATA,
-          data: data
+          data
         });
       })
       .catch(err => {
@@ -56,5 +57,12 @@ export function putMetadata (id, obj) {
           error: err
         });
       });
+  };
+}
+
+export function updateMetadata (data) {
+  return {
+    type: constants.UPDATE_METADATA,
+    data
   };
 }
