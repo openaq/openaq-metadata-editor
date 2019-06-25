@@ -76,7 +76,6 @@ class LocationEdit extends React.Component {
   renderInfo () {
     const { location } = this.props;
     const { metadata } = location;
-    console.log('location', location);
     return (
       <div className='flex edit-container justify-between'>
         <div className='location-edit-details'>
