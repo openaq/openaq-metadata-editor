@@ -6829,7 +6829,7 @@ ono@^4.0.11:
 
 openaq-data-format@openaq/openaq-data-format#location-json-schema:
   version "0.0.0"
-  resolved "https://codeload.github.com/openaq/openaq-data-format/tar.gz/b6b6b1a6e239eb07c2ed4295197aa6002092b6d9"
+  resolved "https://codeload.github.com/openaq/openaq-data-format/tar.gz/6eedbff22e582f85099383b9d988b5a64c65d75c"
   dependencies:
     jsonschema "^1.2.4"
 

@@ -10,7 +10,7 @@ class LocationView extends React.Component {
   componentDidMount () {
     const { match: { params: { id } } } = this.props;
 
-    if (!this.props.location) {
+    if (!this.props.location.id) {
       this.props.getMetadata(id);
     }
   }
@@ -58,7 +58,7 @@ class LocationView extends React.Component {
           <h1 className='page__title'>
             <span className='location-id'>{metadata.locationId}</span>
             <span className='location-name'>{location.location}</span>
-            <span className='location-city'>{location.city}, {metadata.country}</span>
+            <span className='location-city'>{location.city}, {location.country}</span>
           </h1>
         </Header>
 
@@ -69,19 +69,26 @@ class LocationView extends React.Component {
                 <li>Location: <b>{location.location}</b></li>
                 <li>City: <b>{location.city}</b></li>
                 <li>Country: <b>{location.country}</b></li>
-                <li>Latitude: <b>{metadata.coordinates.latitude}</b></li>
-                <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>
-                <li>Location Type: <b>{metadata.siteType}</b></li>
+                {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
+                {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
+                {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
               </ul>
 
-              <Map
-                zoom={10}
-                width={300}
-                coordinates={{
-                  lat: metadata.coordinates.latitude,
-                  lon: metadata.coordinates.longitude
-                }}
-              />
+              {
+                metadata &&
+                metadata.coordinates &&
+                metadata.coordinates.latitude &&
+                metadata.coordinates.longitude && (
+                  <Map
+                    zoom={10}
+                    width={300}
+                    coordinates={{
+                      lat: metadata.coordinates.latitude,
+                      lon: metadata.coordinates.longitude
+                    }}
+                  />
+                )
+              }
             </div>
 
             <div className='location-view-section'>
