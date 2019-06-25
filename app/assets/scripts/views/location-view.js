@@ -21,7 +21,6 @@ class LocationView extends React.Component {
 
     const { metadata } = location;
 
-    console.log('location', location);
     if (!metadata) {
       return (
         <div className='page page--location-view'>
