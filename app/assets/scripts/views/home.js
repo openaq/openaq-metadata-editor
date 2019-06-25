@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Pagination from 'react-js-pagination';
 
 import Header from '../components/header';
 import Search from '../components/search';
@@ -13,7 +14,8 @@ class Home extends React.Component {
     super(props);
     this.state = {
       search: null,
-      filter: null
+      filter: null,
+      activePage: 1
     };
   }
 
@@ -29,9 +31,15 @@ class Home extends React.Component {
     this.props.getMetadataList();
   }
 
+  handlePageChange (pageNumber) {
+    this.setState({ activePage: pageNumber });
+  }
+
   render () {
-    const { search, filter } = this.state;
+    const { search, filter, activePage } = this.state;
     const { history, metadataList } = this.props;
+    if (!metadataList) return <div></div>;
+    const listSlice = metadataList.slice((activePage - 1) * 10, (activePage - 1) * 10 + 10);
 
     return (
       <div className='page page--homepage'>
@@ -40,12 +48,17 @@ class Home extends React.Component {
           <Search onChange={(v) => this.onSearchChange(v)} />
         </Header>
         <main role='main'>
-          <Filter locations={metadataList} />
+          <Filter locations={listSlice} />
           <Table
-            locations={metadataList}
+            locations={listSlice}
             search={search}
             filter={filter}
             history={history}
+          />
+          <Pagination
+            activePage={activePage}
+            totalItemsCount={metadataList.length}
+            onChange={this.handlePageChange.bind(this)}
           />
         </main>
       </div>
