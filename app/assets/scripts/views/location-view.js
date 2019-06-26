@@ -83,10 +83,7 @@ class LocationView extends React.Component {
                   <Map
                     zoom={10}
                     width={300}
-                    coordinates={{
-                      lat: metadata.coordinates.latitude,
-                      lon: metadata.coordinates.longitude
-                    }}
+                    coordinates={[metadata.coordinates.longitude, metadata.coordinates.latitude]}
                   />
                 )
               }

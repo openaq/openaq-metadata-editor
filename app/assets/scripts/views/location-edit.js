@@ -8,7 +8,7 @@ import parse from 'date-fns/parse';
 import { schemas } from 'openaq-data-format';
 
 import Header from '../components/header';
-import Map from '../components/map';
+import MapEdit from '../components/map-edit';
 
 import { getMetadata, putMetadata, updateMetadata } from '../state/locations/actions';
 
@@ -78,39 +78,22 @@ class LocationEdit extends React.Component {
   renderInfo () {
     const { location } = this.props;
     const { metadata } = location;
-    return (
-      <div className='flex edit-container justify-between'>
-        <div className='location-edit-details'>
-          <h1 className='page__title'>
-            Location ID
-            <span className='location-id'>{location.id}</span>
-          </h1>
-          <ul className='location-detail-list'>
-            {/* TODO: make sure location, city, country exist */}
-            <li>Location: <b>{location.location}</b></li>
-            <li>City: <b>{location.city}</b></li>
-            <li>Country: <b>{location.country}</b></li>
-            {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
-            {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
-            {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
-          </ul>
-        </div>
 
-        {
-          metadata &&
-          metadata.coordinates &&
-          metadata.coordinates.latitude &&
-          metadata.coordinates.longitude && (
-            <Map
-              zoom={10}
-              width={300}
-              coordinates={{
-                lat: metadata.coordinates.latitude,
-                lon: metadata.coordinates.longitude
-              }}
-            />
-          )
-        }
+    return (
+      <div className='location-edit-details'>
+        <h1 className='page__title'>
+          Location ID
+          <span className='location-id'>{location.id}</span>
+        </h1>
+        <ul className='location-detail-list'>
+          {/* TODO: make sure location, city, country exist */}
+          <li>Location: <b>{location.location}</b></li>
+          <li>City: <b>{location.city}</b></li>
+          <li>Country: <b>{location.country}</b></li>
+          {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
+          {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
+          {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
+        </ul>
       </div>
     );
   }
@@ -309,13 +292,43 @@ class LocationEdit extends React.Component {
     });
   }
 
+  renderMap () {
+    const { location } = this.props;
+    const { metadata } = location;
+
+    const hasCoordinates = metadata &&
+      metadata.coordinates &&
+      metadata.coordinates.latitude &&
+      metadata.coordinates.longitude;
+
+    const coordinates = hasCoordinates
+      ? [metadata.coordinates.longitude, metadata.coordinates.latitude]
+      : [0, 0];
+
+    const onChange = (coordinates) => {
+      this.propUpdate('coordinates', coordinates);
+    };
+
+    return (
+      <MapEdit
+        zoom={10}
+        width={300}
+        coordinates={coordinates}
+        onChange={onChange}
+      />
+    );
+  }
+
   renderMetadataForm () {
     const { location } = this.props;
     if (!location) return null;
 
     return (
       <main role='main'>
-        {this.renderInfo()}
+        <div className='flex edit-container justify-between'>
+          {this.renderInfo()}
+          {this.renderMap()}
+        </div>
 
         <div className='inner-edit'>
           {this.renderEditSection(editorGroups.siteDetails)}
