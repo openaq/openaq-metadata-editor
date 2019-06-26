@@ -1,0 +1,1 @@
+export const RESET_FILTERS = 'RESET_FILTERS';
