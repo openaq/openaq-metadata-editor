@@ -13,17 +13,23 @@ import auth from './auth';
  */
 function _convertFiltersToParamString (filters) {
   let params = '';
-  let { countries } = filters;
+  let { countries, installationDate } = filters;
 
   /** countries */
   countries.forEach(country => {
-    params = params += `&country=${country.value}`;
+    params = `${params}&country=${country.value}`;
   });
+
+  /** installation dates */
+  params = `${params}&activationDate=["${new Date(installationDate.start)}","${new Date(installationDate.end)}"]`;
+
+  /** elevation */
+  params = `${params}`;
 
   return params;
 }
 
-function request (method, url, params = {}, filters = {}) {
+function request (method, url, params = {}, filters) {
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${auth.getAccessToken()}`
@@ -44,7 +50,9 @@ function request (method, url, params = {}, filters = {}) {
     options.body = JSON.stringify(params);
   } else {
     query = qs.stringify(params);
-    query = `${query}&${_convertFiltersToParamString(filters)}`;
+    if (filters) {
+      query = `${query}&${_convertFiltersToParamString(filters)}`;
+    }
   }
 
   const fullUrl = `${url}?${query}`;

@@ -1,7 +1,6 @@
 import * as constants from './constants';
 import api from '../../services/openaq-api';
 
-
 export function getMetadataList (params) {
   return (dispatch, getState) => {
     dispatch({ type: constants.LOADING_METADATA_LIST });
