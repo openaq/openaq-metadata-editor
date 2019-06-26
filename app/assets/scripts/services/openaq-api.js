@@ -35,13 +35,13 @@ function request (method, url, params = {}) {
 function getMetadataList (params) {
   const url = `${apiUrl}/v1/locations`;
 
-  return request('GET', url, Object.assign({}, { 'metadata': 'true' }, params));
+  return request('GET', url, Object.assign({}, { metadata: 'true' }, params));
 }
 
 function getMetadata (id) {
-  const url = `${apiUrl}/v1/locations/${id}?metadata=true`;
+  const url = `${apiUrl}/v1/locations/${id}`;
 
-  return request('GET', url);
+  return request('GET', url, { metadata: true });
 }
 
 function putMetadata (id, params) {

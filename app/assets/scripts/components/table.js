@@ -65,26 +65,22 @@ class Table extends React.Component {
     const { locations } = this.props;
 
     return (
-      <section className='fold'>
-        <div className='inner'>
-          <div className='responsive-table-wrapper'>
-            <table className='table table--zebra table-with-link-rows'>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Country</th>
-                  <th>City</th>
-                  <th>Activated</th>
-                  <th>Site Type</th>
-                  <th>Instruments</th>
-                  <th>Elevation (m)</th>
-                </tr>
-              </thead>
-              { this.renderLocations(locations) }
-            </table>
-          </div>
-        </div>
-      </section>
+      <div className='responsive-table-wrapper'>
+        <table className='table table--zebra table-with-link-rows'>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Country</th>
+              <th>City</th>
+              <th>Activated</th>
+              <th>Site Type</th>
+              <th>Instruments</th>
+              <th>Elevation (m)</th>
+            </tr>
+          </thead>
+          { this.renderLocations(locations) }
+        </table>
+      </div>
     );
   }
 }

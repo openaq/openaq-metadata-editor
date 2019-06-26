@@ -49,17 +49,28 @@ class Home extends React.Component {
         </Header>
         <main role='main'>
           <Filter locations={metadataList} />
-          <Table
-            locations={metadataList}
-            search={search}
-            filter={filter}
-            history={history}
-          />
-          <Pagination
-            activePage={activePage}
-            totalItemsCount={totalListLength}
-            onChange={this.handlePageChange.bind(this)}
-          />
+          <section className='fold'>
+            <div className='inner'>
+              <Table
+                locations={metadataList}
+                search={search}
+                filter={filter}
+                history={history}
+              />
+              <Pagination
+                activePage={activePage}
+                totalItemsCount={totalListLength}
+                onChange={this.handlePageChange.bind(this)}
+                hideFirstLastPages
+                nextPageText=''
+                prevPageText=''
+                innerClass='paginator'
+                itemClass='paginator__wrapper'
+                itemClassPrev='previous'
+                itemClassNext='next'
+              />
+            </div>
+          </section>
         </main>
       </div>
     );
