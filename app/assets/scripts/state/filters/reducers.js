@@ -9,7 +9,10 @@ const initialState = {
     min: 0,
     max: 10000
   },
-  completeness: null,
+  completeness: {
+    min: 0,
+    max: 100
+  },
   installationDate: {
     start: subYears(new Date(), 10),
     end: new Date()

@@ -50,6 +50,10 @@ const formInputOptions = {
     min: 0,
     max: 10000
   },
+  completeness: {
+    min: 0,
+    max: 100
+  },
   installationDate: {
     start: subYears(new Date(), 10),
     end: new Date()
@@ -131,7 +135,7 @@ class Filter extends React.Component {
           {this.renderInput('countries')}
         </div>
         <div className='filter-column'>
-          {/* this.renderInput('completeness') */}
+          {this.renderInput('completeness') }
           {this.renderInput('installationDate')}
           {this.renderInput('elevation')}
         </div>

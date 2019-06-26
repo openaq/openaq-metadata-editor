@@ -13,7 +13,7 @@ import auth from './auth';
  */
 function _convertFiltersToParamString (filters) {
   let params = '';
-  let { countries, installationDate, elevation, pollutants, siteType } = filters;
+  let { countries, installationDate, completeness, elevation, pollutants, siteType } = filters;
 
   /** countries */
   countries.forEach(country => {
@@ -35,6 +35,9 @@ function _convertFiltersToParamString (filters) {
   Object.keys(siteType).forEach(siteType => {
     params = `${params}&siteType=${siteType}`;
   });
+
+  /** Completeness */
+  params = `${params}&completeness=["${completeness.min}","${completeness.max}"]`;
 
   return params;
 }
