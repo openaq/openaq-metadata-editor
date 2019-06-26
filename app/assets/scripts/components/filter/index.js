@@ -14,24 +14,6 @@ const countryList = alpha2Countries.getNameCodePairs().map((country) => {
   };
 });
 
-const initialState = {
-  open: false,
-  filter: {
-    countries: [],
-    pollutants: {},
-    siteType: {},
-    elevation: {
-      min: 0,
-      max: 10000
-    },
-    completeness: null,
-    installationDate: {
-      start: subYears(new Date(), 10),
-      end: new Date()
-    }
-  }
-};
-
 const filterInputs = {
   countries: {
     name: 'Countries',
@@ -68,6 +50,10 @@ const formInputOptions = {
     min: 0,
     max: 10000
   },
+  completeness: {
+    min: 0,
+    max: 100
+  },
   installationDate: {
     start: subYears(new Date(), 10),
     end: new Date()
@@ -77,18 +63,14 @@ const formInputOptions = {
 class Filter extends React.Component {
   constructor (props) {
     super(props);
-    // const { locations } = props;
-    const state = Object.assign({}, initialState);
 
-    this.state = state;
+    this.state = {
+      open: false
+    };
   }
 
   reset () {
-    this.setState(Object.assign({}, initialState));
-  }
-
-  resetFilter () {
-    this.setState({ filter: Object.assign({}, initialState).filter });
+    this.setState(Object.assign({}, { open: false }));
   }
 
   toggle () {
@@ -102,9 +84,7 @@ class Filter extends React.Component {
   }
 
   setFilterValue (key, value) {
-    const { filter } = this.state;
-    filter[key] = value;
-    this.setState({ filter });
+    this.props.onChange({ [key]: value });
   }
 
   renderToggle () {
@@ -133,7 +113,7 @@ class Filter extends React.Component {
   renderInput (key) {
     const { Component, name } = filterInputs[key];
     const options = formInputOptions[key];
-    const value = this.state.filter[key];
+    const value = this.props.filters[key];
     const onChange = (value) => {
       this.setFilterValue(key, value);
     };
@@ -155,7 +135,7 @@ class Filter extends React.Component {
           {this.renderInput('countries')}
         </div>
         <div className='filter-column'>
-          {/* this.renderInput('completeness') */}
+          {this.renderInput('completeness') }
           {this.renderInput('installationDate')}
           {this.renderInput('elevation')}
         </div>

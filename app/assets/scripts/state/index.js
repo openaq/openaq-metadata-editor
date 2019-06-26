@@ -5,6 +5,7 @@ import config from '../config';
 
 import locations from './locations/reducers';
 import user from './user/reducers';
+import filters from './filters/reducers';
 
 const logger = createLogger({
   level: 'info',
@@ -34,7 +35,8 @@ const composedEnhancers = compose(
 
 const reducer = combineReducers({
   locations,
-  user
+  user,
+  filters
 });
 
 const store = createStore(reducer, initialState, composedEnhancers);

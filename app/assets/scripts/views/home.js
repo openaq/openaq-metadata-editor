@@ -8,6 +8,7 @@ import Filter from '../components/filter';
 import Table from '../components/table';
 
 import { getMetadataList } from '../state/locations/actions';
+import { setFilters } from '../state/filters/actions';
 
 class Home extends React.Component {
   constructor (props) {
@@ -23,8 +24,9 @@ class Home extends React.Component {
     this.setState({ search: value });
   }
 
-  onFilterChange (value) {
-    this.setState({ filter: value });
+  onFilterChange (filter) {
+    this.props.setFilters(filter);
+    this.props.getMetadataList({ limit: 10, page: 1 });
   }
 
   componentDidMount () {
@@ -37,8 +39,8 @@ class Home extends React.Component {
   }
 
   render () {
-    const { search, filter, activePage } = this.state;
-    const { history, metadataList, totalListLength } = this.props;
+    const { search, activePage } = this.state;
+    const { history, metadataList, totalListLength, filters } = this.props;
     if (!metadataList) return <div />;
 
     return (
@@ -48,13 +50,16 @@ class Home extends React.Component {
           <Search onChange={(v) => this.onSearchChange(v)} />
         </Header>
         <main role='main'>
-          <Filter locations={metadataList} />
+          <Filter
+            locations={metadataList}
+            filters={filters}
+            onChange={this.onFilterChange.bind(this)}
+          />
           <section className='fold'>
             <div className='inner'>
               <Table
                 locations={metadataList}
                 search={search}
-                filter={filter}
                 history={history}
               />
               <Pagination
@@ -80,12 +85,14 @@ class Home extends React.Component {
 const mapStateToProps = (state) => {
   return {
     totalListLength: state.locations.metadataList.meta.found,
-    metadataList: state.locations.metadataList.results
+    metadataList: state.locations.metadataList.results,
+    filters: state.filters
   };
 };
 
 const mapDispatchToProps = {
-  getMetadataList
+  getMetadataList,
+  setFilters
 };
 
 export default connect(

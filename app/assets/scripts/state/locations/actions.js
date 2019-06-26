@@ -4,8 +4,9 @@ import api from '../../services/openaq-api';
 export function getMetadataList (params) {
   return (dispatch, getState) => {
     dispatch({ type: constants.LOADING_METADATA_LIST });
+    const { filters } = getState();
 
-    return api.getMetadataList(params)
+    return api.getMetadataList(params, filters)
       .then(data => {
         dispatch({
           type: constants.LOADED_METADATA_LIST,
