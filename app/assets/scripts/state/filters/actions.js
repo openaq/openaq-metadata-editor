@@ -5,3 +5,10 @@ export function resetFilters (params) {
     type: constants.RESET_FILTERS
   };
 }
+
+export function setFilters (data) {
+  return {
+    type: constants.SET_FILTERS,
+    data
+  };
+}
