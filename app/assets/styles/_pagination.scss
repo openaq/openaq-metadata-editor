@@ -35,6 +35,9 @@
     span {
       @extend .visually-hidden;
     }
+    &::before {
+      margin-right: 0;
+    }
   }
 
   .paginator__wrapper.previous a {
