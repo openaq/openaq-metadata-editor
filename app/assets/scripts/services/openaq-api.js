@@ -13,7 +13,7 @@ import auth from './auth';
  */
 function _convertFiltersToParamString (filters) {
   let params = '';
-  let { countries, installationDate } = filters;
+  let { countries, installationDate, elevation } = filters;
 
   /** countries */
   countries.forEach(country => {
@@ -24,7 +24,7 @@ function _convertFiltersToParamString (filters) {
   params = `${params}&activationDate=["${new Date(installationDate.start)}","${new Date(installationDate.end)}"]`;
 
   /** elevation */
-  params = `${params}`;
+  params = `${params}&inletHeight=["${elevation.min}", "${elevation.max}"]`;
 
   return params;
 }
