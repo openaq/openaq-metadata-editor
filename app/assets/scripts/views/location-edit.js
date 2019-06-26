@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import keypath from 'obj-keypath';
+import DatePicker from 'react-datepicker';
+import parse from 'date-fns/parse';
 
 import { schemas } from 'openaq-data-format';
 
@@ -227,6 +229,25 @@ class LocationEdit extends React.Component {
     );
   }
 
+  renderDateProp (key, value, prop) {
+    const onChange = (val) => {
+      this.propUpdate(key, val);
+    };
+
+    const date = value ? parse(value) : '';
+
+    return (
+      <React.Fragment key={`form-field-${key}`}>
+        <label className='form__label'>{prop.title}</label>
+        <DatePicker
+          className='form__control'
+          selected={date}
+          onChange={onChange}
+        />
+      </React.Fragment>
+    );
+  }
+
   renderEditSection (section, keyPrefix) {
     const { location } = this.props;
     const { metadata } = location;
@@ -244,9 +265,13 @@ class LocationEdit extends React.Component {
 
               switch (prop.type) {
                 case 'string':
-                  return prop.enum
-                    ? this.renderSelectProp(key, value, prop)
-                    : this.renderStringProp(key, value, prop);
+                  if (prop.format && prop.format === 'date-time') {
+                    return this.renderDateProp(key, value, prop);
+                  } else if (prop.enum) {
+                    return this.renderSelectProp(key, value, prop);
+                  } else {
+                    return this.renderStringProp(key, value, prop);
+                  }
                 case 'integer':
                   return this.renderIntegerProp(key, value, prop);
                 case 'array':

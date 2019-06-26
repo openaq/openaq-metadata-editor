@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import format from 'date-fns/format';
 
 import Header from '../components/header';
 import Map from '../components/map';
@@ -111,9 +112,9 @@ class LocationView extends React.Component {
               </h2>
               <dl>
                 <dt>Installation Date</dt>
-                <dd>{metadata.activationDate}</dd>
+                <dd>{format(metadata.activationDate, 'YYYY-MM-DD')}</dd>
                 <dt>Deactivation Date</dt>
-                <dd>{metadata.deactivationDate}</dd>
+                <dd>{format(metadata.deactivationDate, 'YYYY-MM-DD')}</dd>
               </dl>
             </div>
 
@@ -137,7 +138,7 @@ class LocationView extends React.Component {
                           <dt>Manufacturer</dt>
                           <dd>{instr.manufacturer}</dd>
                           <dt>Installed</dt>
-                          <dd>{instr.activationDate}</dd>
+                          <dd>{format(instr.activationDate, 'YYYY-MM-DD')}</dd>
                         </dl>
                       </div>
                     );
