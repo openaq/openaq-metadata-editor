@@ -27,15 +27,15 @@ function request (method, url, params = {}) {
     query = qs.stringify(params);
   }
 
-  const fullUrl = url + query;
+  const fullUrl = `${url}?${query}`;
   return fetch(fullUrl, options)
     .then(res => res.json());
 }
 
 function getMetadataList (params) {
-  const url = `${apiUrl}/v1/locations?metadata=true`;
+  const url = `${apiUrl}/v1/locations`;
 
-  return request('GET', url, params);
+  return request('GET', url, Object.assign({}, { 'metadata': 'true' }, params));
 }
 
 function getMetadata (id) {

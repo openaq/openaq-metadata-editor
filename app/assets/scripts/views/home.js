@@ -28,18 +28,18 @@ class Home extends React.Component {
   }
 
   componentDidMount () {
-    this.props.getMetadataList();
+    this.props.getMetadataList({ limit: 10, page: 1 });
   }
 
   handlePageChange (pageNumber) {
     this.setState({ activePage: pageNumber });
+    this.props.getMetadataList({ limit: 10, page: pageNumber });
   }
 
   render () {
     const { search, filter, activePage } = this.state;
-    const { history, metadataList } = this.props;
-    if (!metadataList) return <div></div>;
-    const listSlice = metadataList.slice((activePage - 1) * 10, (activePage - 1) * 10 + 10);
+    const { history, metadataList, totalListLength } = this.props;
+    if (!metadataList) return <div />;
 
     return (
       <div className='page page--homepage'>
@@ -48,16 +48,16 @@ class Home extends React.Component {
           <Search onChange={(v) => this.onSearchChange(v)} />
         </Header>
         <main role='main'>
-          <Filter locations={listSlice} />
+          <Filter locations={metadataList} />
           <Table
-            locations={listSlice}
+            locations={metadataList}
             search={search}
             filter={filter}
             history={history}
           />
           <Pagination
             activePage={activePage}
-            totalItemsCount={metadataList.length}
+            totalItemsCount={totalListLength}
             onChange={this.handlePageChange.bind(this)}
           />
         </main>
@@ -68,6 +68,7 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    totalListLength: state.locations.metadataList.meta.found,
     metadataList: state.locations.metadataList.results
   };
 };
