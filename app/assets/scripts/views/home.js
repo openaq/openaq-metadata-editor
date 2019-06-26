@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Pagination from 'react-js-pagination';
 
 import Header from '../components/header';
 import Search from '../components/search';
@@ -13,7 +14,8 @@ class Home extends React.Component {
     super(props);
     this.state = {
       search: null,
-      filter: null
+      filter: null,
+      activePage: 1
     };
   }
 
@@ -26,12 +28,18 @@ class Home extends React.Component {
   }
 
   componentDidMount () {
-    this.props.getMetadataList();
+    this.props.getMetadataList({ limit: 10, page: 1 });
+  }
+
+  handlePageChange (pageNumber) {
+    this.setState({ activePage: pageNumber });
+    this.props.getMetadataList({ limit: 10, page: pageNumber });
   }
 
   render () {
-    const { search, filter } = this.state;
-    const { history, metadataList } = this.props;
+    const { search, filter, activePage } = this.state;
+    const { history, metadataList, totalListLength } = this.props;
+    if (!metadataList) return <div />;
 
     return (
       <div className='page page--homepage'>
@@ -41,12 +49,28 @@ class Home extends React.Component {
         </Header>
         <main role='main'>
           <Filter locations={metadataList} />
-          <Table
-            locations={metadataList}
-            search={search}
-            filter={filter}
-            history={history}
-          />
+          <section className='fold'>
+            <div className='inner'>
+              <Table
+                locations={metadataList}
+                search={search}
+                filter={filter}
+                history={history}
+              />
+              <Pagination
+                activePage={activePage}
+                totalItemsCount={totalListLength}
+                onChange={this.handlePageChange.bind(this)}
+                hideFirstLastPages
+                nextPageText=''
+                prevPageText=''
+                innerClass='paginator'
+                itemClass='paginator__wrapper'
+                itemClassPrev='previous'
+                itemClassNext='next'
+              />
+            </div>
+          </section>
         </main>
       </div>
     );
@@ -55,6 +79,7 @@ class Home extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    totalListLength: state.locations.metadataList.meta.found,
     metadataList: state.locations.metadataList.results
   };
 };

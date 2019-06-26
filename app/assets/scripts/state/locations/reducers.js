@@ -1,7 +1,7 @@
 import * as constants from './constants';
 
 const initialState = {
-  metadataList: {},
+  metadataList: { results: [], meta: { found: 0 } },
   location: {
     metadata: {
       instruments: []
@@ -12,7 +12,6 @@ const initialState = {
 function reducer (state = initialState, action) {
   switch (action.type) {
     case constants.LOADING_METADATA_LIST: {
-      state.metadataList = [];
       return Object.assign({}, state);
     }
 
