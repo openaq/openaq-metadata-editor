@@ -98,8 +98,14 @@ class LocationView extends React.Component {
                 <dd>{metadata.elevation}</dd>
                 <dt>Site type</dt>
                 <dd>{metadata.siteType}</dd>
-                <dt>Description</dt>
-                <dd>{metadata.notes}</dd>
+                {
+                  metadata.notes && (
+                    <div>
+                      <dt>Description</dt>
+                      <dd>{metadata.notes}</dd>
+                    </div>
+                  )
+                }
               </dl>
             </div>
 
@@ -110,8 +116,14 @@ class LocationView extends React.Component {
               <dl>
                 <dt>Installation Date</dt>
                 <dd>{format(metadata.activationDate, 'YYYY-MM-DD')}</dd>
-                <dt>Deactivation Date</dt>
-                <dd>{format(metadata.deactivationDate, 'YYYY-MM-DD')}</dd>
+                {
+                  metadata.deactivationDate && (
+                    <div>
+                      <dt>Deactivation Date</dt>
+                      <dd>{format(metadata.deactivationDate, 'YYYY-MM-DD')}</dd>
+                    </div>
+                  )
+                }
               </dl>
             </div>
 
@@ -135,8 +147,14 @@ class LocationView extends React.Component {
                           <dd><b>{instr.parameters.join(', ')}</b></dd>
                           <dt>Activated</dt>
                           <dd>{format(instr.activationDate, 'YYYY-MM-DD')}</dd>
-                          <dt>Deactivated</dt>
-                          <dd>{format(instr.deactivationDate, 'YYYY-MM-DD')}</dd>
+                          {
+                            instr.deactivationDate && (
+                              <div>
+                                <dt>Deactivated</dt>
+                                <dd>{format(instr.deactivationDate, 'YYYY-MM-DD')}</dd>
+                              </div>
+                            )
+                          }
                           <dt>Model</dt>
                           <dd>{instr.modelName}</dd>
                           <dt>Manufacturer</dt>
@@ -153,8 +171,14 @@ class LocationView extends React.Component {
                           <dd>{instr.reportingFrequency}</dd>
                           <dt>Serial No.</dt>
                           <dd>{instr.serialNumber}</dd>
-                          <dt>Notes</dt>
-                          <dd>{instr.notes}</dd>
+                          {
+                            instr.notes && (
+                              <div>
+                                <dt>Description</dt>
+                                <dd>{instr.notes}</dd>
+                              </div>
+                            )
+                          }
                         </dl>
                       </div>
                     );
