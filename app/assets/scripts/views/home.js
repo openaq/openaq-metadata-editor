@@ -5,6 +5,7 @@ import Pagination from 'react-js-pagination';
 import Header from '../components/header';
 import Filter from '../components/filter';
 import Table from '../components/table';
+import debounce from 'lodash.debounce';
 
 import { getMetadataList } from '../state/locations/actions';
 import { setFilters } from '../state/filters/actions';
@@ -17,6 +18,10 @@ class Home extends React.Component {
       filter: null,
       activePage: 1
     };
+
+    this.getList = debounce((page) => {
+      this.props.getMetadataList({ limit: 10, page: page || 1 });
+    }, 300).bind(this);
   }
 
   onSearchChange (value) {
@@ -25,16 +30,16 @@ class Home extends React.Component {
 
   onFilterChange (filter) {
     this.props.setFilters(filter);
-    this.props.getMetadataList({ limit: 10, page: 1 });
+    this.getList();
   }
 
   componentDidMount () {
-    this.props.getMetadataList({ limit: 10, page: 1 });
+    this.getList();
   }
 
   handlePageChange (pageNumber) {
     this.setState({ activePage: pageNumber });
-    this.props.getMetadataList({ limit: 10, page: pageNumber });
+    this.getList(pageNumber);
   }
 
   render () {
