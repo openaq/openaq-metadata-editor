@@ -98,8 +98,14 @@ class LocationView extends React.Component {
                 <dd>{metadata.elevation}</dd>
                 <dt>Site type</dt>
                 <dd>{metadata.siteType}</dd>
-                <dt>Description</dt>
-                <dd>{metadata.notes}</dd>
+                {
+                  metadata.notes && (
+                    <div>
+                      <dt>Description</dt>
+                      <dd>{metadata.notes}</dd>
+                    </div>
+                  )
+                }
               </dl>
             </div>
 
@@ -110,8 +116,14 @@ class LocationView extends React.Component {
               <dl>
                 <dt>Installation Date</dt>
                 <dd>{format(metadata.activationDate, 'YYYY-MM-DD')}</dd>
-                <dt>Deactivation Date</dt>
-                <dd>{format(metadata.deactivationDate, 'YYYY-MM-DD')}</dd>
+                {
+                  metadata.deactivationDate && (
+                    <div>
+                      <dt>Deactivation Date</dt>
+                      <dd>{format(metadata.deactivationDate, 'YYYY-MM-DD')}</dd>
+                    </div>
+                  )
+                }
               </dl>
             </div>
 
@@ -122,20 +134,51 @@ class LocationView extends React.Component {
               <div className='flex'>
                 {
                   metadata.instruments.map((instr, i) => {
+                    const isActive = instr.active;
                     return (
                       <div className='column' key={`instrument-${i}`}>
                         <h3 className=''>
                           Instrument {i}
                         </h3>
                         <dl>
+                          <dt>Is Active?</dt>
+                          <dd>{isActive ? 'Yes' : 'No'}</dd>
                           <dt>Pollutants</dt>
                           <dd><b>{instr.parameters.join(', ')}</b></dd>
+                          <dt>Activated</dt>
+                          <dd>{format(instr.activationDate, 'YYYY-MM-DD')}</dd>
+                          {
+                            instr.deactivationDate && (
+                              <div>
+                                <dt>Deactivated</dt>
+                                <dd>{format(instr.deactivationDate, 'YYYY-MM-DD')}</dd>
+                              </div>
+                            )
+                          }
                           <dt>Model</dt>
                           <dd>{instr.modelName}</dd>
                           <dt>Manufacturer</dt>
                           <dd>{instr.manufacturer}</dd>
-                          <dt>Installed</dt>
-                          <dd>{format(instr.activationDate, 'YYYY-MM-DD')}</dd>
+                          <dt>Calibration Procedures</dt>
+                          <dd>{instr.calibrationProcedures}</dd>
+                          <dt>Inlet Height</dt>
+                          <dd>{instr.inletHeight}</dd>
+                          <dt>Measurement Style</dt>
+                          <dd>{instr.measurementStyle}</dd>
+                          <dt>Raw Frequency</dt>
+                          <dd>{instr.rawFrequency}</dd>
+                          <dt>Reporting Frequency</dt>
+                          <dd>{instr.reportingFrequency}</dd>
+                          <dt>Serial No.</dt>
+                          <dd>{instr.serialNumber}</dd>
+                          {
+                            instr.notes && (
+                              <div>
+                                <dt>Description</dt>
+                                <dd>{instr.notes}</dd>
+                              </div>
+                            )
+                          }
                         </dl>
                       </div>
                     );
