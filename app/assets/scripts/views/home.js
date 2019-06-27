@@ -46,8 +46,8 @@ class Home extends React.Component {
     return (
       <div className='page page--homepage'>
         <Header>
-          <h1 className='page__title'>Search locations</h1>
-          <Search onChange={(v) => this.onSearchChange(v)} />
+          <h1 className='page__title'>Metadata Editor</h1>
+          <p>Find a station and complete its metadata</p>
         </Header>
         <main role='main'>
           <Filter
