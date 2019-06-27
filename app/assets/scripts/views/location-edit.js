@@ -231,14 +231,26 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderEditSection (section, keyPrefix) {
+  renderEditSection (section, keyPrefix, options = { deletable: false }) {
     const { location } = this.props;
     const { metadata } = location;
+    const { deletable, index } = options;
 
     return (
       <div className='edit-box' key={`edit-section-${section.name}`}>
         <div className='edit-box-toggle'>
           {section.name}
+          {
+            deletable && (
+              <span
+                className='edit-box-delete collecticons collecticons-trash-bin'
+                onClick={() => {
+                  this.onRemoveInstrumentClick(index);
+                }}
+              >
+              </span>
+            )
+          }
         </div>
         <div className='edit-box-content'>
           {
@@ -288,7 +300,11 @@ class LocationEdit extends React.Component {
         name: `Instrument ${i + 1}`
       });
 
-      return this.renderEditSection(section, `instruments.${i}`);
+      const options = i > 0
+        ? { deletable: true, index: i }
+        : { deletable: false };
+
+      return this.renderEditSection(section, `instruments.${i}`, options);
     });
   }
 
@@ -365,6 +381,12 @@ class LocationEdit extends React.Component {
   onAddInstrumentClick () {
     const { location } = this.props;
     location.metadata.instruments.push({});
+    this.props.updateMetadata(location.metadata);
+  }
+
+  onRemoveInstrumentClick (index) {
+    const { location } = this.props;
+    location.metadata.instruments.splice(index, 1);
     this.props.updateMetadata(location.metadata);
   }
 
