@@ -302,7 +302,11 @@ class LocationEdit extends React.Component {
     }
 
     if (!instruments.length) {
-      instruments.push({});
+      instruments.push({
+        type: null,
+        serialNumber: null,
+        parameters: []
+      });
     }
 
     return instruments.map((instrument, i) => {
@@ -389,7 +393,11 @@ class LocationEdit extends React.Component {
 
   onAddInstrumentClick () {
     const { location } = this.props;
-    location.metadata.instruments.push({});
+    location.metadata.instruments.push({
+      type: null,
+      serialNumber: null,
+      parameters: []
+    });
     this.props.updateMetadata(location.metadata);
   }
 
@@ -412,6 +420,7 @@ class LocationEdit extends React.Component {
         error.key = key;
         keypath.set(errorState, key, error);
       });
+      console.log('errors', errors)
       this.props.setFormErrors(errorState, errors.length);
       return false;
     }
