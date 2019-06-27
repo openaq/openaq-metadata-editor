@@ -41,10 +41,10 @@ class Map extends React.Component {
 
     this.map.on('load', () => {
       if (!usingDefaultCoordinates) {
-        console.log('first point', this.draw.add({
+        this.draw.add({
           type: 'Point',
           coordinates
-        }));
+        });
       }
     });
 
