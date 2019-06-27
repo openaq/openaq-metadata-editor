@@ -51,7 +51,7 @@ class Map extends React.Component {
     const updateCoordinates = (e) => {
       const data = this.draw.getAll();
       const { features } = data;
-      const point = usingDefaultCoordinates ? features[features.length - 1] : features[0];
+      const point = !usingDefaultCoordinates ? features[features.length - 1] : features[0];
 
       features.forEach((feature) => {
         if (feature.id === point.id) {
