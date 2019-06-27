@@ -126,7 +126,7 @@ class LocationEdit extends React.Component {
 
   renderIntegerProp (key, value, prop) {
     const onChange = (e) => {
-      this.propUpdate(key, e.target.value);
+      this.propUpdate(key, e.target.value ? Number(e.target.value) : null);
     };
 
     return (
@@ -222,7 +222,7 @@ class LocationEdit extends React.Component {
 
   renderDateProp (key, value, prop) {
     const onChange = (val) => {
-      this.propUpdate(key, val);
+      this.propUpdate(key, val.toISOString());
     };
 
     const date = value ? parse(value) : '';
@@ -342,7 +342,7 @@ class LocationEdit extends React.Component {
   }
 
   renderMetadataForm () {
-    const { location, errors } = this.props;
+    const { location, errorCount } = this.props;
     if (!location) return null;
 
     return (
@@ -379,11 +379,9 @@ class LocationEdit extends React.Component {
               Save Location
             </button>
           </div>
-          {
-            errors && (
-              <div className='form-error-message'>Please fix errors in the form above</div>
-            )
-          }
+          {(errorCount > 0) && (
+            <div className='form-error-message'>Please fix errors in the form above</div>
+          )}
         </div>
       </main>
     );
@@ -414,11 +412,11 @@ class LocationEdit extends React.Component {
         error.key = key;
         keypath.set(errorState, key, error);
       });
-      this.props.setFormErrors(errorState);
+      this.props.setFormErrors(errorState, errors.length);
       return false;
     }
 
-    this.props.setFormErrors(errorState);
+    this.props.setFormErrors(errorState, errors.length);
     return true;
   }
 
@@ -428,7 +426,7 @@ class LocationEdit extends React.Component {
 
     if (this.validateForm(metadata)) {
       delete metadata.id;
-      this.props.putMetadata(metadata.id, metadata).then(() => {
+      this.props.putMetadata(match.params.id, metadata).then(() => {
         this.props.history.push(`/location/${match.params.id}`);
       });
     }
@@ -447,8 +445,8 @@ class LocationEdit extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { location, errors } = state.locations;
-  return { location, errors };
+  const { location, errors, errorCount } = state.locations;
+  return { location, errors, errorCount };
 };
 
 const mapDispatchToProps = {

@@ -68,9 +68,10 @@ export function updateMetadata (data) {
   };
 }
 
-export function setFormErrors (data) {
+export function setFormErrors (errors, errorCount) {
   return {
     type: constants.SET_FORM_ERRORS,
-    data
+    errors,
+    errorCount
   };
 }

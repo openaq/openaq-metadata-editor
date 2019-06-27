@@ -5,7 +5,8 @@ const initialState = {
   location: {
     metadata: { instruments: [] }
   },
-  errors: { instruments: [] }
+  errors: { instruments: [] },
+  errorCount: 0
 };
 
 function reducer (state = initialState, action) {
@@ -51,7 +52,10 @@ function reducer (state = initialState, action) {
     }
 
     case constants.SET_FORM_ERRORS: {
-      return Object.assign({}, state, { errors: action.data });
+      return Object.assign({}, state, {
+        errors: action.errors,
+        errorCount: action.errorCount || 0
+      });
     }
   }
 
