@@ -35,7 +35,7 @@ class LocationView extends React.Component {
 
           <main role='main'>
             <div className='callout-button'>
-              <Link to={`/location/edit/${match.params.id}`}>
+              <Link to={`/location/${match.params.id}/edit`}>
                 This location does not have any metadata. Edit this location.
               </Link>
             </div>
@@ -146,7 +146,7 @@ class LocationView extends React.Component {
 
           </div>
           <div className='callout-button'>
-            <Link to={`/location/edit/${match.params.id}`}>
+            <Link to={`/location/${match.params.id}/edit`}>
               See something missing? Edit this location
             </Link>
           </div>

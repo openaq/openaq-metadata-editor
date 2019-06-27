@@ -76,7 +76,7 @@ class Root extends Component {
               />
               <PrivateRoute
                 exact
-                path='/location/edit/:id/'
+                path='/location/:id/edit'
                 component={LocationEdit}
               />
               <Route
