@@ -5,12 +5,12 @@ import keypath from 'obj-keypath';
 import DatePicker from 'react-datepicker';
 import parse from 'date-fns/parse';
 
-import { schemas } from 'openaq-data-format';
+import { schemas, validate } from 'openaq-data-format';
 
 import Header from '../components/header';
 import MapEdit from '../components/map-edit';
 
-import { getMetadata, putMetadata, updateMetadata } from '../state/locations/actions';
+import { getMetadata, putMetadata, updateMetadata, setFormErrors } from '../state/locations/actions';
 
 const locationSchema = schemas.location;
 
@@ -61,6 +61,13 @@ const editorGroups = {
 };
 
 class LocationEdit extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      errors: { instruments: [] }
+    };
+  }
+
   componentDidMount () {
     const { match: { params: { id } } } = this.props;
 
@@ -72,6 +79,7 @@ class LocationEdit extends React.Component {
   propUpdate (key, value) {
     const metadata = Object.assign({ instruments: [] }, this.props.location.metadata);
     const data = keypath.set(metadata, key, value);
+    this.validateForm(data);
     this.props.updateMetadata(data);
   }
 
@@ -104,7 +112,7 @@ class LocationEdit extends React.Component {
     };
 
     return (
-      <React.Fragment key={`form-field-${key}`}>
+      <React.Fragment>
         <label className='form__label'>{prop.title}</label>
         <input
           type='text'
@@ -122,7 +130,7 @@ class LocationEdit extends React.Component {
     };
 
     return (
-      <React.Fragment key={`form-field-${key}`}>
+      <React.Fragment>
         <label className='form__label'>{prop.title}</label>
         <input
           type='number'
@@ -140,7 +148,7 @@ class LocationEdit extends React.Component {
     };
 
     return (
-      <React.Fragment key={`form-field-${key}`}>
+      <React.Fragment>
         <label className='form__label'>{prop.title}</label>
         <input
           type='checkbox'
@@ -165,7 +173,7 @@ class LocationEdit extends React.Component {
     };
 
     return (
-      <React.Fragment key={`form-field-${key}`}>
+      <React.Fragment>
         <label className='form__label'>{prop.title}</label>
         <Select
           value={{ key: value, label: value }}
@@ -231,6 +239,25 @@ class LocationEdit extends React.Component {
     );
   }
 
+  renderPropInput (key, value, prop) {
+    switch (prop.type) {
+      case 'string':
+        if (prop.format && prop.format === 'date-time') {
+          return this.renderDateProp(key, value, prop);
+        } else if (prop.enum) {
+          return this.renderSelectProp(key, value, prop);
+        } else {
+          return this.renderStringProp(key, value, prop);
+        }
+      case 'integer':
+        return this.renderIntegerProp(key, value, prop);
+      case 'array':
+        return this.renderMultiSelectProp(key, value, prop);
+      case 'boolean':
+        return this.renderBooleanProp(key, value, prop);
+    }
+  }
+
   renderEditSection (section, keyPrefix) {
     const { location } = this.props;
     const { metadata } = location;
@@ -245,23 +272,18 @@ class LocationEdit extends React.Component {
             section.properties.map((prop) => {
               const key = keyPrefix ? `${keyPrefix}.${prop.key}` : prop.key;
               const value = keypath.get(metadata || {}, key);
+              const error = keypath.get(this.props.errors, key);
 
-              switch (prop.type) {
-                case 'string':
-                  if (prop.format && prop.format === 'date-time') {
-                    return this.renderDateProp(key, value, prop);
-                  } else if (prop.enum) {
-                    return this.renderSelectProp(key, value, prop);
-                  } else {
-                    return this.renderStringProp(key, value, prop);
+              return (
+                <div key={`form-field-${key}`} className={`form-field${error ? ' error' : ''}`}>
+                  {this.renderPropInput(key, value, prop)}
+                  {
+                    error && (
+                      <div className='error-message'>{error.message}</div>
+                    )
                   }
-                case 'integer':
-                  return this.renderIntegerProp(key, value, prop);
-                case 'array':
-                  return this.renderMultiSelectProp(key, value, prop);
-                case 'boolean':
-                  return this.renderBooleanProp(key, value, prop);
-              }
+                </div>
+              );
             })
           }
         </div>
@@ -320,7 +342,7 @@ class LocationEdit extends React.Component {
   }
 
   renderMetadataForm () {
-    const { location } = this.props;
+    const { location, errors } = this.props;
     if (!location) return null;
 
     return (
@@ -357,6 +379,11 @@ class LocationEdit extends React.Component {
               Save Location
             </button>
           </div>
+          {
+            errors && (
+              <div className='form-error-message'>Please fix errors in the form above</div>
+            )
+          }
         </div>
       </main>
     );
@@ -368,12 +395,43 @@ class LocationEdit extends React.Component {
     this.props.updateMetadata(location.metadata);
   }
 
+  formatKey (key) {
+    return key
+      .replace('instance.', '')
+      .replace('[', '.')
+      .replace(']', '');
+  }
+
+  validateForm (metadata) {
+    const { match } = this.props;
+    if (!metadata.id) metadata.id = match.params.id;
+    const { errors } = validate('location', metadata);
+    const errorState = { instruments: [] };
+
+    if (errors && errors.length) {
+      errors.forEach((error) => {
+        const key = this.formatKey(error.property);
+        error.key = key;
+        keypath.set(errorState, key, error);
+      });
+      this.props.setFormErrors(errorState);
+      return false;
+    }
+
+    this.props.setFormErrors(errorState);
+    return true;
+  }
+
   onSaveLocationClick () {
     const { match } = this.props;
     const metadata = Object.assign({}, this.props.location.metadata);
-    this.props.putMetadata(match.params.id, metadata).then(() => {
-      this.props.history.push(`/location/${match.params.id}`);
-    });
+
+    if (this.validateForm(metadata)) {
+      delete metadata.id;
+      this.props.putMetadata(metadata.id, metadata).then(() => {
+        this.props.history.push(`/location/${match.params.id}`);
+      });
+    }
   }
 
   render () {
@@ -389,14 +447,15 @@ class LocationEdit extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { location } = state.locations;
-  return { location };
+  const { location, errors } = state.locations;
+  return { location, errors };
 };
 
 const mapDispatchToProps = {
   getMetadata,
   putMetadata,
-  updateMetadata
+  updateMetadata,
+  setFormErrors
 };
 
 export default connect(

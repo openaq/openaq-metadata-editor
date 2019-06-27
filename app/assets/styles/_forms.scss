@@ -62,3 +62,23 @@ input.form__control[type="checkbox"], input.form__control[type="radio"] {
     background: none;
   }
 }
+
+.form-field.error {
+  margin-left: -10px;
+  padding-left: 10px;
+  background: rgba($danger-color, 0.30);
+  padding-right: 10px;
+  margin-right: -10px;
+
+  .form__control {
+    border: 2px solid $danger-color;
+  }
+}
+
+.form-error-message {
+  text-align: center;
+  background-color: rgba($danger-color, 0.30);
+  margin: 10px;
+  margin: 10px auto;
+  padding: 20px;
+}
