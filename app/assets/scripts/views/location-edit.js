@@ -28,6 +28,9 @@ const propertiesToEdit = Object.keys(locationSchema.properties)
   .filter((key) => !excludePropertiesFromEditing.includes(key))
   .map((key) => {
     const prop = locationSchema.properties[key];
+    if (locationSchema.required.includes(key)) {
+      prop.required = true;
+    }
     prop.key = key;
     return prop;
   });
@@ -35,6 +38,9 @@ const propertiesToEdit = Object.keys(locationSchema.properties)
 const instrumentProperties = Object.keys(locationSchema.properties.instruments.items.properties)
   .map((key) => {
     const prop = locationSchema.properties.instruments.items.properties[key];
+    if (locationSchema.properties.instruments.items.required.includes(key)) {
+      prop.required = true;
+    }
     prop.key = key;
     return prop;
   });
@@ -58,6 +64,11 @@ const editorGroups = {
     name: 'Instrument',
     properties: instrumentProperties
   }
+};
+
+const Asterisk = ({ required }) => {
+  if (!required) return null;
+  return (<span className='required'>*</span>);
 };
 
 class LocationEdit extends React.Component {
@@ -107,13 +118,17 @@ class LocationEdit extends React.Component {
   }
 
   renderStringProp (key, value, prop) {
+    const { required, title } = prop;
     const onChange = (e) => {
       this.propUpdate(key, e.target.value);
     };
 
     return (
       <React.Fragment>
-        <label className='form__label'>{prop.title}</label>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <input
           type='text'
           className='form__control'
@@ -125,13 +140,17 @@ class LocationEdit extends React.Component {
   }
 
   renderIntegerProp (key, value, prop) {
+    const { required, title } = prop;
     const onChange = (e) => {
       this.propUpdate(key, e.target.value ? Number(e.target.value) : null);
     };
 
     return (
       <React.Fragment>
-        <label className='form__label'>{prop.title}</label>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <input
           type='number'
           className='form__control'
@@ -143,13 +162,17 @@ class LocationEdit extends React.Component {
   }
 
   renderBooleanProp (key, value, prop) {
+    const { required, title } = prop;
     const onChange = (e) => {
       this.propUpdate(key, e.target.checked);
     };
 
     return (
       <React.Fragment>
-        <label className='form__label'>{prop.title}</label>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <input
           type='checkbox'
           value={value}
@@ -161,6 +184,7 @@ class LocationEdit extends React.Component {
   }
 
   renderSelectProp (key, value, prop) {
+    const { required, title } = prop;
     const availableValues = prop.enum;
 
     let options;
@@ -174,7 +198,10 @@ class LocationEdit extends React.Component {
 
     return (
       <React.Fragment>
-        <label className='form__label'>{prop.title}</label>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <Select
           value={{ key: value, label: value }}
           options={options}
@@ -188,6 +215,7 @@ class LocationEdit extends React.Component {
   }
 
   renderMultiSelectProp (key, value, prop) {
+    const { required, title } = prop;
     const availableValues = prop.items.enum;
 
     let options;
@@ -206,7 +234,10 @@ class LocationEdit extends React.Component {
 
     return (
       <React.Fragment key={`form-field-${key}`}>
-        <label className='form__label'>{prop.title}</label>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <Select
           isMulti
           value={values}
@@ -221,6 +252,7 @@ class LocationEdit extends React.Component {
   }
 
   renderDateProp (key, value, prop) {
+    const { required, title } = prop;
     const onChange = (val) => {
       this.propUpdate(key, val.toISOString());
     };
@@ -229,7 +261,10 @@ class LocationEdit extends React.Component {
 
     return (
       <React.Fragment key={`form-field-${key}`}>
-        <label className='form__label'>{prop.title}</label>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <DatePicker
           className='form__control'
           selected={date}
@@ -420,7 +455,7 @@ class LocationEdit extends React.Component {
         error.key = key;
         keypath.set(errorState, key, error);
       });
-      console.log('errors', errors)
+
       this.props.setFormErrors(errorState, errors.length);
       return false;
     }

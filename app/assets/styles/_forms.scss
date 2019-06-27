@@ -82,3 +82,8 @@ input.form__control[type="checkbox"], input.form__control[type="radio"] {
   margin: 10px auto;
   padding: 20px;
 }
+
+.required {
+  color: $danger-color;
+  margin-left: 5px;
+}
