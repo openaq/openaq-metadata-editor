@@ -96,6 +96,8 @@
     "watchify": "^3.11.0"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-draw": "1.0.9",
+    "@mapbox/mapbox-gl-geocoder": "3.1.4",
     "alpha2-countries": "^1.1.0",
     "auth0-js": "^9.10.4",
     "babel-preset-es2015": "^6.24.1",
@@ -104,7 +106,7 @@
     "date-fns": "^1.30.1",
     "history": "^4.7.2",
     "lodash.defaultsdeep": "^4.6.0",
-    "mapbox-gl": "^1.0.0",
+    "mapbox-gl": "0.45.0",
     "obj-keypath": "^1.1.0",
     "openaq-data-format": "openaq/openaq-data-format#location-json-schema",
     "openaq-design-system": "openaq/openaq-design-system",

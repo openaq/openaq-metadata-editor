@@ -42,6 +42,10 @@
   }
 }
 
+input.form__control[type="checkbox"], input.form__control[type="radio"] {
+  width: auto;
+}
+
 /* Form color modifiers
    ========================================================================== */
 

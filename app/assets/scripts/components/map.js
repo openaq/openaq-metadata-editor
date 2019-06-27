@@ -15,6 +15,10 @@ class Map extends React.Component {
       style: mapbox.baseStyle,
       zoom: zoom || 8
     });
+
+    this.marker = new mapboxgl.Marker()
+      .setLngLat(coordinates)
+      .addTo(this.map);
   }
 
   componentWillUnmount () {
