@@ -34,7 +34,6 @@ function request (method, url, params = {}) {
 
 function getMetadataList (params) {
   const url = `${apiUrl}/v1/locations`;
-  console.log(params)
 
   return request('GET', url, Object.assign({}, { metadata: 'true' }, params));
 }
