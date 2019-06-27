@@ -11,6 +11,8 @@ class Map extends React.Component {
   componentDidMount () {
     const { zoom, coordinates } = this.props;
 
+    const usingDefaultCoordinates = coordinates[0] === 0 && coordinates[1] === 0;
+
     this.map = new mapboxgl.Map({
       center: coordinates,
       container: this.mapContainer,
@@ -18,7 +20,10 @@ class Map extends React.Component {
       zoom: zoom || 8
     });
 
+    const defaultMode = usingDefaultCoordinates ? 'draw_point' : 'simple_select';
+
     this.draw = new MapboxDraw({
+      defaultMode,
       controls: {
         point: true,
         line_string: false,
@@ -34,10 +39,19 @@ class Map extends React.Component {
     this.map.addControl(this.draw, 'top-left');
     this.map.addControl(this.geocoder, 'bottom-left');
 
-    const updateArea = (e) => {
+    this.map.on('load', () => {
+      if (!usingDefaultCoordinates) {
+        console.log('first point', this.draw.add({
+          type: 'Point',
+          coordinates
+        }));
+      }
+    });
+
+    const updateCoordinates = (e) => {
       const data = this.draw.getAll();
       const { features } = data;
-      const point = features[features.length - 1];
+      const point = usingDefaultCoordinates ? features[features.length - 1] : features[0];
 
       features.forEach((feature) => {
         if (feature.id === point.id) {
@@ -50,9 +64,9 @@ class Map extends React.Component {
       });
     };
 
-    this.map.on('draw.create', updateArea);
-    this.map.on('draw.delete', updateArea);
-    this.map.on('draw.update', updateArea);
+    this.map.on('draw.create', updateCoordinates);
+    this.map.on('draw.delete', updateCoordinates);
+    this.map.on('draw.update', updateCoordinates);
   }
 
   componentWillUnmount () {
