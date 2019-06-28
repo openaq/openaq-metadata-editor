@@ -350,8 +350,8 @@ class LocationEdit extends React.Component {
 
     if (!instruments.length) {
       instruments.push({
-        type: null,
-        serialNumber: null,
+        type: '',
+        serialNumber: '',
         parameters: []
       });
     }
@@ -445,8 +445,8 @@ class LocationEdit extends React.Component {
   onAddInstrumentClick () {
     const { location } = this.props;
     location.metadata.instruments.push({
-      type: null,
-      serialNumber: null,
+      type: '',
+      serialNumber: '',
       parameters: []
     });
     this.props.updateMetadata(location.metadata);
@@ -454,7 +454,9 @@ class LocationEdit extends React.Component {
 
   onRemoveInstrumentClick (index) {
     const { location } = this.props;
-    location.metadata.instruments.splice(index, 1);
+    location.metadata.instruments = location.metadata.instruments.filter((instr, i) => {
+      return i !== index;
+    });
     this.props.updateMetadata(location.metadata);
   }
 
