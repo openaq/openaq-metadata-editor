@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Pagination from 'react-js-pagination';
 
 import Header from '../components/header';
-import Search from '../components/search';
 import Filter from '../components/filter';
 import Table from '../components/table';
+import debounce from 'lodash.debounce';
 
 import { getMetadataList } from '../state/locations/actions';
 import { setFilters } from '../state/filters/actions';
@@ -18,6 +18,10 @@ class Home extends React.Component {
       filter: null,
       activePage: 1
     };
+
+    this.getList = debounce((page) => {
+      this.props.getMetadataList({ limit: 10, page: page || 1 });
+    }, 300).bind(this);
   }
 
   onSearchChange (value) {
@@ -26,16 +30,16 @@ class Home extends React.Component {
 
   onFilterChange (filter) {
     this.props.setFilters(filter);
-    this.props.getMetadataList({ limit: 10, page: 1 });
+    this.getList();
   }
 
   componentDidMount () {
-    this.props.getMetadataList({ limit: 10, page: 1 });
+    this.getList();
   }
 
   handlePageChange (pageNumber) {
     this.setState({ activePage: pageNumber });
-    this.props.getMetadataList({ limit: 10, page: pageNumber });
+    this.getList(pageNumber);
   }
 
   render () {
@@ -46,8 +50,8 @@ class Home extends React.Component {
     return (
       <div className='page page--homepage'>
         <Header>
-          <h1 className='page__title'>Search locations</h1>
-          <Search onChange={(v) => this.onSearchChange(v)} />
+          <h1 className='page__title'>Metadata Editor</h1>
+          <p>Find a station and complete its metadata</p>
         </Header>
         <main role='main'>
           <Filter

@@ -65,7 +65,7 @@ class Filter extends React.Component {
     super(props);
 
     this.state = {
-      open: false
+      open: true
     };
   }
 
@@ -133,14 +133,14 @@ class Filter extends React.Component {
       <div className='filter-content flex justify-between'>
         <div className='filter-column'>
           {this.renderInput('countries')}
+          {this.renderInput('pollutants')}
         </div>
         <div className='filter-column'>
-          {this.renderInput('completeness') }
           {this.renderInput('installationDate')}
           {this.renderInput('elevation')}
         </div>
         <div className='filter-column'>
-          {this.renderInput('pollutants')}
+          {this.renderInput('completeness') }
           {this.renderInput('siteType')}
         </div>
       </div>

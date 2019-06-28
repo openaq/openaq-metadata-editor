@@ -4,45 +4,7 @@ import qs from 'query-string';
 import { apiUrl } from '../config';
 import auth from './auth';
 
-/**
- * Takes the state filters from the store
- * and turns them into a query param string
- * for filtering
- * @param {Object} filters
- * @returns {String}
- */
-function _convertFiltersToParamString (filters) {
-  let params = '';
-  let { countries, installationDate, completeness, elevation, pollutants, siteType } = filters;
-
-  /** countries */
-  countries.forEach(country => {
-    params = `${params}&country=${country.value}`;
-  });
-
-  /** installation dates */
-  params = `${params}&activationDate=["${new Date(installationDate.start)}","${new Date(installationDate.end)}"]`;
-
-  /** elevation */
-  params = `${params}&inletHeight=["${elevation.min}", "${elevation.max}"]`;
-
-  /** pollutants */
-  Object.keys(pollutants).forEach(pollutant => {
-    params = `${params}&parameter=${pollutant}`;
-  });
-
-  /** Site type */
-  Object.keys(siteType).forEach(siteType => {
-    params = `${params}&siteType=${siteType}`;
-  });
-
-  /** Completeness */
-  params = `${params}&completeness=["${completeness.min}","${completeness.max}"]`;
-
-  return params;
-}
-
-function request (method, url, params = {}, filters) {
+function request (method, url, params = {}) {
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${auth.getAccessToken()}`
@@ -62,10 +24,7 @@ function request (method, url, params = {}, filters) {
   ) {
     options.body = JSON.stringify(params);
   } else {
-    query = qs.stringify(params);
-    if (filters) {
-      query = `${query}&${_convertFiltersToParamString(filters)}`;
-    }
+    query = qs.stringify(params, { arrayFormat: 'bracket' });
   }
 
   const fullUrl = `${url}?${query}`;
@@ -73,10 +32,10 @@ function request (method, url, params = {}, filters) {
     .then(res => res.json());
 }
 
-function getMetadataList (params, filters) {
+function getMetadataList (params) {
   const url = `${apiUrl}/v1/locations`;
 
-  return request('GET', url, Object.assign({}, { metadata: 'true' }, params), filters);
+  return request('GET', url, Object.assign({}, { metadata: 'true' }, params));
 }
 
 function getMetadata (id) {
