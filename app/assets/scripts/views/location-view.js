@@ -1,11 +1,59 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import format from 'date-fns/format';
+import { schemas } from 'openaq-data-format';
 
 import Header from '../components/header';
 import Map from '../components/map';
 import { getMetadata } from '../state/locations/actions';
+
+const locationSchema = schemas.location;
+
+const excludePropertiesFromViewing = [
+  'id',
+  'coordinates',
+  'city',
+  'country',
+  'instruments',
+  'parameters',
+  'attribution'
+];
+
+const propertiesToView = Object.keys(locationSchema.properties)
+  .filter((key) => !excludePropertiesFromViewing.includes(key))
+  .map((key) => {
+    const prop = locationSchema.properties[key];
+    prop.key = key;
+    return prop;
+  });
+
+const instrumentPropertiesToView = Object.keys(locationSchema.properties.instruments.items.properties)
+  .map((key) => {
+    const prop = locationSchema.properties.instruments.items.properties[key];
+    prop.key = key;
+    return prop;
+  });
+
+const maintenanceProperties = [
+  'active',
+  'activationDate',
+  'deactivationDate'
+];
+
+const propertyGroups = {
+  siteDetails: {
+    name: 'Site Details',
+    properties: propertiesToView.filter((prop) => !maintenanceProperties.includes(prop.key))
+  },
+  maintenance: {
+    name: 'Maintenance',
+    properties: propertiesToView.filter((prop) => maintenanceProperties.includes(prop.key))
+  },
+  instrument: {
+    name: 'Instrument',
+    properties: instrumentPropertiesToView
+  }
+};
 
 class LocationView extends React.Component {
   componentDidMount () {
@@ -14,6 +62,62 @@ class LocationView extends React.Component {
     if (!this.props.location.id) {
       this.props.getMetadata(id);
     }
+  }
+
+  renderSiteDetails (metadata) {
+    let props = [];
+    propertyGroups.siteDetails.properties
+      .filter(prop => {
+        return typeof (metadata[prop.key]) !== 'undefined';
+      })
+      .forEach(prop => {
+        props.push(<dt>{`${prop.title}`}</dt>);
+        props.push(<dd>{metadata[prop.key]}</dd>);
+      });
+    return (
+      <dl>
+        {props}
+      </dl>
+    );
+  }
+
+  renderMaintenance (metadata) {
+    let props = [];
+    propertyGroups.maintenance.properties
+      .filter(prop => {
+        return typeof (metadata[prop.key]) !== 'undefined';
+      })
+      .forEach(prop => {
+        props.push(<dt>{`${prop.title}`}</dt>);
+        props.push(<dd>{metadata[prop.key]}</dd>);
+      });
+    return (
+      <dl>
+        {props}
+      </dl>
+    );
+  }
+
+  renderInstrument (instr, i) {
+    let props = [];
+    propertyGroups.instrument.properties
+      .filter(prop => {
+        return typeof (instr[prop.key]) !== 'undefined';
+      })
+      .forEach(prop => {
+        props.push(<dt>{`${prop.title}`}</dt>);
+        props.push(<dd>{instr[prop.key]}</dd>);
+      });
+    return (
+      <div className='column' key={`instrument-${i}`}>
+        <h3 className=''>
+          Instrument {i}
+        </h3>
+        <dl>
+          {props}
+        </dl>
+      </div>
+    );
   }
 
   render () {
@@ -93,38 +197,14 @@ class LocationView extends React.Component {
               <h2 className='location-view-header'>
                 Site Details
               </h2>
-              <dl>
-                <dt>Elevation</dt>
-                <dd>{metadata.elevation}</dd>
-                <dt>Site type</dt>
-                <dd>{metadata.siteType}</dd>
-                {
-                  metadata.notes && (
-                    <div>
-                      <dt>Description</dt>
-                      <dd>{metadata.notes}</dd>
-                    </div>
-                  )
-                }
-              </dl>
+              {this.renderSiteDetails(metadata)}
             </div>
 
             <div className='location-view-section'>
               <h2 className='location-view-header'>
                 Maintenance
               </h2>
-              <dl>
-                <dt>Installation Date</dt>
-                <dd>{format(metadata.activationDate, 'YYYY-MM-DD')}</dd>
-                {
-                  metadata.deactivationDate && (
-                    <div>
-                      <dt>Deactivation Date</dt>
-                      <dd>{format(metadata.deactivationDate, 'YYYY-MM-DD')}</dd>
-                    </div>
-                  )
-                }
-              </dl>
+              {this.renderMaintenance(metadata)}
             </div>
 
             <div className='location-view-section'>
@@ -132,61 +212,9 @@ class LocationView extends React.Component {
                 Instruments
               </h2>
               <div className='flex'>
-                {
-                  metadata.instruments.map((instr, i) => {
-                    const isActive = instr.active;
-                    return (
-                      <div className='column' key={`instrument-${i}`}>
-                        <h3 className=''>
-                          Instrument {i}
-                        </h3>
-                        <dl>
-                          <dt>Is Active?</dt>
-                          <dd>{isActive ? 'Yes' : 'No'}</dd>
-                          <dt>Pollutants</dt>
-                          <dd><b>{instr.parameters.join(', ')}</b></dd>
-                          <dt>Activated</dt>
-                          <dd>{format(instr.activationDate, 'YYYY-MM-DD')}</dd>
-                          {
-                            instr.deactivationDate && (
-                              <div>
-                                <dt>Deactivated</dt>
-                                <dd>{format(instr.deactivationDate, 'YYYY-MM-DD')}</dd>
-                              </div>
-                            )
-                          }
-                          <dt>Model</dt>
-                          <dd>{instr.modelName}</dd>
-                          <dt>Manufacturer</dt>
-                          <dd>{instr.manufacturer}</dd>
-                          <dt>Calibration Procedures</dt>
-                          <dd>{instr.calibrationProcedures}</dd>
-                          <dt>Inlet Height</dt>
-                          <dd>{instr.inletHeight}</dd>
-                          <dt>Measurement Style</dt>
-                          <dd>{instr.measurementStyle}</dd>
-                          <dt>Raw Frequency</dt>
-                          <dd>{instr.rawFrequency}</dd>
-                          <dt>Reporting Frequency</dt>
-                          <dd>{instr.reportingFrequency}</dd>
-                          <dt>Serial No.</dt>
-                          <dd>{instr.serialNumber}</dd>
-                          {
-                            instr.notes && (
-                              <div>
-                                <dt>Description</dt>
-                                <dd>{instr.notes}</dd>
-                              </div>
-                            )
-                          }
-                        </dl>
-                      </div>
-                    );
-                  })
-                }
+                {metadata.instruments.map(this.renderInstrument)}
               </div>
             </div>
-
           </div>
           <div className='callout-button'>
             <Link to={`/location/${match.params.id}/edit`}>
