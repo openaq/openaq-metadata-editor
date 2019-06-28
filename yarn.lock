@@ -612,8 +612,8 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
 auth0-js@^9.10.4:
-  version "9.11.0"
-  resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.11.0.tgz#f2632e4eaa44e737a5670043ba566a8fbecebb96"
+  version "9.11.1"
+  resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.11.1.tgz#32fe5fc3a11b5c58096c1ce083a5361fa61ab1b9"
   dependencies:
     base64-js "^1.2.0"
     idtoken-verifier "^1.4.0"
@@ -6313,9 +6313,9 @@ ono@^4.0.11:
   dependencies:
     format-util "^1.0.3"
 
-openaq-data-format@openaq/openaq-data-format#location-json-schema:
+openaq-data-format@openaq/openaq-data-format#e3bda716006e1f69c82b8b1e98e5614688f4718e:
   version "0.0.0"
-  resolved "https://codeload.github.com/openaq/openaq-data-format/tar.gz/13a86e8de9e8b6d59663708c4ced0935fc801ee1"
+  resolved "https://codeload.github.com/openaq/openaq-data-format/tar.gz/e3bda716006e1f69c82b8b1e98e5614688f4718e"
   dependencies:
     jsonschema "^1.2.4"
 

@@ -5,12 +5,12 @@ import keypath from 'obj-keypath';
 import DatePicker from 'react-datepicker';
 import parse from 'date-fns/parse';
 
-import { schemas } from 'openaq-data-format';
+import { schemas, validate } from 'openaq-data-format';
 
 import Header from '../components/header';
 import MapEdit from '../components/map-edit';
 
-import { getMetadata, putMetadata, updateMetadata } from '../state/locations/actions';
+import { getMetadata, putMetadata, updateMetadata, setFormErrors } from '../state/locations/actions';
 
 const locationSchema = schemas.location;
 
@@ -28,6 +28,9 @@ const propertiesToEdit = Object.keys(locationSchema.properties)
   .filter((key) => !excludePropertiesFromEditing.includes(key))
   .map((key) => {
     const prop = locationSchema.properties[key];
+    if (locationSchema.required.includes(key)) {
+      prop.required = true;
+    }
     prop.key = key;
     return prop;
   });
@@ -35,6 +38,9 @@ const propertiesToEdit = Object.keys(locationSchema.properties)
 const instrumentProperties = Object.keys(locationSchema.properties.instruments.items.properties)
   .map((key) => {
     const prop = locationSchema.properties.instruments.items.properties[key];
+    if (locationSchema.properties.instruments.items.required.includes(key)) {
+      prop.required = true;
+    }
     prop.key = key;
     return prop;
   });
@@ -60,7 +66,19 @@ const editorGroups = {
   }
 };
 
+const Asterisk = ({ required }) => {
+  if (!required) return null;
+  return (<span className='required'>*</span>);
+};
+
 class LocationEdit extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      errors: { instruments: [] }
+    };
+  }
+
   componentDidMount () {
     const { match: { params: { id } } } = this.props;
 
@@ -72,6 +90,7 @@ class LocationEdit extends React.Component {
   propUpdate (key, value) {
     const metadata = Object.assign({ instruments: [] }, this.props.location.metadata);
     const data = keypath.set(metadata, key, value);
+    this.validateForm(data);
     this.props.updateMetadata(data);
   }
 
@@ -99,13 +118,17 @@ class LocationEdit extends React.Component {
   }
 
   renderStringProp (key, value, prop) {
+    const { required, title } = prop;
     const onChange = (e) => {
       this.propUpdate(key, e.target.value);
     };
 
     return (
-      <React.Fragment key={`form-field-${key}`}>
-        <label className='form__label'>{prop.title}</label>
+      <React.Fragment>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <input
           type='text'
           className='form__control'
@@ -117,13 +140,17 @@ class LocationEdit extends React.Component {
   }
 
   renderIntegerProp (key, value, prop) {
+    const { required, title } = prop;
     const onChange = (e) => {
-      this.propUpdate(key, e.target.value);
+      this.propUpdate(key, e.target.value ? Number(e.target.value) : null);
     };
 
     return (
-      <React.Fragment key={`form-field-${key}`}>
-        <label className='form__label'>{prop.title}</label>
+      <React.Fragment>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <input
           type='number'
           className='form__control'
@@ -135,13 +162,17 @@ class LocationEdit extends React.Component {
   }
 
   renderBooleanProp (key, value, prop) {
+    const { required, title } = prop;
     const onChange = (e) => {
       this.propUpdate(key, e.target.checked);
     };
 
     return (
-      <React.Fragment key={`form-field-${key}`}>
-        <label className='form__label'>{prop.title}</label>
+      <React.Fragment>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <input
           type='checkbox'
           value={value}
@@ -153,6 +184,7 @@ class LocationEdit extends React.Component {
   }
 
   renderSelectProp (key, value, prop) {
+    const { required, title } = prop;
     const availableValues = prop.enum;
 
     let options;
@@ -165,8 +197,11 @@ class LocationEdit extends React.Component {
     };
 
     return (
-      <React.Fragment key={`form-field-${key}`}>
-        <label className='form__label'>{prop.title}</label>
+      <React.Fragment>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <Select
           value={{ key: value, label: value }}
           options={options}
@@ -180,6 +215,7 @@ class LocationEdit extends React.Component {
   }
 
   renderMultiSelectProp (key, value, prop) {
+    const { required, title } = prop;
     const availableValues = prop.items.enum;
 
     let options;
@@ -198,7 +234,10 @@ class LocationEdit extends React.Component {
 
     return (
       <React.Fragment key={`form-field-${key}`}>
-        <label className='form__label'>{prop.title}</label>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <Select
           isMulti
           value={values}
@@ -213,15 +252,19 @@ class LocationEdit extends React.Component {
   }
 
   renderDateProp (key, value, prop) {
+    const { required, title } = prop;
     const onChange = (val) => {
-      this.propUpdate(key, val);
+      this.propUpdate(key, val.toISOString());
     };
 
     const date = value ? parse(value) : '';
 
     return (
       <React.Fragment key={`form-field-${key}`}>
-        <label className='form__label'>{prop.title}</label>
+        <label className='form__label'>
+          {title}
+          <Asterisk required={required}/>
+        </label>
         <DatePicker
           className='form__control'
           selected={date}
@@ -229,6 +272,25 @@ class LocationEdit extends React.Component {
         />
       </React.Fragment>
     );
+  }
+
+  renderPropInput (key, value, prop) {
+    switch (prop.type) {
+      case 'string':
+        if (prop.format && prop.format === 'date-time') {
+          return this.renderDateProp(key, value, prop);
+        } else if (prop.enum) {
+          return this.renderSelectProp(key, value, prop);
+        } else {
+          return this.renderStringProp(key, value, prop);
+        }
+      case 'integer':
+        return this.renderIntegerProp(key, value, prop);
+      case 'array':
+        return this.renderMultiSelectProp(key, value, prop);
+      case 'boolean':
+        return this.renderBooleanProp(key, value, prop);
+    }
   }
 
   renderEditSection (section, keyPrefix) {
@@ -245,23 +307,18 @@ class LocationEdit extends React.Component {
             section.properties.map((prop) => {
               const key = keyPrefix ? `${keyPrefix}.${prop.key}` : prop.key;
               const value = keypath.get(metadata || {}, key);
+              const error = keypath.get(this.props.errors, key);
 
-              switch (prop.type) {
-                case 'string':
-                  if (prop.format && prop.format === 'date-time') {
-                    return this.renderDateProp(key, value, prop);
-                  } else if (prop.enum) {
-                    return this.renderSelectProp(key, value, prop);
-                  } else {
-                    return this.renderStringProp(key, value, prop);
+              return (
+                <div key={`form-field-${key}`} className={`form-field${error ? ' error' : ''}`}>
+                  {this.renderPropInput(key, value, prop)}
+                  {
+                    error && (
+                      <div className='error-message'>{error.message}</div>
+                    )
                   }
-                case 'integer':
-                  return this.renderIntegerProp(key, value, prop);
-                case 'array':
-                  return this.renderMultiSelectProp(key, value, prop);
-                case 'boolean':
-                  return this.renderBooleanProp(key, value, prop);
-              }
+                </div>
+              );
             })
           }
         </div>
@@ -280,7 +337,11 @@ class LocationEdit extends React.Component {
     }
 
     if (!instruments.length) {
-      instruments.push({});
+      instruments.push({
+        type: null,
+        serialNumber: null,
+        parameters: []
+      });
     }
 
     return instruments.map((instrument, i) => {
@@ -320,7 +381,7 @@ class LocationEdit extends React.Component {
   }
 
   renderMetadataForm () {
-    const { location } = this.props;
+    const { location, errorCount } = this.props;
     if (!location) return null;
 
     return (
@@ -357,6 +418,9 @@ class LocationEdit extends React.Component {
               Save Location
             </button>
           </div>
+          {(errorCount > 0) && (
+            <div className='form-error-message'>Please fix errors in the form above</div>
+          )}
         </div>
       </main>
     );
@@ -364,16 +428,52 @@ class LocationEdit extends React.Component {
 
   onAddInstrumentClick () {
     const { location } = this.props;
-    location.metadata.instruments.push({});
+    location.metadata.instruments.push({
+      type: null,
+      serialNumber: null,
+      parameters: []
+    });
     this.props.updateMetadata(location.metadata);
+  }
+
+  formatKey (key) {
+    return key
+      .replace('instance.', '')
+      .replace('[', '.')
+      .replace(']', '');
+  }
+
+  validateForm (metadata) {
+    const { match } = this.props;
+    if (!metadata.id) metadata.id = match.params.id;
+    const { errors } = validate('location', metadata);
+    const errorState = { instruments: [] };
+
+    if (errors && errors.length) {
+      errors.forEach((error) => {
+        const key = this.formatKey(error.property);
+        error.key = key;
+        keypath.set(errorState, key, error);
+      });
+
+      this.props.setFormErrors(errorState, errors.length);
+      return false;
+    }
+
+    this.props.setFormErrors(errorState, errors.length);
+    return true;
   }
 
   onSaveLocationClick () {
     const { match } = this.props;
     const metadata = Object.assign({}, this.props.location.metadata);
-    this.props.putMetadata(match.params.id, metadata).then(() => {
-      this.props.history.push(`/location/${match.params.id}`);
-    });
+
+    if (this.validateForm(metadata)) {
+      delete metadata.id;
+      this.props.putMetadata(match.params.id, metadata).then(() => {
+        this.props.history.push(`/location/${match.params.id}`);
+      });
+    }
   }
 
   render () {
@@ -389,14 +489,15 @@ class LocationEdit extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { location } = state.locations;
-  return { location };
+  const { location, errors, errorCount } = state.locations;
+  return { location, errors, errorCount };
 };
 
 const mapDispatchToProps = {
   getMetadata,
   putMetadata,
-  updateMetadata
+  updateMetadata,
+  setFormErrors
 };
 
 export default connect(

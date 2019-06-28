@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Pagination from 'react-js-pagination';
 
 import Header from '../components/header';
-import Search from '../components/search';
 import Filter from '../components/filter';
 import Table from '../components/table';
 import debounce from 'lodash.debounce';

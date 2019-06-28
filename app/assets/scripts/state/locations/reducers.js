@@ -3,10 +3,10 @@ import * as constants from './constants';
 const initialState = {
   metadataList: { results: [], meta: { found: 0 } },
   location: {
-    metadata: {
-      instruments: []
-    }
-  }
+    metadata: { instruments: [] }
+  },
+  errors: { instruments: [] },
+  errorCount: 0
 };
 
 function reducer (state = initialState, action) {
@@ -49,6 +49,13 @@ function reducer (state = initialState, action) {
       const location = Object.assign({}, state.location);
       location.metadata = Object.assign({}, location.metadata, action.data);
       return Object.assign({}, state, { location });
+    }
+
+    case constants.SET_FORM_ERRORS: {
+      return Object.assign({}, state, {
+        errors: action.errors,
+        errorCount: action.errorCount || 0
+      });
     }
   }
 
