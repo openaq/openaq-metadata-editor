@@ -4,6 +4,19 @@ node_js:
 env:
   global:
     - PRODUCTION_BRANCH=master
+    - ACCESS_KEY_ID=phony
+    - SECRET_ACCESS_KEY=secret-phony
 cache: npm
 script: npm run lint
 after_success: npm run build
+deploy:
+    - provider: s3
+    access_key_id: ${ACCESS_KEY_ID}
+    secret_access_key:
+      secure: ${SECRET_ACCESS_KEY}
+    bucket: ${AWS_BUCKET}
+    acl: public_read
+    local-dir: dist
+    skip-cleanup: true
+    on:
+      branch: ${PRODUCTION_BRANCH}
