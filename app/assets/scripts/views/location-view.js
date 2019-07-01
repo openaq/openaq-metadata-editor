@@ -63,11 +63,6 @@ class LocationView extends React.Component {
     if (!this.props.location.id) {
       this.props.getMetadata(id);
     }
-
-    this._renderList = this._renderList.bind(this);
-    this.renderSiteDetails = this.renderSiteDetails.bind(this);
-    this.renderMaintenance = this.renderMaintenance.bind(this);
-    this.renderInstrument = this.renderInstrument.bind(this);
   }
 
   _renderList (keyPrefix, metadata, properties) {
@@ -209,7 +204,9 @@ class LocationView extends React.Component {
                 Instruments
               </h2>
               <div className='flex'>
-                {metadata.instruments.map(this.renderInstrument)}
+                {metadata.instruments.map((inst) => {
+                  return this.renderInstrument(inst);
+                })}
               </div>
             </div>
           </div>
