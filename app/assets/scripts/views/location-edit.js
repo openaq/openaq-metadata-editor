@@ -99,7 +99,7 @@ class LocationEdit extends React.Component {
     const { metadata } = location;
 
     return (
-      <div className='location-edit-details'>
+      <div className='location-info'>
         <h1 className='page__title'>
           Location ID
           <span className='location-id'>{location.id}</span>
@@ -402,9 +402,11 @@ class LocationEdit extends React.Component {
 
     return (
       <main role='main'>
-        <div className='flex edit-container justify-between'>
-          {this.renderInfo()}
-          {this.renderMap()}
+        <div className='edit-container'>
+          <div className='location-details flex justify-between'>
+            {this.renderInfo()}
+            {this.renderMap()}
+          </div>
         </div>
 
         <div className='inner-edit'>
