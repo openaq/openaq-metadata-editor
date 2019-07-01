@@ -28,6 +28,8 @@ const runSequence = require('run-sequence');
 const through2 = require('through2');
 const { compile } = require('collecticons-processor');
 
+const OPENAQ_ADDONS = require('openaq-design-system/gulp-addons');
+
 // /////////////////////////////////////////////////////////////////////////////
 // --------------------------- Variables -------------------------------------//
 // ---------------------------------------------------------------------------//
@@ -79,7 +81,7 @@ gulp.task('serve', ['vendorScripts', 'javascript', 'collecticons', 'styles'], fu
     },
     middleware: [
       historyApiFallback(),
-      require('openaq-design-system/gulp-addons').graphicsMiddleware(fs)
+      OPENAQ_ADDONS.graphicsMiddleware(fs)
     ]
   });
 
@@ -234,7 +236,7 @@ gulp.task('html', function () {
 });
 
 gulp.task('images', function () {
-  return gulp.src('app/assets/graphics/**/*')
+  return gulp.src(['app/assets/graphics/**/*', OPENAQ_ADDONS.graphicsPath + '/**/*'])
     .pipe($.imagemin([
       $.imagemin.gifsicle({ interlaced: true }),
       $.imagemin.jpegtran({ progressive: true }),
