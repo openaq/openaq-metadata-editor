@@ -10,7 +10,7 @@ class Header extends React.Component {
           <div className='page__headline'>
             <h1 className='site__title'>
               <a href='/' title='Visit homepage'>
-                <img src='assets/graphics/layout/logo.svg' alt='OpenAQ logotype' height='48' />
+                <img src='/assets/graphics/layout/logo.svg' alt='OpenAQ logotype' height='48' />
                 <span className='visually-hidden'>OpenAQ</span>
               </a>
             </h1>
