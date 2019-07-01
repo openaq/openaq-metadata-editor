@@ -21,12 +21,12 @@
  */
 
 @import "bourbon";
-@import "../../../../node_modules/tachyons-flexbox/css/tachyons-flexbox.css";
+@import "../../../../node_modules/tachyons-flexbox/css/tachyons-flexbox";
 @import "../../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss";
 @import "../../../../node_modules/react-input-range/src/scss/index.scss";
-@import "../../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
-@import "../../../../node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
-@import "../../../../node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+@import "../../../../node_modules/mapbox-gl/dist/mapbox-gl";
+@import "../../../../node_modules/@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw";
+@import "../../../../node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder";
 
 /* Reboot
    ========================================================================== */
