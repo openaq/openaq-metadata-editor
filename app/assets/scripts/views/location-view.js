@@ -104,7 +104,7 @@ class LocationView extends React.Component {
   }
 
   renderInstrument (instr, i) {
-    const props = this._renderList(`instrument-${i}`, instr, propertyGroups.instrument.properties)
+    const props = this._renderList(`instrument-${i}`, instr, propertyGroups.instrument.properties);
     return (
       <div className='column' key={`instrument-${i}`}>
         <h3 className=''>
