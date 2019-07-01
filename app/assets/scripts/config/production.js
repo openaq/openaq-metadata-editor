@@ -6,14 +6,12 @@ export default {
     token: null,
     baseStyle: null
   },
-  apiUrl: null,
+  apiUrl: 'http://api.openaq.org',
   auth: {
     // Domain and client can be found in the Auth0 Application page.
     domain: null,
     clientID: null,
-    // App url + /callback. Ex: http://localhost:3000/callback
-    callbackUrl: null,
-    // Audience is the identifier chosen for the Api. Ex: http://openaq.org
-    audience: null
+    callbackUrl: 'http://metadata.openaq.org/callback',
+    audience: 'http://openaq.org'
   }
 };
