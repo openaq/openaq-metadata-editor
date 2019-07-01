@@ -82,7 +82,7 @@ class LocationEdit extends React.Component {
   componentDidMount () {
     const { match: { params: { id } } } = this.props;
 
-    if (!this.props.location || this.props.location.id || this.props.location.id !== id) {
+    if (!this.props.location || !this.props.location.id || this.props.location.id !== id) {
       this.props.getMetadata(id);
     }
   }
