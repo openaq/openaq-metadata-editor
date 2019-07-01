@@ -160,47 +160,59 @@ class LocationView extends React.Component {
         </Header>
 
         <main role='main'>
+          <div className='fold'>
+            <div className='inner'>
+
+              <div className='flex justify-between'>
+                <div>
+                  <h2 className='fold__title'>Location</h2>
+
+                  <ul className=''>
+                    <li>Location: <b>{location.location}</b></li>
+                    <li>City: <b>{location.city}</b></li>
+                    <li>Country: <b>{location.country}</b></li>
+                    {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
+                    {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
+                    {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
+                  </ul>
+                </div>
+
+                {
+                  metadata &&
+                  metadata.coordinates &&
+                  metadata.coordinates.latitude &&
+                  metadata.coordinates.longitude && (
+                    <Map
+                      zoom={10}
+                      width={600}
+                      coordinates={[metadata.coordinates.longitude, metadata.coordinates.latitude]}
+                    />
+                  )
+                }
+              </div>
+            </div>
+          </div>
+
+          <div className='location-view-section fold fold--filled'>
+            <div className='inner flex justify-start'>
+              <div className='column'>
+                <h2 className='location-view-header'>
+                  Site Details
+                </h2>
+                {this.renderSiteDetails(metadata)}
+              </div>
+              <div className='column'>
+                <h2 className='location-view-header'>
+                  Maintenance
+                </h2>
+                {this.renderMaintenance(metadata)}
+              </div>
+            </div>
+          </div>
+
           <div className='inner'>
-            <div className='row'>
-              <ul className='location-detail-list'>
-                <li>Location: <b>{location.location}</b></li>
-                <li>City: <b>{location.city}</b></li>
-                <li>Country: <b>{location.country}</b></li>
-                {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
-                {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
-                {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
-              </ul>
-
-              {
-                metadata &&
-                metadata.coordinates &&
-                metadata.coordinates.latitude &&
-                metadata.coordinates.longitude && (
-                  <Map
-                    zoom={10}
-                    width={300}
-                    coordinates={[metadata.coordinates.longitude, metadata.coordinates.latitude]}
-                  />
-                )
-              }
-            </div>
-
             <div className='location-view-section'>
-              <h2 className='location-view-header'>
-                Site Details
-              </h2>
-              {this.renderSiteDetails(metadata)}
-            </div>
-
-            <div className='location-view-section'>
-              <h2 className='location-view-header'>
-                Maintenance
-              </h2>
-              {this.renderMaintenance(metadata)}
-            </div>
-
-            <div className='location-view-section'>
-              <h2 className='location-view-header'>
+              <h2 className='location-view-header fold__title'>
                 Instruments
               </h2>
               <div className='flex'>
