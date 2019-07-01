@@ -204,8 +204,8 @@ class LocationView extends React.Component {
                 Instruments
               </h2>
               <div className='flex'>
-                {metadata.instruments.map((inst) => {
-                  return this.renderInstrument(inst);
+                {metadata.instruments.map((inst, i) => {
+                  return this.renderInstrument(inst, i);
                 })}
               </div>
             </div>
