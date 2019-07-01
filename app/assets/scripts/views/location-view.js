@@ -70,7 +70,7 @@ class LocationView extends React.Component {
     this.renderInstrument = this.renderInstrument.bind(this);
   }
 
-  _renderList (metadata, properties) {
+  _renderList (keyPrefix, metadata, properties) {
     let props = [];
 
     properties
@@ -78,7 +78,7 @@ class LocationView extends React.Component {
         return typeof (metadata[prop.key]) !== 'undefined';
       })
       .forEach(prop => {
-        props.push(<dt>{`${prop.title}`}</dt>);
+        props.push(<dt key={`${keyPrefix}-${prop.title}`}>{`${prop.title}`}</dt>);
         let val = metadata[prop.key];
         if (prop.format && prop.format === 'date-time') {
           val = format(val, 'YYYY-MM-DD');
@@ -86,7 +86,7 @@ class LocationView extends React.Component {
         if (prop.type && prop.type === 'boolean') {
           val = val ? 'Yes' : 'No';
         }
-        props.push(<dd>{val}</dd>);
+        props.push(<dd key={`${keyPrefix}-${prop.title}-val`}>{val}</dd>);
       });
     return (
       <dl>
@@ -96,15 +96,15 @@ class LocationView extends React.Component {
   }
 
   renderSiteDetails (metadata) {
-    return this._renderList(metadata, propertyGroups.siteDetails.properties);
+    return this._renderList('siteDetails', metadata, propertyGroups.siteDetails.properties);
   }
 
   renderMaintenance (metadata) {
-    return this._renderList(metadata, propertyGroups.maintenance.properties);
+    return this._renderList('metadata', metadata, propertyGroups.maintenance.properties);
   }
 
   renderInstrument (instr, i) {
-    const props = this._renderList(instr, propertyGroups.instrument.properties)
+    const props = this._renderList(`instrument-${i}`, instr, propertyGroups.instrument.properties)
     return (
       <div className='column' key={`instrument-${i}`}>
         <h3 className=''>
