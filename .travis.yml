@@ -6,3 +6,4 @@ env:
     - PRODUCTION_BRANCH=master
 cache: npm
 script: npm run lint
+after_success: npm run build
