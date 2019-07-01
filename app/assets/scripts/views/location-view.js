@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { schemas } from 'openaq-data-format';
+import format from 'date-fns/format';
 
 import Header from '../components/header';
 import Map from '../components/map';
@@ -62,52 +63,48 @@ class LocationView extends React.Component {
     if (!this.props.location.id) {
       this.props.getMetadata(id);
     }
+
+    this._renderList = this._renderList.bind(this);
+    this.renderSiteDetails = this.renderSiteDetails.bind(this);
+    this.renderMaintenance = this.renderMaintenance.bind(this);
+    this.renderInstrument = this.renderInstrument.bind(this);
+  }
+
+  _renderList (metadata, properties) {
+    let props = [];
+
+    properties
+      .filter(prop => {
+        return typeof (metadata[prop.key]) !== 'undefined';
+      })
+      .forEach(prop => {
+        props.push(<dt>{`${prop.title}`}</dt>);
+        let val = metadata[prop.key];
+        if (prop.format && prop.format === 'date-time') {
+          val = format(val, 'YYYY-MM-DD');
+        }
+        if (prop.type && prop.type === 'boolean') {
+          val = val ? 'Yes' : 'No';
+        }
+        props.push(<dd>{val}</dd>);
+      });
+    return (
+      <dl>
+        {props}
+      </dl>
+    );
   }
 
   renderSiteDetails (metadata) {
-    let props = [];
-    propertyGroups.siteDetails.properties
-      .filter(prop => {
-        return typeof (metadata[prop.key]) !== 'undefined';
-      })
-      .forEach(prop => {
-        props.push(<dt>{`${prop.title}`}</dt>);
-        props.push(<dd>{metadata[prop.key]}</dd>);
-      });
-    return (
-      <dl>
-        {props}
-      </dl>
-    );
+    return this._renderList(metadata, propertyGroups.siteDetails.properties);
   }
 
   renderMaintenance (metadata) {
-    let props = [];
-    propertyGroups.maintenance.properties
-      .filter(prop => {
-        return typeof (metadata[prop.key]) !== 'undefined';
-      })
-      .forEach(prop => {
-        props.push(<dt>{`${prop.title}`}</dt>);
-        props.push(<dd>{metadata[prop.key]}</dd>);
-      });
-    return (
-      <dl>
-        {props}
-      </dl>
-    );
+    return this._renderList(metadata, propertyGroups.maintenance.properties);
   }
 
   renderInstrument (instr, i) {
-    let props = [];
-    propertyGroups.instrument.properties
-      .filter(prop => {
-        return typeof (instr[prop.key]) !== 'undefined';
-      })
-      .forEach(prop => {
-        props.push(<dt>{`${prop.title}`}</dt>);
-        props.push(<dd>{instr[prop.key]}</dd>);
-      });
+    const props = this._renderList(instr, propertyGroups.instrument.properties)
     return (
       <div className='column' key={`instrument-${i}`}>
         <h3 className=''>
