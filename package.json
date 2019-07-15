@@ -109,7 +109,7 @@
     "lodash.defaultsdeep": "^4.6.0",
     "mapbox-gl": "0.45.0",
     "obj-keypath": "^1.1.0",
-    "openaq-data-format": "openaq/openaq-data-format#e3bda716006e1f69c82b8b1e98e5614688f4718e",
+    "openaq-data-format": "github:openaq/openaq-data-format#master",
     "openaq-design-system": "openaq/openaq-design-system",
     "query-string": "^6.5.0",
     "react": "^16.8.1",
