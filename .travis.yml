@@ -8,8 +8,8 @@ env:
 cache: npm
 script: npm run lint
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "$STAGING_BRANCH" ]; npm run stage; fi
-  - if [ "$TRAVIS_BRANCH" == "$PRODUCTION_BRANCH" ]; npm run build; fi
+  - '[[ $TRAVIS_BRANCH == $STAGING_BRANCH ]] && npm run stage'
+  - '[[ $TRAVIS_BRANCH == $PRODUCTION_BRANCH ]] && npm run stage'
 deploy:
   - provider: s3
     access_key_id: AKIAIHACHLPCT2PIL4TA
