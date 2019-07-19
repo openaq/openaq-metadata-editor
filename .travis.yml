@@ -7,9 +7,11 @@ env:
     - PRODUCTION_BRANCH=master
 cache: npm
 script: npm run lint
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "$STAGING_BRANCH" ]; npm run stage; fi
+  - if [ "$TRAVIS_BRANCH" == "$PRODUCTION_BRANCH" ]; npm run build; fi
 deploy:
   - provider: s3
-    before_deploy: npm run stage
     access_key_id: AKIAIHACHLPCT2PIL4TA
     secret_access_key:
       secure: JmalFAU1SCF2NruC1FjpsfvBPMyyZAc0FrFefki8mC6r8QamQyv/xesq0KPQlraA1Lll0dE1b7qMdoSZNZIR8itzOlDQZXC4Hnu4HEd+vOhAkkVlCPSxF3yGvL/i2OGL+ocJmY5tlGcPzWD8TSBpLFlML5dUhUwAWIhxDXnHQuAFaC/yIkmO2lq3ldSwAy/4CVX+24wh2kg8pNms0T9FVTGSirERJwMsUFLKzXtcUd0QLWZ1j2Fao1CClSiiRX2841F0UNIkQOm5XFbIii4iCr+xtq+U1LmqoMnGi78WwR0JuZ+WgbPFfxXuHHVtQrVngOWGrSm0SJwx+IplqwVq1u/IQM+vAK36UIv0at5vZ77eGP4wOnpBA2J/Vdie/41/4+E4aIxcUBFZmtdfwolSdT9LXJrJP8KgmV3suwcbX5h/8/6dsI+7pGTi+CX9fQ4Ecs0rUtBmynNV4SP6jgJoylDRoZHAf/HZCs//JsA2nbO8E5JUf5tLAHTU0aDEI7EaMdtDO46EYnQhbeHp5MdnFrz6jZm42FqkYsIaA423X4cYsDuRph1IV6gqJiSzeGwfyDxDCFYke2+uEm3CDu10jCdTaNMcchdpg7/1VUjdq3V+A+uz8Eq/OeK1JRfPkFD7RzcJx18nNNMjHQQkiknjJc8/jNKzc9GZSjADXWFRpoo=
