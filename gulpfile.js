@@ -183,7 +183,7 @@ gulp.task('vendorScripts', function () {
 // ----------------------------------------------------------------------------//
 
 gulp.task('build', function () {
-  runSequence(['vendorScripts', 'javascript', 'styles'], ['html', 'images', 'extras'], function () {
+  runSequence(['vendorScripts', 'javascript', 'collecticons', 'styles'], ['html', 'images', 'extras'], function () {
     return gulp.src('dist/**/*')
       .pipe($.size({ title: 'build', gzip: true }))
       .pipe($.exit());
