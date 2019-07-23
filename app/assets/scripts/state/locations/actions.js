@@ -9,13 +9,14 @@ import api from '../../services/openaq-api';
  * @returns {Object}
  */
 function _addFiltersToParams (params, filters) {
-  let { countries, installationDate, completeness, elevation, pollutants, siteType } = filters;
+  let { countries, completeness, elevation, pollutants, siteType } = filters;
 
   /** countries */
   params['country'] = countries.map(c => c.value);
 
   /** installation dates */
-  params['activationDate'] = `["${new Date(installationDate.start)}","${new Date(installationDate.end)}"]`;
+  // Temporarily remove activation date
+  // params['activationDate'] = `["${new Date(installationDate.start)}","${new Date(installationDate.end)}"]`;
 
   /** elevation */
   params['inletHeight'] = `["${elevation.min}", "${elevation.max}"]`;
