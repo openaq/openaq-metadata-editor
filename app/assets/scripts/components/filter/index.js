@@ -136,11 +136,10 @@ class Filter extends React.Component {
           {this.renderInput('pollutants')}
         </div>
         <div className='filter-column'>
-          {this.renderInput('installationDate')}
           {this.renderInput('elevation')}
+          {this.renderInput('completeness') }
         </div>
         <div className='filter-column'>
-          {this.renderInput('completeness') }
           {this.renderInput('siteType')}
         </div>
       </div>
