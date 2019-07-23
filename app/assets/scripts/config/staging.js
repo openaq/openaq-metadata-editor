@@ -1,3 +1,5 @@
+'use strict';
+
 export default {
   environment: 'staging',
   apiUrl: 'https://api.openaq-staging.org',
