@@ -10,7 +10,6 @@ export default {
   auth: {
     domain: 'openaq-staging.auth0.com',
     clientID: '_MoXmZ3_AwxoKGdS_VMcf23CpVr0157M',
-    callbackUrl: 'https://metadata.openaq-staging.org/callback',
-    audience: 'http://openaq-staging.org'
+    callbackUrl: 'https://metadata.openaq-staging.org/callback'
   }
 };
