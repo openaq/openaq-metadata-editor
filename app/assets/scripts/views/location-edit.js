@@ -196,7 +196,6 @@ class LocationEdit extends React.Component {
     }
 
     const onChange = (val) => {
-      console.log('val', val.key)
       this.propUpdate(key, val.key);
     };
 
@@ -475,17 +474,19 @@ class LocationEdit extends React.Component {
 
   validateForm (metadata) {
     const { match } = this.props;
+    const isNotRequired = (key) => {
+      const requiredKeys = ['id', 'instrument', 'name'];
+      return requiredKeys.filter(requiredKey => (requiredKey === key));
+    };
     // Sets metadata id from props if none exists
     if (!metadata.id) metadata.id = match.params.id;
     // Applies error status to form elements that don't meet validation
     // criteria from openaq-data-format
-    console.log('metadata', metadata);
     // Removes metadata property with value of ''. In the future,
     // this should be replaced in favor of validation that accepts '' as a valid no-option
-    Object.keys(metadata).forEach((key) => (metadata[key] === '') && delete metadata[key]);
-    console.log('metadata2', metadata);
+    Object.keys(metadata).forEach((key) => (metadata[key] === '' && !isNotRequired(key).length) && delete metadata[key]);
+    // Runs validation from open-aq-format
     const { errors } = validate('location', metadata);
-    console.log('errors', errors);
     // Lists form item and error type for validation error occuring on an instrument
     const errorState = { instruments: [] };
 
