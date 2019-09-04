@@ -190,6 +190,10 @@ class LocationEdit extends React.Component {
     let options;
     if (availableValues) {
       options = availableValues.map((k) => ({ key: k, label: k }));
+
+      // Adds an option for users to deselect item
+      const deselectValue = { key: '', label: 'not applicable' };
+      options.unshift(deselectValue);
     }
 
     const onChange = (val) => {
@@ -471,10 +475,16 @@ class LocationEdit extends React.Component {
 
   validateForm (metadata) {
     const { match } = this.props;
+    // Sets metadata id from props if none exists
     if (!metadata.id) metadata.id = match.params.id;
+    // Applies error status to form elements that don't meet validation
+    // criteria from openaq-data-format
     const { errors } = validate('location', metadata);
+    console.log('errors', errors);
+    // Lists form item and error type for validation error occuring on an instrument
     const errorState = { instruments: [] };
 
+    // Sets error state and message if error is triggered above
     if (errors && errors.length) {
       errors.forEach((error) => {
         const key = this.formatKey(error.property);
