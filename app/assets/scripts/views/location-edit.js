@@ -87,6 +87,11 @@ class LocationEdit extends React.Component {
     }
   }
 
+  /**
+   * @param {string} key - form input label.
+   * @param {number} value - form input value.
+   * @return {function} action to update metadata object with type.
+   */
   propUpdate (key, value) {
     const metadata = Object.assign({ instruments: [] }, this.props.location.metadata);
     const data = keypath.set(metadata, key, value);
@@ -182,6 +187,11 @@ class LocationEdit extends React.Component {
     );
   }
 
+  /**
+   * @param {string} key - form input label.
+   * @param {number} value - form input value.
+   * @param {object} prop - section properties used to populate dropdown.
+   */
   renderSelectProp (key, value, prop) {
     const { required, title } = prop;
     const availableValues = prop.enum;
@@ -472,25 +482,25 @@ class LocationEdit extends React.Component {
       .replace(']', '');
   }
 
+  /**
+   * @param {object} metadata - updated data from form input to be validated.
+   * Sets metadata id.
+   * Removes empty values that are not required.
+   * Runs validation from open-aq-format.
+   * Sets error state and message if triggered from validation.
+   */
   validateForm (metadata) {
     const { match } = this.props;
+    if (!metadata.id) metadata.id = match.params.id;
+    // In the future, this should be replaced in favor of validation that accepts '' as a valid no-option.
     const isNotRequired = (key) => {
       const requiredKeys = ['id', 'instrument', 'name'];
       return requiredKeys.filter(requiredKey => (requiredKey === key));
     };
-    // Sets metadata id from props if none exists
-    if (!metadata.id) metadata.id = match.params.id;
-    // Applies error status to form elements that don't meet validation
-    // criteria from openaq-data-format
-    // Removes metadata property with value of ''. In the future,
-    // this should be replaced in favor of validation that accepts '' as a valid no-option
     Object.keys(metadata).forEach((key) => (metadata[key] === '' && !isNotRequired(key).length) && delete metadata[key]);
-    // Runs validation from open-aq-format
     const { errors } = validate('location', metadata);
-    // Lists form item and error type for validation error occuring on an instrument
     const errorState = { instruments: [] };
 
-    // Sets error state and message if error is triggered above
     if (errors && errors.length) {
       errors.forEach((error) => {
         const key = this.formatKey(error.property);
