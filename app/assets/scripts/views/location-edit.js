@@ -9,6 +9,7 @@ import { schemas, validate } from 'openaq-data-format';
 
 import Header from '../components/header';
 import MapEdit from '../components/map-edit';
+import ErrorMessage from '../components/error-message';
 
 import { getMetadata, putMetadata, updateMetadata, setFormErrors } from '../state/locations/actions';
 
@@ -75,7 +76,8 @@ class LocationEdit extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      errors: { instruments: [] }
+      errors: { instruments: [] },
+      isError: false;
     };
   }
 
@@ -328,9 +330,7 @@ class LocationEdit extends React.Component {
                 <div key={`form-field-${key}`} className={`form-field${error ? ' error' : ''}`}>
                   {this.renderPropInput(key, value, prop)}
                   {
-                    error && (
-                      <div className='error-message'>{error.message}</div>
-                    )
+                    error && (<ErrorMessage style='error-message' message={error.message}/>)
                   }
                 </div>
               );
@@ -439,9 +439,7 @@ class LocationEdit extends React.Component {
               Save Location
             </button>
           </div>
-          {(errorCount > 0) && (
-            <div className='form-error-message'>Please fix errors in the form above</div>
-          )}
+          {(errorCount > 0) && (<ErrorMessage style='form-error-message' message='Please fix errors in the form above'/>)}
         </div>
       </main>
     );
@@ -512,9 +510,14 @@ class LocationEdit extends React.Component {
 
     if (this.validateForm(metadata)) {
       delete metadata.id;
-      this.props.putMetadata(match.params.id, metadata).then(() => {
-        this.props.history.push(`/location/${match.params.id}`);
-      });
+      this.props.putMetadata(match.params.id, metadata)
+        .then(() => {
+          throw new Error();
+          this.props.history.push(`/location/${match.params.id}`);
+        })
+        .catch(() => {
+          return (<ErrorMessage style='form-error-message' message='Error Submitting'/>);
+        });
     }
   }
 
