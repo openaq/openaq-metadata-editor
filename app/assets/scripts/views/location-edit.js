@@ -202,6 +202,10 @@ class LocationEdit extends React.Component {
     let options;
     if (availableValues) {
       options = availableValues.map((k) => ({ key: k, label: k }));
+
+      // Adds an option for users to deselect item
+      const deselectValue = { key: '', label: 'Select One' };
+      options.unshift(deselectValue);
     }
 
     const onChange = (val) => {
