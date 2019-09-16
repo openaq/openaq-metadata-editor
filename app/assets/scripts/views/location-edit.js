@@ -200,10 +200,6 @@ class LocationEdit extends React.Component {
     let options;
     if (availableValues) {
       options = availableValues.map((k) => ({ key: k, label: k }));
-
-      // Adds an option for users to deselect item
-      const deselectValue = { key: '', label: 'Select One' };
-      options.unshift(deselectValue);
     }
 
     const onChange = (val) => {
@@ -522,7 +518,6 @@ class LocationEdit extends React.Component {
 
   onSaveLocationClick () {
     const { match } = this.props;
-
     const metadata = Object.assign({}, this.props.location.metadata);
 
     if (this.validateForm(metadata)) {
