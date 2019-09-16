@@ -488,7 +488,7 @@ class LocationEdit extends React.Component {
       .replace(']', '');
   }
 
-/**
+  /**
    * @param {object} metadata - updated data from form input to be validated.
    * Sets metadata id.
    * Removes empty values that are not required.
