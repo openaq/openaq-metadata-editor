@@ -43,11 +43,10 @@ function reducer (state = initialState, action) {
     }
 
     case constants.PUT_METADATA_ERROR: {
-      console.log('error!!!!', action.error);
-      // return state;
+      console.error('PUT ERROR:', action.error);
       return Object.assign({}, state, {
         putError: action.error,
-        putErrorMessage: 'There was an error updating metadata... sorry :('
+        putErrorMessage: 'There was an error updating metadata. Please try again.'
       });
     }
 
