@@ -76,8 +76,7 @@ class LocationEdit extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      errors: { instruments: [] },
-      isError: false;
+      isUpdateError: false
     };
   }
 
@@ -440,6 +439,13 @@ class LocationEdit extends React.Component {
             </button>
           </div>
           {(errorCount > 0) && (<ErrorMessage style='form-error-message' message='Please fix errors in the form above'/>)}
+          {this.state.isUpdateError ? (
+            <ErrorMessage
+              style='form-error-message'
+              message='There was an error updating '
+              retry={(e) => this.onSaveLocationClick(e)}
+            />
+          ) : null}
         </div>
       </main>
     );
@@ -506,17 +512,19 @@ class LocationEdit extends React.Component {
 
   onSaveLocationClick () {
     const { match } = this.props;
+
     const metadata = Object.assign({}, this.props.location.metadata);
 
     if (this.validateForm(metadata)) {
       delete metadata.id;
       this.props.putMetadata(match.params.id, metadata)
         .then(() => {
-          throw new Error();
+          // throw new Error();
           this.props.history.push(`/location/${match.params.id}`);
         })
-        .catch(() => {
-          return (<ErrorMessage style='form-error-message' message='Error Submitting'/>);
+        .catch((err) => {
+          this.setState({ isUpdateError: true });
+          console.error('Error submitting update:', err);
         });
     }
   }
