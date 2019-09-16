@@ -190,10 +190,6 @@ class LocationEdit extends React.Component {
     let options;
     if (availableValues) {
       options = availableValues.map((k) => ({ key: k, label: k }));
-
-      // Adds an option for users to deselect item
-      const deselectValue = { key: '', label: 'Select One' };
-      options.unshift(deselectValue);
     }
 
     const onChange = (val) => {
@@ -478,23 +474,10 @@ class LocationEdit extends React.Component {
 
   validateForm (metadata) {
     const { match } = this.props;
-    const isNotRequired = (key) => {
-      const requiredKeys = ['id', 'instrument', 'name'];
-      return requiredKeys.filter(requiredKey => (requiredKey === key));
-    };
-    // Sets metadata id from props if none exists
     if (!metadata.id) metadata.id = match.params.id;
-    // Applies error status to form elements that don't meet validation
-    // criteria from openaq-data-format
-    // Removes metadata property with value of ''. In the future,
-    // this should be replaced in favor of validation that accepts '' as a valid no-option
-    Object.keys(metadata).forEach((key) => (metadata[key] === '' && !isNotRequired(key).length) && delete metadata[key]);
-    // Runs validation from open-aq-format
     const { errors } = validate('location', metadata);
-    // Lists form item and error type for validation error occuring on an instrument
     const errorState = { instruments: [] };
 
-    // Sets error state and message if error is triggered above
     if (errors && errors.length) {
       errors.forEach((error) => {
         const key = this.formatKey(error.property);
@@ -512,7 +495,6 @@ class LocationEdit extends React.Component {
 
   onSaveLocationClick () {
     const { match } = this.props;
-
     const metadata = Object.assign({}, this.props.location.metadata);
 
     if (this.validateForm(metadata)) {
