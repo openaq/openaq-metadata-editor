@@ -87,10 +87,14 @@ class LocationEdit extends React.Component {
     }
   }
 
+  /**
+   * @param {string} key - form input label.
+   * @param {number} value - form input value.
+   * @return {function} action to update metadata object with type.
+   */
   propUpdate (key, value) {
     const metadata = Object.assign({ instruments: [] }, this.props.location.metadata);
     const data = keypath.set(metadata, key, value);
-    this.validateForm(data);
     this.props.updateMetadata(data);
   }
 
@@ -183,6 +187,11 @@ class LocationEdit extends React.Component {
     );
   }
 
+  /**
+   * @param {string} key - form input label.
+   * @param {number} value - form input value.
+   * @param {object} prop - section properties used to populate dropdown.
+   */
   renderSelectProp (key, value, prop) {
     const { required, title } = prop;
     const availableValues = prop.enum;
@@ -190,6 +199,10 @@ class LocationEdit extends React.Component {
     let options;
     if (availableValues) {
       options = availableValues.map((k) => ({ key: k, label: k }));
+
+      // Adds an option for users to deselect item
+      const deselectValue = { key: '', label: 'Select One' };
+      options.unshift(deselectValue);
     }
 
     const onChange = (val) => {
@@ -469,9 +482,22 @@ class LocationEdit extends React.Component {
       .replace(']', '');
   }
 
+  /**
+   * @param {object} metadata - updated data from form input to be validated.
+   * Sets metadata id.
+   * Removes empty values that are not required.
+   * Runs validation from open-aq-format.
+   * Sets error state and message if triggered from validation.
+   */
   validateForm (metadata) {
     const { match } = this.props;
     if (!metadata.id) metadata.id = match.params.id;
+    // In the future, this should be replaced in favor of validation that accepts '' as a valid no-option.
+    const isNotRequired = (key) => {
+      const requiredKeys = ['id', 'instrument', 'name'];
+      return requiredKeys.filter(requiredKey => (requiredKey === key));
+    };
+    Object.keys(metadata).forEach((key) => (metadata[key] === '' && !isNotRequired(key).length) && delete metadata[key]);
     const { errors } = validate('location', metadata);
     const errorState = { instruments: [] };
 
