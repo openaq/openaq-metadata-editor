@@ -7,7 +7,7 @@ const ErrorMessage = props => {
       {props.retry ? (
         <button
           type='button'
-          className='button button--medium button--primary-bounded'
+          className='button button--primary-bounded message-button'
           onClick={(e) => props.retry()}>
               Retry
         </button>
