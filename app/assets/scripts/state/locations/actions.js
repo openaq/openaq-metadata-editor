@@ -79,12 +79,14 @@ export function putMetadata (id, obj) {
   return (dispatch, getState) => {
     return api.putMetadata(id, obj)
       .then(data => {
+        throw new Error()
         dispatch({
           type: constants.PUT_METADATA,
           data
         });
       })
       .catch(err => {
+        console.log('error firing')
         dispatch({
           type: constants.PUT_METADATA_ERROR,
           error: err
