@@ -98,7 +98,6 @@ class LocationEdit extends React.Component {
   propUpdate (key, value) {
     const metadata = Object.assign({ instruments: [] }, this.props.location.metadata);
     const data = keypath.set(metadata, key, value);
-    this.validateForm(data);
     this.props.updateMetadata(data);
   }
 
