@@ -521,15 +521,17 @@ class LocationEdit extends React.Component {
   onSaveLocationClick () {
     const { match } = this.props;
     const metadata = Object.assign({}, this.props.location.metadata);
-
+    
     if (this.validateForm(metadata)) {
       delete metadata.id;
       this.props.putMetadata(match.params.id, metadata)
-        .then(() => {
-          // throw new Error();
-          this.props.history.push(`/location/${match.params.id}`);
-        })
-        .catch((err) => {
+      .then(() => {
+        // throw new Error();
+        console.log('putError', this.props.putError);
+        console.log('putError', this.props.putErrorMessage);
+        this.props.history.push(`/location/${match.params.id}`);
+      })
+      .catch((err) => {
           this.setState({ isUpdateError: true });
           console.error('Error submitting update:', err);
         });
@@ -549,8 +551,8 @@ class LocationEdit extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { location, errors, errorCount } = state.locations;
-  return { location, errors, errorCount };
+  const { location, errors, errorCount, putError, putErrorMessage } = state.locations;
+  return { location, errors, errorCount, putError, putErrorMessage };
 };
 
 const mapDispatchToProps = {
