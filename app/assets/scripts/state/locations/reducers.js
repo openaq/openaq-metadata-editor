@@ -5,7 +5,7 @@ const initialState = {
   location: {
     metadata: { instruments: [] }
   },
-  putError: '',
+  putError: null,
   putErrorMessage: '',
   errors: { instruments: [] },
   errorCount: 0
@@ -46,7 +46,7 @@ function reducer (state = initialState, action) {
       console.error('PUT ERROR:', action.error);
       return Object.assign({}, state, {
         putError: action.error,
-        putErrorMessage: 'There was an error updating metadata. Please try again.'
+        putErrorMessage: `Update Error: ${action.error.message}`
       });
     }
 
