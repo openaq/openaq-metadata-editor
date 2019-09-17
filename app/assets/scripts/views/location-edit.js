@@ -9,6 +9,7 @@ import { schemas, validate } from 'openaq-data-format';
 
 import Header from '../components/header';
 import MapEdit from '../components/map-edit';
+import ErrorMessage from '../components/error-message';
 
 import { getMetadata, putMetadata, updateMetadata, setFormErrors } from '../state/locations/actions';
 
@@ -75,7 +76,9 @@ class LocationEdit extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      errors: { instruments: [] }
+      errors: { instruments: [] },
+      isUpdateError: false,
+      errorMessage: ''
     };
   }
 
@@ -338,9 +341,7 @@ class LocationEdit extends React.Component {
                 <div key={`form-field-${key}`} className={`form-field${error ? ' error' : ''}`}>
                   {this.renderPropInput(key, value, prop)}
                   {
-                    error && (
-                      <div className='error-message'>{error.message}</div>
-                    )
+                    error && (<ErrorMessage style='error-message' message={error.message}/>)
                   }
                 </div>
               );
@@ -449,9 +450,14 @@ class LocationEdit extends React.Component {
               Save Location
             </button>
           </div>
-          {(errorCount > 0) && (
-            <div className='form-error-message'>Please fix errors in the form above</div>
-          )}
+          {(errorCount > 0) && (<ErrorMessage style='form-error-message' message='Please fix errors in the form above'/>)}
+          {this.state.isUpdateError ? (
+            <ErrorMessage
+              style='form-error-message'
+              message={this.state.errorMessage}
+              retry={(e) => this.onSaveLocationClick(e)}
+            />
+          ) : null}
         </div>
       </main>
     );
@@ -522,9 +528,14 @@ class LocationEdit extends React.Component {
 
     if (this.validateForm(metadata)) {
       delete metadata.id;
-      this.props.putMetadata(match.params.id, metadata).then(() => {
-        this.props.history.push(`/location/${match.params.id}`);
-      });
+      this.props.putMetadata(match.params.id, metadata)
+        .then(() => {
+          this.props.putError ? (
+            this.setState({ isUpdateError: true, errorMessage: this.props.putErrorMessage })
+          ) : (
+            this.props.history.push(`/location/${match.params.id}`)
+          );
+        });
     }
   }
 
@@ -541,8 +552,8 @@ class LocationEdit extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { location, errors, errorCount } = state.locations;
-  return { location, errors, errorCount };
+  const { location, errors, errorCount, putError, putErrorMessage } = state.locations;
+  return { location, errors, errorCount, putError, putErrorMessage };
 };
 
 const mapDispatchToProps = {
