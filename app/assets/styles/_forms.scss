@@ -10,6 +10,32 @@
   }
 }
 
+.tooltip-button {
+  font-size: smaller;
+  border-radius: 50px;
+  margin: 0 0.8rem;
+}
+
+.tooltip-info {
+  visibility: hidden;
+  position: absolute;
+  right: 10%;
+  bottom: 100%;
+
+}
+
+.tooltip:hover .tooltip-info {
+  visibility: visible;
+}
+
+.tooltip {
+  position: relative;
+  .form__control {
+    display: inline-block;
+    width: 90%;
+  }
+}
+
 .edit-box {
   .form__legend {
     color: $base-color;

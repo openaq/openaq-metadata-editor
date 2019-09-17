@@ -125,7 +125,8 @@ class LocationEdit extends React.Component {
   }
 
   renderStringProp (key, value, prop) {
-    const { required, title } = prop;
+    console.log('form prop', prop)
+    const { required, title, description } = prop;
     const onChange = (e) => {
       this.propUpdate(key, e.target.value);
     };
@@ -136,12 +137,16 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <input
-          type='text'
-          className='form__control'
-          value={value}
-          onChange={onChange}
-        />
+        <div className='tooltip'>
+          <input
+            type='text'
+            className='form__control'
+            value={value}
+            onChange={onChange}
+          />
+          <button className='tooltip-button button button--primary-bounded'>i</button>
+          <span className='tooltip-info'>{description}</span>
+        </div>
       </React.Fragment>
     );
   }
