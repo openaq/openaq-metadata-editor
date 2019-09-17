@@ -21,7 +21,6 @@
   position: absolute;
   right: 10%;
   bottom: 100%;
-
 }
 
 .tooltip:hover .tooltip-info {
@@ -30,9 +29,9 @@
 
 .tooltip {
   position: relative;
+  display: flex;
   .form__control {
-    display: inline-block;
-    width: 90%;
+    display: flex;
   }
 }
 
