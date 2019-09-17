@@ -125,7 +125,6 @@ class LocationEdit extends React.Component {
   }
 
   renderStringProp (key, value, prop) {
-    console.log('form prop', prop)
     const { required, title, description } = prop;
     const onChange = (e) => {
       this.propUpdate(key, e.target.value);
