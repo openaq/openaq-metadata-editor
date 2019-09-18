@@ -10,6 +10,7 @@ import { schemas, validate } from 'openaq-data-format';
 import Header from '../components/header';
 import MapEdit from '../components/map-edit';
 import ErrorMessage from '../components/error-message';
+import FormInput from '../components/form-input';
 
 import { getMetadata, putMetadata, updateMetadata, setFormErrors } from '../state/locations/actions';
 
@@ -146,31 +147,31 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderIntegerProp (key, value, prop) {
-    const { required, title, description } = prop;
-    const onChange = (e) => {
-      this.propUpdate(key, e.target.value ? Number(e.target.value) : null);
-    };
+  // renderIntegerProp (key, value, prop) {
+  //   const { required, title, description } = prop;
+  //   const onChange = (e) => {
+  //     this.propUpdate(key, e.target.value ? Number(e.target.value) : null);
+  //   };
 
-    return (
-      <React.Fragment>
-        <label className='form__label'>
-          {title}
-          <Asterisk required={required}/>
-        </label>
-        <div className='tooltip'>
-          <input
-            type='number'
-            className='form__control'
-            value={value}
-            onChange={onChange}
-          />
-          <button className='tooltip-button button button--primary-bounded'>i</button>
-          <span className='tooltip-info'>{description}</span>
-        </div>
-      </React.Fragment>
-    );
-  }
+  //   return (
+  //     <React.Fragment>
+  //       <label className='form__label'>
+  //         {title}
+  //         <Asterisk required={required}/>
+  //       </label>
+  //       <div className='tooltip'>
+  //         <input
+  //           type='number'
+  //           className='form__control'
+  //           value={value}
+  //           onChange={onChange}
+  //         />
+  //         <button className='tooltip-button button button--primary-bounded'>i</button>
+  //         <span className='tooltip-info'>{description}</span>
+  //       </div>
+  //     </React.Fragment>
+  //   );
+  // }
 
   renderBooleanProp (key, value, prop) {
     const { required, title } = prop;
@@ -305,7 +306,15 @@ class LocationEdit extends React.Component {
           return this.renderStringProp(key, value, prop);
         }
       case 'integer':
-        return this.renderIntegerProp(key, value, prop);
+        // return this.renderIntegerProp(key, value, prop);
+        return (
+          <FormInput
+            onChange= {(e) => { this.propUpdate(key, e.target.value ? Number(e.target.value) : null); }}
+            title={prop.title}
+            value={value}
+            description={prop.description}
+            required={prop.required}
+          />);
       case 'array':
         return this.renderMultiSelectProp(key, value, prop);
       case 'boolean':
