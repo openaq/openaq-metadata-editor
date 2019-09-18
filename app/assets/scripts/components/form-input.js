@@ -5,22 +5,27 @@ const Asterisk = ({ required }) => {
   return (<span className='required'>*</span>);
 };
 
-const FormInput = props => {
+const FormInput = ({ title, type, value, onChange, isTooltopShowing, description }) => {
+  // const {title, type, value, onChange, isTooltopShowing, description } = props;
   return (
     <React.Fragment>
       <label className='form__label'>
-        {props.title}
-        <Asterisk required={props.required}/>
+        {title}
+        <Asterisk required={title}/>
       </label>
       <div className='tooltip'>
         <input
-          type={props.type}
+          type={type}
           className='form__control'
-          value={props.value}
-          onChange={props.onChange}
+          value={value}
+          onChange={onChange}
         />
-        <button className='tooltip-button button button--primary-bounded'>i</button>
-        <span className='tooltip-info'>{props.description}</span>
+        {isTooltopShowing ? (
+          <div>
+            <button className='tooltip-button button button--primary-bounded'>i</button>
+            <span className='tooltip-info'>{description}</span>
+          </div>
+        ) : null }
       </div>
     </React.Fragment>
   );

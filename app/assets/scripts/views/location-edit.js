@@ -125,76 +125,6 @@ class LocationEdit extends React.Component {
     );
   }
 
-  renderStringProp (key, value, prop) {
-    const { required, title } = prop;
-    const onChange = (e) => {
-      this.propUpdate(key, e.target.value);
-    };
-
-    return (
-      <React.Fragment>
-        <label className='form__label'>
-          {title}
-          <Asterisk required={required}/>
-        </label>
-        <input
-          type='text'
-          className='form__control'
-          value={value}
-          onChange={onChange}
-        />
-      </React.Fragment>
-    );
-  }
-
-  // renderIntegerProp (key, value, prop) {
-  //   const { required, title, description } = prop;
-  //   const onChange = (e) => {
-  //     this.propUpdate(key, e.target.value ? Number(e.target.value) : null);
-  //   };
-
-  //   return (
-  //     <React.Fragment>
-  //       <label className='form__label'>
-  //         {title}
-  //         <Asterisk required={required}/>
-  //       </label>
-  //       <div className='tooltip'>
-  //         <input
-  //           type='number'
-  //           className='form__control'
-  //           value={value}
-  //           onChange={onChange}
-  //         />
-  //         <button className='tooltip-button button button--primary-bounded'>i</button>
-  //         <span className='tooltip-info'>{description}</span>
-  //       </div>
-  //     </React.Fragment>
-  //   );
-  // }
-
-  renderBooleanProp (key, value, prop) {
-    const { required, title } = prop;
-    const onChange = (e) => {
-      this.propUpdate(key, e.target.checked);
-    };
-
-    return (
-      <React.Fragment>
-        <label className='form__label'>
-          {title}
-          <Asterisk required={required}/>
-        </label>
-        <input
-          type='checkbox'
-          value={value}
-          className='form__control'
-          onChange={onChange}
-        />
-      </React.Fragment>
-    );
-  }
-
   /**
    * @param {string} key - form input label.
    * @param {number} value - form input value.
@@ -303,10 +233,18 @@ class LocationEdit extends React.Component {
         } else if (prop.enum) {
           return this.renderSelectProp(key, value, prop);
         } else {
-          return this.renderStringProp(key, value, prop);
+          return (
+            <FormInput
+              onChange= {(e) => { this.propUpdate(key, e.target.value); }}
+              title={prop.title}
+              value={value}
+              description={prop.description}
+              required={prop.required}
+              type='text'
+              isTooltopShowing={true}
+            />);
         }
       case 'integer':
-        // return this.renderIntegerProp(key, value, prop);
         return (
           <FormInput
             onChange= {(e) => { this.propUpdate(key, e.target.value ? Number(e.target.value) : null); }}
@@ -314,11 +252,23 @@ class LocationEdit extends React.Component {
             value={value}
             description={prop.description}
             required={prop.required}
+            type='number'
+            isTooltopShowing={true}
           />);
       case 'array':
         return this.renderMultiSelectProp(key, value, prop);
       case 'boolean':
-        return this.renderBooleanProp(key, value, prop);
+        return (
+          <FormInput
+            onChange= {(e) => { this.propUpdate(key, e.target.checked); }}
+            title={prop.title}
+            value={value}
+            description={prop.description}
+            required={prop.required}
+            type='checkbox'
+            isTooltopShowing={false}
+          />
+        );
     }
   }
 
