@@ -5,20 +5,21 @@ const Asterisk = ({ required }) => {
   return (<span className='required'>*</span>);
 };
 
-const FormInput = ({ title, type, value, onChange, isTooltopShowing, description }) => {
-  // const {title, type, value, onChange, isTooltopShowing, description } = props;
+const FormSelect = ({ title, type, value, onChange, isTooltopShowing, description, required }) => {
   return (
     <React.Fragment>
       <label className='form__label'>
         {title}
-        <Asterisk required={title}/>
+        <Asterisk required={required}/>
       </label>
       <div className='tooltip'>
-        <input
-          type={type}
-          className='form__control'
-          value={value}
+        <Select
+          value={{ key: value, label: value }}
+          options={options}
           onChange={onChange}
+          getOptionValue={(option) => {
+            return option.key;
+          }}
         />
         {isTooltopShowing ? (
           <div>
@@ -31,4 +32,4 @@ const FormInput = ({ title, type, value, onChange, isTooltopShowing, description
   );
 };
 
-export default FormInput;
+export default FormSelect;

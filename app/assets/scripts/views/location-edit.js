@@ -10,7 +10,7 @@ import { schemas, validate } from 'openaq-data-format';
 import Header from '../components/header';
 import MapEdit from '../components/map-edit';
 import ErrorMessage from '../components/error-message';
-import FormInput from '../components/form-input';
+import FormInput from '../components/form/form-input';
 
 import { getMetadata, putMetadata, updateMetadata, setFormErrors } from '../state/locations/actions';
 
