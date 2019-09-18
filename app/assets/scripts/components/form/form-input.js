@@ -8,7 +8,7 @@ const FormInput = ({ title, type, value, onChange, isTooltopShowing, description
         {title}
         <Asterisk required={required}/>
       </label>
-      <div className='tooltip'>
+      <div className='tooltip-container'>
         <input
           type={type}
           className='form__control'
@@ -16,10 +16,10 @@ const FormInput = ({ title, type, value, onChange, isTooltopShowing, description
           onChange={onChange}
         />
         {isTooltopShowing ? (
-          <React.Fragment>
+          <div className='tooltip'>
             <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
             <span className='tooltip-info'>{description}</span>
-          </React.Fragment>
+          </div>
         ) : null }
       </div>
     </React.Fragment>

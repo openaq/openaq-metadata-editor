@@ -153,7 +153,7 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <div className='tooltip'>
+        <div className='tooltip-container'>
           <Select
             className='form__select'
             value={{ key: value, label: value }}
@@ -163,8 +163,10 @@ class LocationEdit extends React.Component {
               return option.key;
             }}
           />
-          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
-          <span className='tooltip-info'>{description}</span>
+          <div className='tooltip'>
+            <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+            <span className='tooltip-info'>{description}</span>
+          </div>
         </div>
       </React.Fragment>
     );
@@ -194,7 +196,7 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <div className='tooltip'>
+        <div className='tooltip-container'>
           <Select
             isMulti
             className='form__select'
@@ -205,8 +207,10 @@ class LocationEdit extends React.Component {
               return option.key;
             }}
           />
-          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
-          <span className='tooltip-info'>{description}</span>
+          <div className='tooltip'>
+            <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+            <span className='tooltip-info'>{description}</span>
+          </div>
         </div>
       </React.Fragment>
     );
@@ -226,14 +230,16 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <div className='tooltip'>
+        <div className='tooltip-container form__date'>
           <DatePicker
             className='form__control'
             selected={date}
             onChange={onChange}
           />
-          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
-          <span className='tooltip-info'>{description}</span>
+          <div className='tooltip'>
+            <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+            <span className='tooltip-info'>{description}</span>
+          </div>
         </div>
       </React.Fragment>
     );
