@@ -11,6 +11,7 @@ import Header from '../components/header';
 import MapEdit from '../components/map-edit';
 import ErrorMessage from '../components/error-message';
 import FormInput from '../components/form/form-input';
+import Asterisk from '../components/form/asterisk';
 
 import { getMetadata, putMetadata, updateMetadata, setFormErrors } from '../state/locations/actions';
 
@@ -66,11 +67,6 @@ const editorGroups = {
     name: 'Instrument',
     properties: instrumentProperties
   }
-};
-
-const Asterisk = ({ required }) => {
-  if (!required) return null;
-  return (<span className='required'>*</span>);
 };
 
 class LocationEdit extends React.Component {
