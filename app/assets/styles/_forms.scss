@@ -32,6 +32,9 @@
   .form__control {
     display: flex;
   }
+  .form__select {
+    flex-grow: 1;
+  }
 }
 
 .edit-box {

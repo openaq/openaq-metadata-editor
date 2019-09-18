@@ -16,10 +16,10 @@ const FormInput = ({ title, type, value, onChange, isTooltopShowing, description
           onChange={onChange}
         />
         {isTooltopShowing ? (
-          <div>
-            <button className='tooltip-button button button--primary-bounded'>i</button>
+          <React.Fragment>
+            <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
             <span className='tooltip-info'>{description}</span>
-          </div>
+          </React.Fragment>
         ) : null }
       </div>
     </React.Fragment>

@@ -131,7 +131,7 @@ class LocationEdit extends React.Component {
    * @param {object} prop - section properties used to populate dropdown.
    */
   renderSelectProp (key, value, prop) {
-    const { required, title } = prop;
+    const { required, title, description } = prop;
     const availableValues = prop.enum;
 
     let options;
@@ -153,20 +153,25 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <Select
-          value={{ key: value, label: value }}
-          options={options}
-          onChange={onChange}
-          getOptionValue={(option) => {
-            return option.key;
-          }}
-        />
+        <div className='tooltip'>
+          <Select
+            className='form__select'
+            value={{ key: value, label: value }}
+            options={options}
+            onChange={onChange}
+            getOptionValue={(option) => {
+              return option.key;
+            }}
+          />
+          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+          <span className='tooltip-info'>{description}</span>
+        </div>
       </React.Fragment>
     );
   }
 
   renderMultiSelectProp (key, value, prop) {
-    const { required, title } = prop;
+    const { required, title, description } = prop;
     const availableValues = prop.items.enum;
 
     let options;
@@ -189,21 +194,26 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <Select
-          isMulti
-          value={values}
-          options={options}
-          onChange={onChange}
-          getOptionValue={(option) => {
-            return option.key;
-          }}
-        />
+        <div className='tooltip'>
+          <Select
+            isMulti
+            className='form__select'
+            value={values}
+            options={options}
+            onChange={onChange}
+            getOptionValue={(option) => {
+              return option.key;
+            }}
+          />
+          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+          <span className='tooltip-info'>{description}</span>
+        </div>
       </React.Fragment>
     );
   }
 
   renderDateProp (key, value, prop) {
-    const { required, title } = prop;
+    const { required, title, description } = prop;
     const onChange = (val) => {
       this.propUpdate(key, val.toISOString());
     };
@@ -216,11 +226,15 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <DatePicker
-          className='form__control'
-          selected={date}
-          onChange={onChange}
-        />
+        <div className='tooltip'>
+          <DatePicker
+            className='form__control'
+            selected={date}
+            onChange={onChange}
+          />
+          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+          <span className='tooltip-info'>{description}</span>
+        </div>
       </React.Fragment>
     );
   }
