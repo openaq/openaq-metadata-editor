@@ -8,7 +8,7 @@ import parse from 'date-fns/parse';
 import { schemas, validate } from 'openaq-data-format';
 
 import Header from '../components/header';
-import MapEdit from '../components/map-edit';
+import Map from '../components/map';
 import ErrorMessage from '../components/error-message';
 import FormInput from '../components/form/form-input';
 import Asterisk from '../components/form/asterisk';
@@ -362,6 +362,9 @@ class LocationEdit extends React.Component {
     });
   }
 
+  /**
+   * @return {class} Displays class component non-editable map with coordinates from metadata.
+   */
   renderMap () {
     const { location } = this.props;
     const { metadata } = location;
@@ -375,16 +378,11 @@ class LocationEdit extends React.Component {
       ? [metadata.coordinates.longitude, metadata.coordinates.latitude]
       : [0, 0];
 
-    const onChange = (coordinates) => {
-      this.propUpdate('coordinates', coordinates);
-    };
-
     return (
-      <MapEdit
+      <Map
         zoom={10}
         width={300}
         coordinates={coordinates}
-        onChange={onChange}
       />
     );
   }
