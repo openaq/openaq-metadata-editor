@@ -171,21 +171,21 @@ class LocationView extends React.Component {
                     <li>Location: <b>{location.location}</b></li>
                     <li>City: <b>{location.city}</b></li>
                     <li>Country: <b>{location.country}</b></li>
-                    {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
-                    {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
+                    {location && location.coordinates && location.coordinates.latitude && (<li>Latitude: <b>{location.coordinates.latitude}</b></li>)}
+                    {location && location.coordinates && location.coordinates.longitude && <li>Longitude: <b>{location.coordinates.longitude}</b></li>}
                     {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
                   </ul>
                 </div>
 
                 {
-                  metadata &&
-                  metadata.coordinates &&
-                  metadata.coordinates.latitude &&
-                  metadata.coordinates.longitude && (
+                  location &&
+                  location.coordinates &&
+                  location.coordinates.latitude &&
+                  location.coordinates.longitude && (
                     <Map
                       zoom={10}
                       width={600}
-                      coordinates={[metadata.coordinates.longitude, metadata.coordinates.latitude]}
+                      coordinates={[location.coordinates.longitude, location.coordinates.latitude]}
                     />
                   )
                 }
