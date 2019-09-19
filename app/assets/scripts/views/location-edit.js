@@ -362,6 +362,9 @@ class LocationEdit extends React.Component {
     });
   }
 
+  /**
+   * @return {class} Displays class component non-editable map with coordinates from metadata.
+   */
   renderMap () {
     const { location } = this.props;
     const { metadata } = location;
