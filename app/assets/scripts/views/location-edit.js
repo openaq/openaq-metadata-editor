@@ -81,7 +81,7 @@ class LocationEdit extends React.Component {
 
   componentDidMount () {
     const { match: { params: { id } } } = this.props;
-
+    
     if (!this.props.location || this.props.location.id || this.props.location.id !== id) {
       this.props.getMetadata(id);
     }
@@ -257,7 +257,6 @@ class LocationEdit extends React.Component {
               description={prop.description}
               required={prop.required}
               type='text'
-              isTooltopShowing={true}
             />);
         }
       case 'integer':
@@ -269,7 +268,6 @@ class LocationEdit extends React.Component {
             description={prop.description}
             required={prop.required}
             type='number'
-            isTooltopShowing={true}
           />);
       case 'array':
         return this.renderMultiSelectProp(key, value, prop);
@@ -282,7 +280,6 @@ class LocationEdit extends React.Component {
             description={prop.description}
             required={prop.required}
             type='checkbox'
-            isTooltopShowing={false}
           />
         );
     }
