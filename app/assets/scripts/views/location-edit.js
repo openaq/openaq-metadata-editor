@@ -100,7 +100,6 @@ class LocationEdit extends React.Component {
 
   renderInfo () {
     const { location } = this.props;
-    console.log('location', location)
 
     return (
       <div className='location-info'>
