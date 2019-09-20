@@ -8,7 +8,10 @@ import parse from 'date-fns/parse';
 import { schemas, validate } from 'openaq-data-format';
 
 import Header from '../components/header';
-import MapEdit from '../components/map-edit';
+import Map from '../components/map';
+import ErrorMessage from '../components/error-message';
+import FormInput from '../components/form/form-input';
+import Asterisk from '../components/form/asterisk';
 
 import { getMetadata, putMetadata, updateMetadata, setFormErrors } from '../state/locations/actions';
 
@@ -66,16 +69,13 @@ const editorGroups = {
   }
 };
 
-const Asterisk = ({ required }) => {
-  if (!required) return null;
-  return (<span className='required'>*</span>);
-};
-
 class LocationEdit extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      errors: { instruments: [] }
+      errors: { instruments: [] },
+      isUpdateError: false,
+      errorMessage: ''
     };
   }
 
@@ -100,7 +100,7 @@ class LocationEdit extends React.Component {
 
   renderInfo () {
     const { location } = this.props;
-    const { metadata } = location;
+    console.log('location', location)
 
     return (
       <div className='location-info'>
@@ -113,80 +113,14 @@ class LocationEdit extends React.Component {
           <li>Location: <b>{location.location}</b></li>
           <li>City: <b>{location.city}</b></li>
           <li>Country: <b>{location.country}</b></li>
-          {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
-          {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
+          {location && location.coordinates && location.coordinates.latitude && (<li>Latitude: <b>{location.coordinates.latitude}</b></li>)}
+          {location && location.coordinates && location.coordinates.longitude && <li>Longitude: <b>{location.coordinates.longitude}</b></li>}
         </ul>
-        <div className='tooltip'>
-          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
-          <span className='tooltip-info'>This is static data from provider</span>
+        <div className='location-tooltip'>
+          <i className='location-tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+          <span className='location-tooltip-info'>This data is determined by the provider. Requests for changes may be made below.</span>
         </div>
       </div>
-    );
-  }
-
-  renderStringProp (key, value, prop) {
-    const { required, title } = prop;
-    const onChange = (e) => {
-      this.propUpdate(key, e.target.value);
-    };
-
-    return (
-      <React.Fragment>
-        <label className='form__label'>
-          {title}
-          <Asterisk required={required}/>
-        </label>
-        <input
-          type='text'
-          className='form__control'
-          value={value}
-          onChange={onChange}
-        />
-      </React.Fragment>
-    );
-  }
-
-  renderIntegerProp (key, value, prop) {
-    const { required, title } = prop;
-    const onChange = (e) => {
-      this.propUpdate(key, e.target.value ? Number(e.target.value) : null);
-    };
-
-    return (
-      <React.Fragment>
-        <label className='form__label'>
-          {title}
-          <Asterisk required={required}/>
-        </label>
-        <input
-          type='number'
-          className='form__control'
-          value={value}
-          onChange={onChange}
-        />
-      </React.Fragment>
-    );
-  }
-
-  renderBooleanProp (key, value, prop) {
-    const { required, title } = prop;
-    const onChange = (e) => {
-      this.propUpdate(key, e.target.checked);
-    };
-
-    return (
-      <React.Fragment>
-        <label className='form__label'>
-          {title}
-          <Asterisk required={required}/>
-        </label>
-        <input
-          type='checkbox'
-          value={value}
-          className='form__control'
-          onChange={onChange}
-        />
-      </React.Fragment>
     );
   }
 
@@ -196,7 +130,7 @@ class LocationEdit extends React.Component {
    * @param {object} prop - section properties used to populate dropdown.
    */
   renderSelectProp (key, value, prop) {
-    const { required, title } = prop;
+    const { required, title, description } = prop;
     const availableValues = prop.enum;
 
     let options;
@@ -218,20 +152,27 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <Select
-          value={{ key: value, label: value }}
-          options={options}
-          onChange={onChange}
-          getOptionValue={(option) => {
-            return option.key;
-          }}
-        />
+        <div className='tooltip-container'>
+          <Select
+            className='form__select'
+            value={{ key: value, label: value }}
+            options={options}
+            onChange={onChange}
+            getOptionValue={(option) => {
+              return option.key;
+            }}
+          />
+          <div className='tooltip'>
+            <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+            <span className='tooltip-info'>{description}</span>
+          </div>
+        </div>
       </React.Fragment>
     );
   }
 
   renderMultiSelectProp (key, value, prop) {
-    const { required, title } = prop;
+    const { required, title, description } = prop;
     const availableValues = prop.items.enum;
 
     let options;
@@ -254,21 +195,28 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <Select
-          isMulti
-          value={values}
-          options={options}
-          onChange={onChange}
-          getOptionValue={(option) => {
-            return option.key;
-          }}
-        />
+        <div className='tooltip-container'>
+          <Select
+            isMulti
+            className='form__select'
+            value={values}
+            options={options}
+            onChange={onChange}
+            getOptionValue={(option) => {
+              return option.key;
+            }}
+          />
+          <div className='tooltip'>
+            <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+            <span className='tooltip-info'>{description}</span>
+          </div>
+        </div>
       </React.Fragment>
     );
   }
 
   renderDateProp (key, value, prop) {
-    const { required, title } = prop;
+    const { required, title, description } = prop;
     const onChange = (val) => {
       this.propUpdate(key, val.toISOString());
     };
@@ -281,11 +229,17 @@ class LocationEdit extends React.Component {
           {title}
           <Asterisk required={required}/>
         </label>
-        <DatePicker
-          className='form__control'
-          selected={date}
-          onChange={onChange}
-        />
+        <div className='tooltip-container form__date'>
+          <DatePicker
+            className='form__control'
+            selected={date}
+            onChange={onChange}
+          />
+          <div className='tooltip'>
+            <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+            <span className='tooltip-info'>{description}</span>
+          </div>
+        </div>
       </React.Fragment>
     );
   }
@@ -298,14 +252,42 @@ class LocationEdit extends React.Component {
         } else if (prop.enum) {
           return this.renderSelectProp(key, value, prop);
         } else {
-          return this.renderStringProp(key, value, prop);
+          return (
+            <FormInput
+              onChange= {(e) => { this.propUpdate(key, e.target.value); }}
+              title={prop.title}
+              value={value}
+              description={prop.description}
+              required={prop.required}
+              type='text'
+              isTooltopShowing={true}
+            />);
         }
       case 'integer':
-        return this.renderIntegerProp(key, value, prop);
+        return (
+          <FormInput
+            onChange= {(e) => { this.propUpdate(key, e.target.value ? Number(e.target.value) : null); }}
+            title={prop.title}
+            value={value}
+            description={prop.description}
+            required={prop.required}
+            type='number'
+            isTooltopShowing={true}
+          />);
       case 'array':
         return this.renderMultiSelectProp(key, value, prop);
       case 'boolean':
-        return this.renderBooleanProp(key, value, prop);
+        return (
+          <FormInput
+            onChange= {(e) => { this.propUpdate(key, e.target.checked); }}
+            title={prop.title}
+            value={value}
+            description={prop.description}
+            required={prop.required}
+            type='checkbox'
+            isTooltopShowing={false}
+          />
+        );
     }
   }
 
@@ -341,9 +323,7 @@ class LocationEdit extends React.Component {
                 <div key={`form-field-${key}`} className={`form-field${error ? ' error' : ''}`}>
                   {this.renderPropInput(key, value, prop)}
                   {
-                    error && (
-                      <div className='error-message'>{error.message}</div>
-                    )
+                    error && (<ErrorMessage style='error-message' message={error.message}/>)
                   }
                 </div>
               );
@@ -385,29 +365,26 @@ class LocationEdit extends React.Component {
     });
   }
 
+  /**
+   * @return {class} Displays class component non-editable map with coordinates from metadata.
+   */
   renderMap () {
     const { location } = this.props;
-    const { metadata } = location;
 
-    const hasCoordinates = metadata &&
-      metadata.coordinates &&
-      metadata.coordinates.latitude &&
-      metadata.coordinates.longitude;
+    const hasCoordinates = location &&
+      location.coordinates &&
+      location.coordinates.latitude &&
+      location.coordinates.longitude;
 
     const coordinates = hasCoordinates
-      ? [metadata.coordinates.longitude, metadata.coordinates.latitude]
+      ? [location.coordinates.longitude, location.coordinates.latitude]
       : [0, 0];
 
-    const onChange = (coordinates) => {
-      this.propUpdate('coordinates', coordinates);
-    };
-
     return (
-      <MapEdit
+      <Map
         zoom={10}
         width={300}
         coordinates={coordinates}
-        onChange={onChange}
       />
     );
   }
@@ -452,9 +429,14 @@ class LocationEdit extends React.Component {
               Save Location
             </button>
           </div>
-          {(errorCount > 0) && (
-            <div className='form-error-message'>Please fix errors in the form above</div>
-          )}
+          {(errorCount > 0) && (<ErrorMessage style='form-error-message' message='Please fix errors in the form above'/>)}
+          {this.state.isUpdateError ? (
+            <ErrorMessage
+              style='form-error-message'
+              message={this.state.errorMessage}
+              retry={(e) => this.onSaveLocationClick(e)}
+            />
+          ) : null}
         </div>
       </main>
     );
@@ -525,9 +507,14 @@ class LocationEdit extends React.Component {
 
     if (this.validateForm(metadata)) {
       delete metadata.id;
-      this.props.putMetadata(match.params.id, metadata).then(() => {
-        this.props.history.push(`/location/${match.params.id}`);
-      });
+      this.props.putMetadata(match.params.id, metadata)
+        .then(() => {
+          this.props.putError ? (
+            this.setState({ isUpdateError: true, errorMessage: this.props.putErrorMessage })
+          ) : (
+            this.props.history.push(`/location/${match.params.id}`)
+          );
+        });
     }
   }
 
@@ -544,8 +531,8 @@ class LocationEdit extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { location, errors, errorCount } = state.locations;
-  return { location, errors, errorCount };
+  const { location, errors, errorCount, putError, putErrorMessage } = state.locations;
+  return { location, errors, errorCount, putError, putErrorMessage };
 };
 
 const mapDispatchToProps = {

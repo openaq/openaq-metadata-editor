@@ -5,6 +5,8 @@ const initialState = {
   location: {
     metadata: { instruments: [] }
   },
+  putError: null,
+  putErrorMessage: '',
   errors: { instruments: [] },
   errorCount: 0
 };
@@ -41,8 +43,11 @@ function reducer (state = initialState, action) {
     }
 
     case constants.PUT_METADATA_ERROR: {
-      console.log('error', action.error);
-      return state;
+      console.error('PUT ERROR:', action.error);
+      return Object.assign({}, state, {
+        putError: action.error,
+        putErrorMessage: `Update Error: ${action.error.message}`
+      });
     }
 
     case constants.UPDATE_METADATA: {
