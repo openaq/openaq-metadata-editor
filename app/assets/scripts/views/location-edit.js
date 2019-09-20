@@ -115,7 +115,6 @@ class LocationEdit extends React.Component {
           <li>Country: <b>{location.country}</b></li>
           {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
           {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
-          {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
         </ul>
       </div>
     );
