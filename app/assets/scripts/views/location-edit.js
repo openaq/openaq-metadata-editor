@@ -120,7 +120,7 @@ class LocationEdit extends React.Component {
         </ul>
         <div className='location-tooltip'>
           <i className='location-tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
-          <span className='location-tooltip-info'>This data is determined by the provider. Requests for changes may be made below.</span>
+          <span className='location-tooltip-info'>This data is determined by the provider. Requests for changes may be made below using the notes field and the coordinate error checkbox.</span>
         </div>
       </div>
     );
