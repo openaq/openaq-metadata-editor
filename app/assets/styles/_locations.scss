@@ -10,7 +10,6 @@
 
 .location-tooltip {
   position: relative; 
-  width: 150%;
 }
 
 .location-tooltip-button {
@@ -21,7 +20,6 @@
   visibility: hidden;
   position: absolute;
   margin-left: 0.5rem;
-
 }
 
 .location-tooltip:hover .location-tooltip-info {
@@ -30,7 +28,6 @@
   padding: 0.3rem 0.5rem;
   border: 1px solid $base-color;
 }
-
 
 .page__title {
   .location-id {
