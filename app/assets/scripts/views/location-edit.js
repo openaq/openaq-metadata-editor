@@ -98,6 +98,9 @@ class LocationEdit extends React.Component {
     this.props.updateMetadata(data);
   }
 
+  /**
+   * @return Displays the form header with data from the provider that is not subject to change by the user.
+   */
   renderInfo () {
     const { location } = this.props;
 
