@@ -98,9 +98,11 @@ class LocationEdit extends React.Component {
     this.props.updateMetadata(data);
   }
 
+  /**
+   * @return Displays the form header with data from the provider that is not subject to change by the user.
+   */
   renderInfo () {
     const { location } = this.props;
-    const { metadata } = location;
 
     return (
       <div className='location-info'>
@@ -115,8 +117,11 @@ class LocationEdit extends React.Component {
           <li>Country: <b>{location.country}</b></li>
           {location && location.coordinates && location.coordinates.latitude && (<li>Latitude: <b>{location.coordinates.latitude}</b></li>)}
           {location && location.coordinates && location.coordinates.longitude && <li>Longitude: <b>{location.coordinates.longitude}</b></li>}
-          {metadata && metadata.siteType && <li>Location Type: <b>{metadata.siteType}</b></li>}
         </ul>
+        <div className='location-tooltip'>
+          <i className='location-tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+          <span className='location-tooltip-info'>This data is determined by the provider. Requests for changes may be made below using the notes field and the coordinate error checkbox.</span>
+        </div>
       </div>
     );
   }

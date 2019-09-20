@@ -1,12 +1,32 @@
 .location-detail-list {
   margin: 0px;
   padding: 0px;
-  float: left;
   font-size: 20px;
 
   li {
     list-style-type: none;
   }
+}
+
+.location-tooltip {
+  position: relative; 
+}
+
+.location-tooltip-button {
+  float: left;
+}
+
+.location-tooltip-info {
+  visibility: hidden;
+  position: absolute;
+  margin-left: 0.5rem;
+}
+
+.location-tooltip:hover .location-tooltip-info {
+  visibility: visible;
+  background-color: white;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid $base-color;
 }
 
 .page__title {
