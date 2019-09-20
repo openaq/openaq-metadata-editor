@@ -8,7 +8,7 @@ import parse from 'date-fns/parse';
 import { schemas, validate } from 'openaq-data-format';
 
 import Header from '../components/header';
-import Map from '../components/map';
+import MapEdit from '../components/map-edit';
 import ErrorMessage from '../components/error-message';
 import FormInput from '../components/form/form-input';
 import Asterisk from '../components/form/asterisk';
@@ -262,7 +262,6 @@ class LocationEdit extends React.Component {
               description={prop.description}
               required={prop.required}
               type='text'
-              isTooltopShowing={true}
             />);
         }
       case 'integer':
@@ -274,7 +273,6 @@ class LocationEdit extends React.Component {
             description={prop.description}
             required={prop.required}
             type='number'
-            isTooltopShowing={true}
           />);
       case 'array':
         return this.renderMultiSelectProp(key, value, prop);
@@ -287,7 +285,6 @@ class LocationEdit extends React.Component {
             description={prop.description}
             required={prop.required}
             type='checkbox'
-            isTooltopShowing={false}
           />
         );
     }
@@ -382,11 +379,16 @@ class LocationEdit extends React.Component {
       ? [location.coordinates.longitude, location.coordinates.latitude]
       : [0, 0];
 
+    const onChange = (coordinates) => {
+      this.propUpdate('coordinates', coordinates);
+    };
+
     return (
-      <Map
+      <MapEdit
         zoom={10}
         width={300}
         coordinates={coordinates}
+        onChange={onChange}
       />
     );
   }

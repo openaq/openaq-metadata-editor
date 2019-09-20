@@ -1,7 +1,7 @@
 import React from 'react';
 import Asterisk from './asterisk';
 
-const FormInput = ({ title, type, value, onChange, isTooltopShowing, description, required }) => {
+const FormInput = ({ title, type, value, onChange, description, required }) => {
   return (
     <React.Fragment>
       <label className='form__label'>
@@ -15,12 +15,10 @@ const FormInput = ({ title, type, value, onChange, isTooltopShowing, description
           value={value}
           onChange={onChange}
         />
-        {isTooltopShowing ? (
-          <div className='tooltip'>
-            <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
-            <span className='tooltip-info'>{description}</span>
-          </div>
-        ) : null }
+        <div className='tooltip'>
+          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+          <span className='tooltip-info'>{description}</span>
+        </div>
       </div>
     </React.Fragment>
   );
