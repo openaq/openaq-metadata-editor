@@ -116,6 +116,10 @@ class LocationEdit extends React.Component {
           {metadata && metadata.coordinates && metadata.coordinates.latitude && (<li>Latitude: <b>{metadata.coordinates.latitude}</b></li>)}
           {metadata && metadata.coordinates && metadata.coordinates.longitude && <li>Longitude: <b>{metadata.coordinates.longitude}</b></li>}
         </ul>
+        <div className='tooltip'>
+          <i className='tooltip-button edit-box-delete collecticons collecticons-circle-information'/>
+          <span className='tooltip-info'>This is static data from provider</span>
+        </div>
       </div>
     );
   }
