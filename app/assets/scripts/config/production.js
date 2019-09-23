@@ -8,12 +8,9 @@ export default {
   },
   apiUrl: null,
   auth: {
-    // Domain and client can be found in the Auth0 Application page.
-    domain: null,
-    clientID: null,
-    // App url + /callback. Ex: http://localhost:3000/callback
-    callbackUrl: null,
-    // Audience is the identifier chosen for the Api. Ex: http://openaq.org
-    audience: null
+    domain: 'openaq-prod.auth0.com',
+    clientID: '2NfSLaCPOGHAfYkkbv4m9A4EFxZ54hHt',
+    callbackUrl: 'https://metadata.openaq.org/callback',
+    audience: 'https://openaq-prod.auth0.com/api/v2/'
   }
 };
