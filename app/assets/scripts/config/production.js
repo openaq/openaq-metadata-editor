@@ -3,7 +3,7 @@
 export default {
   environment: 'production',
   mapbox: {
-    token: 'pk.eyJ1IjoidW1waHJleTEwMTIiLCJhIjoiQ1MzNldBYyJ9.fM0A16yfZbqCIH0--_X7Eg',
+    token: 'pk.eyJ1IjoiZGV2c2VlZCIsImEiOiJnUi1mbkVvIn0.018aLhX0Mb0tdtaT2QNe2Q',
     baseStyle: 'mapbox://styles/devseed/ciqs29d060000clnr9222bg5x'
   },
   apiUrl: 'https://api.openaq.org',
