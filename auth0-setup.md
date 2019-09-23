@@ -11,40 +11,32 @@ Through the `Applications` menu create a new application of type `Single Page We
 Through the `APIs` menu create a new Api. Name it "OpenAq API".
 - **Identifier** should be `http://openaq.org`. This is just used to identify the api, but it is recommended to use the url.
 
-## Hooks
-Through the `Hooks` menu create a new Pre User Registration hook. Name it "init-user".
-Add the following code:
-```
-module.exports = function (user, context, cb) {
-  var response = {};
-  response.user = user;
-
-  // Disable the user on creation.
-  response.user.user_metadata = { active: false };
-
-  cb(null, response);
-};
-```
-This will set the user as disabled as soon as it is created, allowing users to create accounts that have to be activated by an administrator.
+## Social Connections
+To allow users to login through Google go to `Connections > Social` and enable the Google provider. When deploying the app to production the Google provider needs to be setup with [appropriate api keys](https://auth0.com/docs/connections/social/google) or the authentication won't persist through page refreshes. 
 
 ## Rules
 Through the `Rules` menu create a new Empty Rule. Name it "User metadata".
 Add the following code:
 ```
 function (user, context, callback) {
-  // Include the user metadata on token response
-  context.idToken['http://openaq.org/user_metadata'] = user.user_metadata || {};
-  context.accessToken['http://openaq.org/user_metadata'] = user.user_metadata || {};
+  let uMeta = user.user_metadata || {};
+  // Anything other than false is considered true.
+  uMeta.active = uMeta.active !== false;
+  // Include the user metadata on token response.
+  context.idToken['http://openaq.org/user_metadata'] = uMeta;
+  context.accessToken['http://openaq.org/user_metadata'] = uMeta;
   callback(null, user, context);
+}
 }
 ```
 This rule is used to ensure that the user metadata is sent to the Application through the token.
 This is what allows us to have the data needed to check whether a user is active or not.
+By default all users are considered active, until `"active" = false` is added to the `user_metadata`.
 To add custom data to tokens we have to use claims in url format, hence the `http://openaq.org/user_metadata`. These are just identifiers are will not be called by Auth0.
 
 ## User activation
-By default the users are created in a pending state. This allows the users to sign up through the app, but can't do anything until they are approved by an administrator.
-To activate a user, go to the user page selecting if from the list on `Users & Roles > Users`, and under `user_metadata` set `"active"` to `true`.
+By default the users are created as active. This allows the users to sign up through the app and have full access.
+To deactivate a user, go to the user page selecting if from the list on `Users & Roles > Users`, and under `user_metadata` add `"active" = false`
 
 ----
 
@@ -60,6 +52,7 @@ The server config will need a `auth` key with the following properties:
   "issuer": "https://<The auth0 account id. Ex: openaq-prod>.auth0.com/"
 }
 ```
+NOTE: It's imperative that the issuer has a trailing `/`.
 
 ## Frontend
 The frontend config also needs a `auth` key with the following properties:

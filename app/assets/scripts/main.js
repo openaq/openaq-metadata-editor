@@ -47,7 +47,7 @@ const PrivateRoute = connect(
         }
 
         const metadata = user.userProfile['http://openaq.org/user_metadata'];
-        if (!metadata.active) {
+        if (!metadata || !metadata.active) {
           return (
             <GlobalMessage>
               <p>Your account has to be activated by an administrator.</p>

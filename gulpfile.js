@@ -41,7 +41,7 @@ var pkgDependencies;
 // Environment
 // Set the correct environment, which controls what happens in config.js
 if (!process.env.NODE_ENV) {
-  if (!process.env.CIRCLE_BRANCH || process.env.CIRCLE_BRANCH !== process.env.PRODUCTION_BRANCH) {
+  if (!process.env.TRAVIS_BRANCH || process.env.TRAVIS_BRANCH !== process.env.PRODUCTION_BRANCH) {
     process.env.NODE_ENV = 'staging';
   } else {
     process.env.NODE_ENV = 'production';
@@ -183,7 +183,7 @@ gulp.task('vendorScripts', function () {
 // ----------------------------------------------------------------------------//
 
 gulp.task('build', function () {
-  runSequence(['vendorScripts', 'javascript', 'styles'], ['html', 'images', 'extras'], function () {
+  runSequence(['vendorScripts', 'javascript', 'collecticons', 'styles'], ['html', 'images', 'extras'], function () {
     return gulp.src('dist/**/*')
       .pipe($.size({ title: 'build', gzip: true }))
       .pipe($.exit());
