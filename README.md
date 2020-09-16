@@ -14,7 +14,17 @@ An editor for OpenAQ station metadata.
 2. Run `nvm use` and `nvm install` to install the correct version of node for the project
 3. Run `npm install` to install node modules 
 4. Install gulp globally `npm install -g gulp`
-5. Run `gulp serve` to start project 
+5. Run `npm run serve` to start project
+
+Compiles the sass files, javascript, and launches the server making the site available at `http://localhost:3000/`
+The system will watch files and execute tasks whenever one of them changes.
+The site will automatically refresh since it is bundled with livereload.
+
+### Other commands
+Compile the sass files, javascript... Use this instead of ```npm run serve``` if you don't want to watch.
+```
+$ npm run build
+```
 
 ### Troubleshooting: 
 
